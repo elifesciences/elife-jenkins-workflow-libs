@@ -1,0 +1,1 @@
+Returns the commit currently checked out by the Git repository. There was no command to do that in the standard Jenkins pipeline steps.
