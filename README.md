@@ -10,8 +10,8 @@ Jenkins however provides the possibility to define custom steps shared by all pi
 
 ## Usage
 
-1. Configure your Jenkins SSH access choosing a port at [http://$JENKINS/configure].
-2. Provide a public key at [http://$JENKINS/me/configure].  
+1. Configure your Jenkins SSH access choosing a port at `http://$JENKINS/configure`.
+2. Provide a public key at `http://$JENKINS/me/configure`.
 3. Git push this repository (or your fork of it) at the remote `ssh://$USERNAME@$JENKINS:$PORT/workflowLibs.git`.
 
 `$PORT` should be the port you have chosen (e.g. 16022) and `$USERNAME` should be your Jenkins username.
