@@ -1,0 +1,1 @@
+Switches the revision of the project on `stackname` to the particular `commit`. Depends on BUILDER_SCRIPTS_PREFIX environment variable.
