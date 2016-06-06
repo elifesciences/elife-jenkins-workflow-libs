@@ -1,1 +1,3 @@
 Executed the `elife-spectrum` end2end tests, which connect the various projects.
+
+Since end2end tests needs to be run only for one project at a time, this step depends on having a node tagged with the label `end2end` which will be used to run them.
