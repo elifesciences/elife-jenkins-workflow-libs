@@ -1,0 +1,2 @@
+Move some `branch` to `commit`, which is supposed to have just been tested. For example, `elifeGitMoveToBranch 123456 master` to put into master the result of testing `develop` branch.
+Both the local and the remote version of the branch are moved to the new commit. No force-push is attempted, as the command relies on the remote `origin` to only allow fast-forwards.
