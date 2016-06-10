@@ -8,6 +8,6 @@ def call() {
 
         def end2endTestLogArtifact = "${env.BUILD_TAG}.end2end.log"
         sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${end2endTestLogArtifact}"
-        archive $end2endTestLogArtifact
+        archive end2endTestLogArtifact
     }
 }
