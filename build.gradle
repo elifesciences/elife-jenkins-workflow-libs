@@ -1,0 +1,23 @@
+apply plugin: 'groovy'
+apply plugin: 'codenarc'
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['vars']
+        }
+    }
+}
+
+codenarc {
+    reportFormat = 'console'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.6'
+    compile 'org.apache.logging.log4j:log4j-core:2.6.1'
+}
