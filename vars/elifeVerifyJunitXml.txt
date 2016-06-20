@@ -1,0 +1,1 @@
+Fails the build if the `testArtifact` contains any errors. The file must follow the JUnit XML report conventions.
