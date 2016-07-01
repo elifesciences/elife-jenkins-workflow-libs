@@ -1,3 +1,4 @@
 def call(stackname, cmd) {
-    sh "sudo -H -u elife ${env.BUILDER_SCRIPTS_PREFIX}cmd '${stackname},${cmd}'"
+    cmd = cmd.replaceAll('=', '\\=')
+    sh "${env.BUILDER_PATH}bldr cmd '${stackname},${cmd}'"
 }
