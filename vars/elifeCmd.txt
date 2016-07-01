@@ -1,1 +1,1 @@
-Executes `cmd` on `stackname`. Depends on BUILDER_SCRIPTS_PREFIX environment variable.
+Executes `cmd` on `stackname`. Depends on OLD_BUILDER_SCRIPTS_PREFIX environment variable.
