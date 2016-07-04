@@ -1,0 +1,1 @@
+Deploys the commit `revision` on `stackname`, provisioning the stack again after the code change to make sure all processes are up-to-date.
