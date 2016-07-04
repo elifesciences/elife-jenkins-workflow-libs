@@ -5,6 +5,6 @@ def call(stackname, folder, propagateFailure=false) {
     }
     builderCmd stackname, projectTestsCmd
 
-    def smokeTestsCmd = "cd ${folder}; test -e smoke_tests.sh && ./smoke_tests.sh || echo 'No smoke tests to execute'"
+    def smokeTestsCmd = "cd ${folder}; if [ -e smoke_tests.sh ]; then ./smoke_tests.sh; fi"
     builderCmd stackname, smokeTestsCmd
 }
