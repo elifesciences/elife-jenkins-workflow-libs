@@ -1,0 +1,5 @@
+Executes a `project_tests.sh` inside `folder` on `stackname`. The script may fail, but this does not interrupt the build to allow retrieval of the JUnit-formatted XML log.
+
+Pass `propagateFailure=true` to instead make the failure immediate.
+
+If a `smoke_tests.sh` file is found in `folder` on `stackname`, it is executed and its (possible) failure will be propagated to the build, as smoke tests normally do not produce an XML log.
