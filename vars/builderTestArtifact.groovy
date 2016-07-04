@@ -1,9 +1,15 @@
 def call(localTestArtifact, stackname=null, remoteTestArtifact = null) {
+    // https://issues.jenkins-ci.org/browse/JENKINS-33511
+    env.WORKSPACE = pwd()
+
     if (stackname) {
         if (remoteTestArtifact == null) {
             throw new Exception("When specifying a `stackname`, you must also specify a `remoteTestArtifact` to retrieve");
         }
-        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${localTestArtifact}"
+
+        def absolutePathOfLocalTestArtifact = "${env.WORKSPACE}/$localTestArtifact"
+        sh "touch ${absolutePathOfLocalTestArtifact}"
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact}"
     }
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
 }
