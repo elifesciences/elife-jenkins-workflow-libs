@@ -1,0 +1,1 @@
+Notifies a Slack channel that `project` is being deployed on `environment`, adding a link to the build being performed to do so.
