@@ -3,6 +3,7 @@ def call(Closure body) {
         timestamps {
             wrap([$class: 'AnsiColorBuildWrapper']) {
                 body()
+                deleteDir()
             }
         }
     }
