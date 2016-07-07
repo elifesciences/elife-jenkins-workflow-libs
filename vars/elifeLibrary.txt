@@ -1,0 +1,1 @@
+Similar to `elifePipeline`, but makes the code run on a specialized `libraries` node and cleans up right after the build has finished to avoid pull requests occupying too much disk space.
