@@ -1,5 +1,8 @@
-def call() {
+def call(Closure preliminaryStep=null) {
     node("end2end") {
+        if (preliminaryStep != null) {
+            preliminaryStep()
+        }
         sh "cd ${env.SPECTRUM_PREFIX}; sudo -H -u elife ${env.SPECTRUM_PREFIX}execute.sh || echo TESTS FAILED"
         
         def end2endTestXmlArtifact = "${env.BUILD_TAG}.end2end.junit.xml"

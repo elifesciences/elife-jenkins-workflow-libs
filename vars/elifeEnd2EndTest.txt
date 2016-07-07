@@ -1,3 +1,5 @@
 Executed the `elife-spectrum` end2end tests, which connect the various projects.
 
 Since end2end tests needs to be run only for one project at a time, this step depends on having a node tagged with the label `end2end` which will be used to run them.
+
+Accepts a `preliminaryStep` closure as an argument, to be run on the node. For example, this step can be used to deploy the current project to the `end2end` environment so that its deploy cannot be concurrent with end2end tests that are running for other projects.
