@@ -11,5 +11,8 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null) {
         sh "touch ${absolutePathOfLocalTestArtifact}"
         sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact}"
     }
+    if (!fileExists(localTestArtifact)) {
+        error "Tests failed without leaving around an artifact."
+    }
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
 }
