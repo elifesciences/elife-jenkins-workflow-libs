@@ -1,5 +1,5 @@
 def call(Closure preliminaryStep=null, marker=null) {
-    node("end2end") {
+    lock('end2end') {
         if (preliminaryStep != null) {
             preliminaryStep()
         }
