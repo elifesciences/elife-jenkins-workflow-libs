@@ -1,0 +1,5 @@
+Repeats the `build` block serially for all the values in `variants`.
+
+A new stage is created for each of the `variants`, and the value of the current variant is passed as an argument to the `build` block.
+
+It is possible to pass a third `stageName` parameter (e.g. `Tests, %s dependencies`) to customize the stage name.
