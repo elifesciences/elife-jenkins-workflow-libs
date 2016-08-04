@@ -1,5 +1,6 @@
 import com.cloudbees.groovy.cps.NonCPS
 
+@NonCPS
 def findMaintainers(fileName) {
     if (fileExists(fileName)) {
         maintainersFile = readFile fileName
