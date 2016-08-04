@@ -1,1 +1,3 @@
 Should be used as the top level construct for pipeline stages. Accepts a block and wraps it with timestamps and colors to make the build output more understandable.
+
+If a `maintainers.txt` file is present in the repository, build failures will be sent to them through email.
