@@ -2,6 +2,7 @@ def findMaintainers(fileName) {
     def maintainers = []
 
     if (fileExists(fileName)) {
+        echo "Found maintainers file ${fileName}" 
         def maintainersFile = readFile fileName
         def rows = maintainersFile.tokenize("\n")
         for (int i = 0; i < maintainers.size(); i++) {
