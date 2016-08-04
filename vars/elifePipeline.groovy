@@ -1,15 +1,16 @@
-import com.cloudbees.groovy.cps.NonCPS
-
-@NonCPS
 def findMaintainers(fileName) {
+    def maintainers = []
+
     if (fileExists(fileName)) {
-        maintainersFile = readFile fileName
-        maintainers = maintainersFile.tokenize("\n").collect { it.trim() }
-        print maintainers
-        return maintainers
+        def maintainersFile = readFile fileName
+        def rows = maintainersFile.tokenize("\n")
+        for (int i = 0; i < maintainers.size(); i++) {
+            maintainer = rows.get(i).trim()
+            maintainers << maintainer
+        }
     }
 
-    return []
+    return maintainers
 }
 
 def call(Closure body) {
