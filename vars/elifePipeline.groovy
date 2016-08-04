@@ -11,7 +11,6 @@ def findMaintainers(fileName) {
 }
 
 def call(Closure body) {
-    def 
     node {
         timestamps {
             wrap([$class: 'AnsiColorBuildWrapper']) {
