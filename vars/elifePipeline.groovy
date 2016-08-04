@@ -17,12 +17,10 @@ def call(Closure body) {
                 try {
                     body()
                 } catch (e) {
-                    def w = new StringWriter()
-                    e.printStackTrace(new PrintWriter(w))
                     maintainers = findMaintainers 'maintainers.txt'
                     for (int i = 0; i < maintainers.size(); i++) {
                         def address = maintainers.get(i)
-                        mail subject: "failed with ${e.message}", to: address, body: "Failed: ${w}"
+                        mail subject: "${env.BUILD_TAG} failed", to: address, body: "Message: ${e.message}\nFailed build: ${env.BUILD_URL}"
                     }
                     throw e
                 } finally {
