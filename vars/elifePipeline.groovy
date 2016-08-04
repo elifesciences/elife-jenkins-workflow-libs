@@ -19,6 +19,7 @@ def call(Closure body) {
                     body()
                 } catch (e) {
                     maintainers = findMaintainers 'maintainers.txt'
+                    echo "Found maintainers: ${maintainers}"
                     for (int i = 0; i < maintainers.size(); i++) {
                         def address = maintainers.get(i)
                         mail subject: "${env.BUILD_TAG} failed", to: address, body: "Message: ${e.message}\nFailed build: ${env.BUILD_URL}"
