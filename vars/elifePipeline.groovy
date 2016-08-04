@@ -4,9 +4,9 @@ def findMaintainers(fileName) {
     if (fileExists(fileName)) {
         echo "Found maintainers file ${fileName}" 
         def maintainersFile = readFile fileName
-        echo "File content is ${maintainersFile}"
+        echo "File content is `${maintainersFile}`"
         def rows = maintainersFile.tokenize("\n")
-        for (int i = 0; i < maintainers.size(); i++) {
+        for (int i = 0; i < rows.size(); i++) {
             maintainer = rows.get(i).trim()
             maintainers << maintainer
         }
