@@ -5,6 +5,7 @@ def findMaintainers(fileName) {
     if (fileExists(fileName)) {
         maintainersFile = readFile fileName
         maintainers = maintainersFile.tokenize("\n").collect { it.trim() }
+        print maintainers
         return maintainers
     }
 
