@@ -26,7 +26,8 @@ def call(Closure body) {
                     echo "Found maintainers: ${maintainers}"
                     for (int i = 0; i < maintainers.size(); i++) {
                         def address = maintainers.get(i)
-                        mail subject: "${env.BUILD_TAG} failed", to: address, body: "Message: ${e.message}\nFailed build: ${env.BUILD_URL}"
+                        echo "When configured, we will send an email like subject: \"${env.BUILD_TAG} failed\", to: address, body: \"Message: ${e.message}\nFailed build: ${env.BUILD_URL}"
+                        //mail subject: "${env.BUILD_TAG} failed", to: address, body: "Message: ${e.message}\nFailed build: ${env.BUILD_URL}"
                     }
                     throw e
                 } finally {
