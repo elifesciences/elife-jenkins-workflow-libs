@@ -1,0 +1,1 @@
+If a `smoke_tests.sh` file is found in `folder` on `stackname`, it is executed. These tests should target the real application, but on localhost so that they may be executed on any environment and machine.
