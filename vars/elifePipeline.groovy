@@ -4,12 +4,13 @@ def findMaintainers(fileName) {
     if (fileExists(fileName)) {
         echo "Found maintainers file ${fileName}" 
         def maintainersFile = readFile fileName
-        echo "File content is `${maintainersFile}`"
         def rows = maintainersFile.tokenize("\n")
         for (int i = 0; i < rows.size(); i++) {
             maintainer = rows.get(i).trim()
             maintainers << maintainer
         }
+    } else {
+        echo "No maintainers.txt file found"
     }
 
     return maintainers
@@ -27,6 +28,7 @@ def call(Closure body) {
                     for (int i = 0; i < maintainers.size(); i++) {
                         def address = maintainers.get(i)
                         mail subject: "${env.BUILD_TAG} failed", to: address, from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.BUILD_URL}console"
+                        echo "Failure email sent to ${address}"
                     }
                     throw e
                 } finally {
