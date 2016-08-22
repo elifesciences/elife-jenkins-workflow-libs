@@ -1,5 +1,6 @@
 def retrieveArtifacts(stackname, testArtifacts) {
     def localTestArtifacts = []
+    echo "Looking for test artifacts: ${testArtifacts}"
     for (int i = 0; i < testArtifacts.size(); i++) {
         def remoteTestArtifact = testArtifacts.get(i)
         def slash = remoteTestArtifact.lastIndexOf('/')
