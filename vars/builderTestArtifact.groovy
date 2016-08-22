@@ -8,10 +8,15 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
         }
 
         def allowMissingParameter = allowMissing ? "True" : "False"
-        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE},allow_missing=${allowMissingParameter}"
+        def localTestArtifactFullPath = "${env.WORKSPACE}/${localTestArtifact}"
+        echo "Creating empty ${localTestArtifactFullPath}"
+        sh "touch ${localTestArtifactFullPath}"
+        echo "Downloading onto ${localTestArtifactFullPath}
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${localTestArtifactFullPath},allow_missing=${allowMissingParameter}"
     }
-    if (!fileExists(localTestArtifact)) {
+    if (!readFile(localTestArtifactFullPath)) {
         if (allowMissing) {
+            echo "Artifacts not found, but was configured to ignore missing artifacts.
             return
         } else {
             error "Tests failed without leaving around an artifact."

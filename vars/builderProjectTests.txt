@@ -1,7 +1,5 @@
-Executes a `project_tests.sh` inside `folder` on `stackname`. The script may fail, but this does not interrupt the build to allow retrieval of the JUnit-formatted XML log.
+Executes a `project_tests.sh` inside `folder` on `stackname`. The script may fail, and the error will propagate up.
 
-Pass `propagateFailure=true` to instead make the failure immediate.
+Pass `testArtifacts=['/srv/journal/build/behat.xml', ...]` to specify a list of test artifacts to process with `builderTestArtifact`, when they exist. Even when a failure is happening, an attempt to retrieve these artifacts till still be made.
 
-Pass `testArtifacts=['/srv/journal/build/behat.xml', ...]` to specify a list of test artifacts to process with `builderTestArtifact` if they exist.
-
-`builderSmokeTests` is also executed, and its (possible) failure will be propagated to the build, as smoke tests normally do not produce an XML log.
+`builderSmokeTests` is also executed, and its (possible) failure will be propagated to the build as per the other tests.
