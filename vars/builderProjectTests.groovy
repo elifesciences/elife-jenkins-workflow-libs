@@ -14,7 +14,9 @@ def call(stackname, folder, testArtifacts=[]) {
         }
         for (int i = 0; i < localTestArtifacts.size(); i++) {
             def localTestArtifact = localTestArtifacts.get(i)
-            elifeVerifyJunitXml localTestArtifact
+            if (fileExists(localTestArtifact)) {
+                elifeVerifyJunitXml localTestArtifact
+            }
         }
         throw e
     }
