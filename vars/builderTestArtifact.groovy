@@ -16,7 +16,7 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
     }
     if (!readFile(localTestArtifactFullPath)) {
         if (allowMissing) {
-            echo "Artifact ${localTestArtifactFullPath} not found, but was configured to ignore missing artifacts.
+            echo "Artifact ${localTestArtifactFullPath} not found, but was configured to ignore missing artifacts."
             return
         } else {
             error "Tests failed without leaving around an artifact at ${remoteTestArtifact}, which should have been downloaded at ${localTestArtifactFullPath}."
