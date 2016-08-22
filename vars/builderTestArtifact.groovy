@@ -9,7 +9,8 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
 
         def absolutePathOfLocalTestArtifact = "${env.WORKSPACE}/$localTestArtifact"
         sh "touch ${absolutePathOfLocalTestArtifact}"
-        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact}"
+        def allowMissingParameter = allowMissing ? "True" : "False"
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact},allow_missing=${allowMissingParameter}"
     }
     if (!fileExists(localTestArtifact) && !allowMissing) {
         error "Tests failed without leaving around an artifact."
