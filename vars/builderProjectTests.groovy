@@ -1,8 +1,5 @@
-def call(stackname, folder, propagateFailure=false, testArtifacts=[]) {
+def call(stackname, folder, testArtifacts=[]) {
     def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
-    if (!propagateFailure) {
-        projectTestsCmd = "${projectTestsCmd} || echo TESTS_FAILED"
-    }
     try {
         builderCmd stackname, projectTestsCmd
     } catch (e) {
