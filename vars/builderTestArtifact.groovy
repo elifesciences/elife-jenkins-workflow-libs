@@ -18,5 +18,6 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
             error "Tests failed without leaving around an artifact."
         }
     }
+    echo "Found ${localTestArtifact}"
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
 }

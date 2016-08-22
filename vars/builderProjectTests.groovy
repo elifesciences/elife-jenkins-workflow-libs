@@ -8,6 +8,7 @@ def retrieveArtifacts(stackname, testArtifacts) {
         localTestArtifacts << localTestArtifact
         builderTestArtifact localTestArtifact, stackname, remoteTestArtifact, true
     }
+    echo "Retrieved test artifacts: ${localTestArtifacts}"
     for (int i = 0; i < localTestArtifacts.size(); i++) {
         def localTestArtifact = localTestArtifacts.get(i)
         if (fileExists(localTestArtifact)) {
