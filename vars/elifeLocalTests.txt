@@ -1,0 +1,3 @@
+Executes `cmd` in the current workspace and bubbles up any failure.
+
+However, before letting exceptions raise, archives the artifacts listed in `testArtifacts`.
