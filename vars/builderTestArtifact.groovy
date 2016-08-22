@@ -11,8 +11,12 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
         def allowMissingParameter = allowMissing ? "True" : "False"
         sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact},allow_missing=${allowMissingParameter}"
     }
-    if (!fileExists(localTestArtifact) && !allowMissing) {
-        error "Tests failed without leaving around an artifact."
+    if (!fileExists(localTestArtifact)) {
+        if (allowMissing) {
+            return
+        } else {
+            error "Tests failed without leaving around an artifact."
+        }
     }
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
 }
