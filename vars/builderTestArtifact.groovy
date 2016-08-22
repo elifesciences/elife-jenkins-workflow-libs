@@ -7,9 +7,8 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
             throw new Exception("When specifying a `stackname`, you must also specify a `remoteTestArtifact` to retrieve");
         }
 
-        def absolutePathOfLocalTestArtifact = "${env.WORKSPACE}/$localTestArtifact"
         def allowMissingParameter = allowMissing ? "True" : "False"
-        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact},allow_missing=${allowMissingParameter}"
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE},allow_missing=${allowMissingParameter}"
     }
     if (!fileExists(localTestArtifact)) {
         if (allowMissing) {
@@ -19,6 +18,5 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
         }
     }
     echo "Found ${localTestArtifact}"
-    //this causes an error: ERROR: No test report files were found. Configuration error?
-    //step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
+    step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
 }
