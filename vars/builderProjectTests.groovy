@@ -8,7 +8,7 @@ def call(stackname, folder, testArtifacts=[]) {
             def remoteTestArtifact = testArtifacts.get(i)
             def slash = remoteTestArtifact.lastIndexOf('/')
             def basename = remoteTestArtifact[slash+1..-1]
-            def localTestArtifact = "${env.BUILD_TAG}.{$basename}"
+            def localTestArtifact = "${env.BUILD_TAG}.${basename}"
             localTestArtifacts << localTestArtifact
             builderTestArtifact localTestArtifact, stackname, remoteTestArtifact, true
         }
