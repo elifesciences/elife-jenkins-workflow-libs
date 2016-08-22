@@ -12,7 +12,7 @@ def call(stackname, folder, testArtifacts=[]) {
             localTestArtifacts << localTestArtifact
             builderTestArtifact localTestArtifact, stackname, remoteTestArtifact, true
         }
-        for (int i = 0; i < localTestArtifacts; i++) {
+        for (int i = 0; i < localTestArtifacts.size(); i++) {
             def localTestArtifact = localTestArtifacts.get(i)
             elifeVerifyJunitXml localTestArtifact
         }
