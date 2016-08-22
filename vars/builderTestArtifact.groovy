@@ -1,4 +1,4 @@
-def call(localTestArtifact, stackname=null, remoteTestArtifact = null) {
+def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMissing = false) {
     // https://issues.jenkins-ci.org/browse/JENKINS-33511
     env.WORKSPACE = pwd()
 
@@ -11,7 +11,7 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null) {
         sh "touch ${absolutePathOfLocalTestArtifact}"
         sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${absolutePathOfLocalTestArtifact}"
     }
-    if (!fileExists(localTestArtifact)) {
+    if (!fileExists(localTestArtifact) && !allowMissing) {
         error "Tests failed without leaving around an artifact."
     }
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])

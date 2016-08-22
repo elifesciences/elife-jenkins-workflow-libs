@@ -2,4 +2,6 @@ Executes a `project_tests.sh` inside `folder` on `stackname`. The script may fai
 
 Pass `propagateFailure=true` to instead make the failure immediate.
 
+Pass `testArtifacts=['/srv/journal/build/behat.xml', ...]` to specify a list of test artifacts to process with `builderTestArtifact` if they exist.
+
 `builderSmokeTests` is also executed, and its (possible) failure will be propagated to the build, as smoke tests normally do not produce an XML log.
