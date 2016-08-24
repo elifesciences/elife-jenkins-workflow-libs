@@ -1,5 +1,7 @@
 def backslash(character, string) {
-    return string.replaceAll(character, '\\' + character)
+    // backslash the slash because it's a special character
+    // backslash them again because replaceAll has special chars like \1
+    return string.replaceAll(character, '\\\\' + character)
 }
 
 def backslashQuotes(string) {
