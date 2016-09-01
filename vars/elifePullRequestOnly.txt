@@ -1,0 +1,1 @@
+Executes `body` only in a pull request pipeline (defined as "in organization folders"), nor in mainline pipelines.
