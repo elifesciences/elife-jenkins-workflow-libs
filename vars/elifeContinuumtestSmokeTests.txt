@@ -1,0 +1,1 @@
+Runs a smoke test on the "continuumtest" environment, confirming that it's still working and it can publish a new article.
