@@ -1,0 +1,1 @@
+Executes an automated process inside a Jenkins pipeline. More general than `elifeLibrary` or `elifePipeline`, and targeting a node with Python and PHP available.
