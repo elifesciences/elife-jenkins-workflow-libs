@@ -1,5 +1,0 @@
-Archives the `localTestArtifact` in the build result. May be called multiple times.
-
-`localTestArtifact` must be the path to a local file in the workspace following the JUnit XML report conventions.
-
-`stackname` and `remoteTestArtifact` can be specified at the same time to download an artifact from a remote machine into `localTestArtifact`, which in this case does not need to be present but will be written instead.
