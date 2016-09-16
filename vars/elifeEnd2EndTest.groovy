@@ -13,7 +13,7 @@ def call(Closure preliminaryStep=null, marker=null) {
         
         def end2endTestXmlArtifact = "${env.BUILD_TAG}.end2end.junit.xml"
         sh "cp ${env.SPECTRUM_PREFIX}build/junit.xml ${end2endTestXmlArtifact}"
-        elifeTestArtifact end2endTestXmlArtifact
+        builderTestArtifact end2endTestXmlArtifact
 
         def end2endTestLogArtifact = "${env.BUILD_TAG}.end2end.log"
         sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${end2endTestLogArtifact}"
