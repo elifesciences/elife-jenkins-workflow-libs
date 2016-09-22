@@ -1,3 +1,3 @@
-Sends a commit status notification for the current commit, which needs to originate from Github or to have been previously pushed there.
+Sends a commit status notification for the `commit`, which needs to originate from Github or to have been previously pushed there.
 
 `status` is usually `success` or `failure`.
