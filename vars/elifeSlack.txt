@@ -1,1 +1,1 @@
-Sends a message to a Slack channel.
+Sends a `message` to the configured Slack channel.
