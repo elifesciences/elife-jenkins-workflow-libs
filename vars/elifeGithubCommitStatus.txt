@@ -1,3 +1,6 @@
 Sends a commit status notification for the `commit`, which needs to originate from Github or to have been previously pushed there.
 
+`commit` is a sha.
 `status` is usually `success` or `failure`.
+`context` is what is checked by Github for required commit statuses, like `continuous-integration/jenkins/pr-head`.
+`description` is free text that will appear in the pull request, if there is one.
