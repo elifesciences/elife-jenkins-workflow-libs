@@ -1,1 +1,1 @@
-Git-adds `add` and performs an automated commit with message `message`.
+Git-adds the `add` path in the repository, and performs an automated commit with message `message`.
