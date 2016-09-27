@@ -4,4 +4,4 @@ Since end2end tests needs to be run only for one project at a time, this step wi
 
 Accepts a `preliminaryStep` closure as an argument, to be run on the node. For example, this step can be used to deploy the current project to the `end2end` environment so that its deploy cannot be concurrent with end2end tests that are running for other projects.
 
-Accept a second `marker` optional parameter, which can be used to filter the end2end tests that cover the project under test. The marker is passed in as a py.test `-m` parameter.
+Accepts a second `marker` optional parameter, which can be used to filter the end2end tests that cover the project under test. The marker is passed in as a py.test `-m` parameter.
