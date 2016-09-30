@@ -1,3 +1,3 @@
 def call() {
-    return sh("git rev-parse HEAD > ${commitFile}", returnStdout=true).trim()
+    return sh("git rev-parse HEAD", returnStdout=true).trim()
 }
