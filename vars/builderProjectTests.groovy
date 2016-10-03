@@ -25,7 +25,7 @@ def retrieveArtifacts(stackname, testArtifacts) {
 def call(stackname, folder, testArtifacts=[]) {
     def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
     try {
-        builderStart stackname
+        //builderStart stackname
         builderCmd stackname, projectTestsCmd
     } finally {
         retrieveArtifacts stackname, testArtifacts
