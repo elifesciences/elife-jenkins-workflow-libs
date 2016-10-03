@@ -1,1 +1,5 @@
-Deploys the commit `revision` on `stackname`, provisioning the stack again after the code change to make sure all processes are up-to-date.
+In order:
+
+- makes sure `stackname` is up and running
+- deploys the commit `revision` on `stackname`
+- provisions `stackname` again after the code change to make sure all processes are up-to-date.

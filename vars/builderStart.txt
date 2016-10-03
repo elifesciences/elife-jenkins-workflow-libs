@@ -1,1 +1,3 @@
 Makes sure `stackname` is started and ready for new deployments. Idempotent.
+
+BEWARE: you shouldn't need to call this, you are probably looking for `builderDeployRevision`. Only use if you know what you're doing.
