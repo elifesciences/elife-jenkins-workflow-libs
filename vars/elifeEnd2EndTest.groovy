@@ -1,5 +1,6 @@
 def call(Closure preliminaryStep=null, marker=null) {
     lock('end2end') {
+        builderStartAll(elifeEnd2endStacks())
         if (preliminaryStep != null) {
             preliminaryStep()
         }

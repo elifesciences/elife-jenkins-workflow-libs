@@ -1,0 +1,3 @@
+Executed `builderStopIfNextHourIsImminent` on all `stacks`.
+
+If stopping actions have to be performed, they are run in parallel for better performance.

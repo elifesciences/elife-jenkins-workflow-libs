@@ -1,0 +1,1 @@
+Returns the list of stacks involved in the `end2end` environment, that the `elifeEnd2endTest` step relies upon.
