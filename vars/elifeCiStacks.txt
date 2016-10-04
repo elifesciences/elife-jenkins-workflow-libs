@@ -1,0 +1,1 @@
+Returns the list of stacks involved in the `ci` environment, that the `builderProjectTests` step relies upon.
