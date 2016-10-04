@@ -2,4 +2,4 @@ Executed `builderStart` on all `stacks`.
 
 If starting actions have to be performed, they are run in parallel for better performance.
 
-If `lockName` is provided, that single lock is taken instead of a lock for every stack.
+Each starting action takes a lock with the same name as the stack.
