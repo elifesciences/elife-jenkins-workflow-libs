@@ -1,3 +1,5 @@
 Executed `builderStopIfNextHourIsImminent` on all `stacks`.
 
 If stopping actions have to be performed, they are run in parallel for better performance.
+
+If `lockName` is provided, that single lock is taken instead of a lock for every stack.
