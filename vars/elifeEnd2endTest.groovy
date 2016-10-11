@@ -1,5 +1,5 @@
 def call(Closure preliminaryStep=null, marker=null, environmentName='end2end') {
-    lock(environment) {
+    lock(environmentName) {
         if (environmentName == 'end2end') {
             builderStartAll(elifeEnd2endStacks())
         }
