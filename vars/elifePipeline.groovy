@@ -20,6 +20,7 @@ def call(Closure body) {
     node {
         timestamps {
             wrap([$class: 'AnsiColorBuildWrapper']) {
+                // TODO: revise when Declarative Pipeline is available
                 try {
                     body()
                 } catch (e) {
