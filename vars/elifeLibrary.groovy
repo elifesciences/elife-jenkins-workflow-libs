@@ -1,9 +1,11 @@
 def call(Closure body) {
     elifePipeline {
-        builderStart "elife-libraries--ci"
-        node("libraries") {
-            body()
-            deleteDir()
+        lock("elife-libraries--ci") {
+            builderStart "elife-libraries--ci"
+            node("libraries") {
+                body()
+                deleteDir()
+            }
         }
     }
 }
