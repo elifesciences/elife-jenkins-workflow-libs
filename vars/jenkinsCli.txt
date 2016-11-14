@@ -1,0 +1,3 @@
+Runs `command` on the jenkins-cli.jar.
+
+The shell command will have the form `java -jar jenkins-cli.jar -s https://$jenkins command`.
