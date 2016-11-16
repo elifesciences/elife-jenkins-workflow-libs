@@ -1,4 +1,4 @@
-def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', processes=4) {
+def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', processes=6) {
     lock(environmentName) {
         if (environmentName == 'end2end') {
             builderStartAll(elifeEnd2endStacks())
