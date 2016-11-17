@@ -22,7 +22,9 @@ def call(Closure body) {
             wrap([$class: 'AnsiColorBuildWrapper']) {
                 // TODO: revise when Declarative Pipeline is available
                 try {
-                    body()
+                    timeout(time:60, unit:'MINUTES') {
+                        body()
+                    }
                 } catch (e) {
                     maintainers = findMaintainers 'maintainers.txt'
                     echo "Found maintainers: ${maintainers}"
