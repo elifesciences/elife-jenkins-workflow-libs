@@ -1,0 +1,1 @@
+Returns the list of stacks used as anonymous nodes to run code as an external organization.
