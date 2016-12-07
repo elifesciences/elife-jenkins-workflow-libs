@@ -1,3 +1,5 @@
-Similar to `elifePipeline`, but makes the code run on a specialized `libraries` node and cleans up right after the build has finished to avoid pull requests occupying too much disk space.
+Similar to `elifePipeline`, but makes the code run on a specialized libraries node (Jenkins slave) and cleans up right after the build has finished to avoid pull requests occupying too much disk space.
 
 The node will be brought up automatically and connected as a slave if it's not already in this state. A label is used to assign the contents of the job to the node. A lock will be held for the duration of the builds that prevents the node being stopped as long as something is running on it.
+
+If there are multiple libraries nodes, `slave` can be used to select the one the build needs to run on.

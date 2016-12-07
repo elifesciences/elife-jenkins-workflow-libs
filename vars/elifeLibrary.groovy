@@ -1,8 +1,8 @@
-def call(Closure body) {
+def call(Closure body, slave='elife-libraries--powerful') {
     elifePipeline {
-        lock("elife-libraries--powerful") {
-            builderStart "elife-libraries--powerful"
-            jenkinsCli "connect-node libraries-runner"
+        lock(slave) {
+            builderStart slave
+            jenkinsCli "connect-node ${slave}"
             node("libraries") {
                 body()
                 deleteDir()
