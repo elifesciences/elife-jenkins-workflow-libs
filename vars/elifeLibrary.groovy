@@ -3,7 +3,7 @@ def call(Closure body, slave='elife-libraries--ci') {
         lock(slave) {
             builderStart slave
             jenkinsCli "connect-node ${slave}"
-            node("libraries") {
+            node(slave) {
                 body()
                 deleteDir()
             }
