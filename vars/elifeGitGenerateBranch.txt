@@ -1,0 +1,6 @@
+Generates a new branch name starting with `prefix`, and checks it out forking it from the current workspace.
+
+Uses the build number to make the branch unique for this project, but customize the prefix when you:
+
+- use this in multiple pipelines for the same Git repository
+- want a more descriptive branch name 

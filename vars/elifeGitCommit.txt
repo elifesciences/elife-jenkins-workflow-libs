@@ -1,0 +1,5 @@
+Commits the current staged files with `message`. You will have to `git add` them before.
+
+Useful when you have complex commit messages that may break a shell command or require Kung-fu escaping skills to get all single and double quotes to work.
+
+You can customize the `temporaryFile` to be used.

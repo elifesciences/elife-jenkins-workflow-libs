@@ -1,0 +1,6 @@
+Returns `true` if there are difference ready to be committed in Git's index.
+
+Do this after `git add` because:
+
+- otherwise the diff used by this command will be empty
+- you may miss out on new files otherwise

@@ -1,0 +1,1 @@
+Given another Git repository nested into `folder`, returns a short string with the commit sha and message for its current revision.
