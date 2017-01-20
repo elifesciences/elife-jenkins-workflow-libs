@@ -1,0 +1,3 @@
+Executes `body`, but only if `trigger` is truthy.
+
+Used inside stages that are not always executed inside a pipeline, but that you want to maintain nevertheless for consistency (and because if you change the number and/or names of stage in a new build the Jenkins UI will hide all the previous one with a different structure.)
