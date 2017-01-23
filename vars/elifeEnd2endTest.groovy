@@ -1,4 +1,4 @@
-def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', processes=6) {
+def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', processes=6, revision='master') {
     lock(environmentName) {
         if (environmentName == 'end2end') {
             builderStartAll(elifeEnd2endStacks())
@@ -12,7 +12,7 @@ def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', p
             additionalArguments = additionalArguments + "-m ${marker}"
         }
 
-        sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} sudo -H -u elife ${env.SPECTRUM_PREFIX}execute.sh ${additionalArguments} || echo TESTS FAILED"
+        sh "cd ${env.SPECTRUM_PREFIX}; git checkout ${revision}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} sudo -H -u elife ${env.SPECTRUM_PREFIX}execute.sh ${additionalArguments} || echo TESTS FAILED"
         
         def testXmlArtifact = "${env.BUILD_TAG}.${environmentName}.junit.xml"
         sh "cp ${env.SPECTRUM_PREFIX}build/junit.xml ${testXmlArtifact}"
