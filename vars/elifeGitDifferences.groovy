@@ -1,3 +1,3 @@
-def call() {
-    return sh(script: "git diff --cached --exit-code", returnStatus: true)
+def call(subfolder='.') {
+    return sh(script: "git diff --cached --exit-code ${subfolder}", returnStatus: true)
 }

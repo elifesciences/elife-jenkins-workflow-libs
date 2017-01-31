@@ -4,3 +4,5 @@ Do this after `git add` because:
 
 - otherwise the diff used by this command will be empty
 - you may miss out on new files otherwise
+
+A `subfolder` argument can be passed to limit the check for differences to a subfolder of the repository (defaults to `.`)
