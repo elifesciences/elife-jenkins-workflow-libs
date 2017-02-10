@@ -22,7 +22,7 @@ def call(Closure body) {
             wrap([$class: 'AnsiColorBuildWrapper']) {
                 // TODO: revise when Declarative Pipeline is available
                 try {
-                    timeout(time:60, unit:'MINUTES') {
+                    timeout(time:120, unit:'MINUTES') {
                         body()
                     }
                 } catch (e) {
