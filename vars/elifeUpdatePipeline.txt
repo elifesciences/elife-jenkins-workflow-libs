@@ -5,6 +5,6 @@ In order:
 - runs the `describeStep`, a closure that should return a string describing the modification
 - commits, push and opens a pull request for this change.
 
-In case `updateStep` does not produce changes, the pipeline stops.
+`updateStep` should `git add` the modification it wants to include, but without committing them. In case `updateStep` does not produce changes, the pipeline stops.
 
 `branchPrefix` can be used to customize the name to use; it will be concatenated to the build number for uniqueness.
