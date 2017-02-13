@@ -11,14 +11,22 @@ def backslashQuotes(string) {
     return string.replaceAll(/'/, closedQuote + quote + openQuote)
 }
 
-def call(stackname, cmd, folder=null) {
+def call(stackname, cmd, folder=null, captureOutput=false) {
     if (folder) {
         cmd = "cd ${folder} && " + cmd;
     }
     cmd = backslash('=', cmd)
     cmd = backslash(',', cmd)
     cmd = backslashQuotes(cmd)
-    def shellCmd = "${env.BUILDER_PATH}bldr 'cmd:${stackname},${cmd}'"
+    def additionalBuilderOptions = {}
+    if (captureOutput) {
+        additionalBuilderOptions = ",clean_output=1"
+    }
+    def shellCmd = "${env.BUILDER_PATH}bldr 'cmd:${stackname},${cmd}${additionalBuilderOptions}'"
     print "About to execute: ${shellCmd}"
-    sh shellCmd 
+    if (captureOutput) {
+        return sh(script: shellCmd, returnStdout=true)
+    } else {
+        sh shellCmd 
+    }
 }
