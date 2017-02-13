@@ -1,1 +1,3 @@
 Executes `cmd` on `stackname`. Depends on BUILDER_PATH environment variable.
+
+Optionally specify a `folder` in which to execute the command, to use as the working directory.

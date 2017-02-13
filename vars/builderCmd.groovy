@@ -11,7 +11,10 @@ def backslashQuotes(string) {
     return string.replaceAll(/'/, closedQuote + quote + openQuote)
 }
 
-def call(stackname, cmd) {
+def call(stackname, cmd, folder=null) {
+    if (folder) {
+        cmd = "cd ${folder} && " + cmd;
+    }
     cmd = backslash('=', cmd)
     cmd = backslash(',', cmd)
     cmd = backslashQuotes(cmd)
