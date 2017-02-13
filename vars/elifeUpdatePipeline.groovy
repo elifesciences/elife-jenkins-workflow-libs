@@ -8,7 +8,9 @@ def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenki
             branch = elifeGitGenerateBranch branchPrefix
         }
 
-        stage 'Update', updateStep(commit)
+        stage 'Update', {
+            updateStep(commit)
+        }
 
         def differences
         def shortDescription
