@@ -18,7 +18,7 @@ def call(stackname, cmd, folder=null, captureOutput=false) {
     cmd = backslash('=', cmd)
     cmd = backslash(',', cmd)
     cmd = backslashQuotes(cmd)
-    def additionalBuilderOptions = {}
+    def additionalBuilderOptions = ""
     if (captureOutput) {
         additionalBuilderOptions = ",clean_output=1"
     }
