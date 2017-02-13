@@ -1,0 +1,1 @@
+Synchronizes the remote repository on `hostname` at `folder` with the local folder, which is supposed to be a Jenkins workspace containing the same repository (and usually a nearby commit).
