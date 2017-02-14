@@ -25,7 +25,7 @@ def call(stackname, cmd, folder=null, captureOutput=false) {
     def shellCmd = "${env.BUILDER_PATH}bldr 'cmd:${stackname},${cmd}${additionalBuilderOptions}'"
     print "About to execute: ${shellCmd}"
     if (captureOutput) {
-        return sh(script: shellCmd, returnStdout=true)
+        return sh(script: shellCmd, returnStdout:true)
     } else {
         sh shellCmd 
     }
