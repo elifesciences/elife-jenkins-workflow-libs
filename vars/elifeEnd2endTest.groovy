@@ -1,6 +1,6 @@
 // TODO: reorder this horrible list of parameters
 // better: http://docs.groovy-lang.org/latest/html/documentation/#_named_arguments
-def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', processes=15, revision='master', articleId=null) {
+def call(Closure preliminaryStep=null, marker=null, environmentName='end2end', processes=10, revision='master', articleId=null) {
     lock(environmentName) {
         if (environmentName == 'end2end') {
             builderStartAll(elifeEnd2endStacks())
