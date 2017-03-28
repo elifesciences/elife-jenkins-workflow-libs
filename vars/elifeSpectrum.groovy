@@ -8,12 +8,12 @@ def call(Map parameters) {
         assert deploy.get('revision') != null
         assert deploy.get('folder') != null
         preliminaryStep = {
-            builderDeployRevision stackname, revision
-            builderSmokeTests stackname, folder
+            builderDeployRevision deploy.get('stackname'), deploy.get('revision')
+            builderSmokeTests deploy.get('stackname'), deploy.get('folder')
         }
         rollbackStep = {
-            builderDeployRevision stackname, 'approved'
-            builderSmokeTests stackname, folder
+            builderDeployRevision deploy.get('stackname'), 'approved'
+            builderSmokeTests deploy.get('stackname'), deploy.get('folder')
         }
     }
     if (parameters.get('preliminaryStep')) {
