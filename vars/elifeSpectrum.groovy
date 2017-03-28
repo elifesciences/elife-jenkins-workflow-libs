@@ -23,7 +23,7 @@ def call(Map parameters) {
         rollbackStep = parameters.get('rollbackStep')
     }
     String marker = parameters.get('marker')
-    String environmentName = parameters.get('environment', 'end2end')
+    String environmentName = parameters.get('environmentName', 'end2end')
     Integer processes = parameters.get('processes', 10)
     String revision = parameters.get('revision', 'master')
     String articleId = parameters.get('articleId')
