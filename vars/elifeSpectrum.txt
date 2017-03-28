@@ -1,10 +1,13 @@
 Runs the spectrum (usually end2end) tests.
 
 Call with named parameters:
-- `Closure preliminaryStep`: execute after having reserved the environment but before running tests; for example, deploying new code.
-- `Closure rollbackStep`: execute in case of failure, bringing back the environment to a working combination of versions.
+- `deploy`: map with keys `stackname`, `revision` and `folder`. Will deploy `revision` to `stackname` as the `preliminaryStep` and run smoke tests in `folder`. Will rollback `stackname` to `approved` (if needed), running smoke tests again.
+- `Closure preliminaryStep`: execute after having reserved the environment but before running tests; for example, deploying new code. When `deploy` is specified, this is optional, otherwise overrides the default `preliminaryStep`.
+- `Closure rollbackStep`: execute in case of failure, bringing back the environment to a working combination of versions. When `deploy` is specified, this is optional, otherwise overrides the default `rollbackStep`.
 - `String environmentName`: `end2end` or `continuumtest`. Defaults to `end2end`.
 - `processes`: number of parallel processes to use. Defaults to 10.
 - `marker`: filter for the group of tests to run, often the name of a project like `recommendations`. Defaults to null.
 - `articleId`: specifies the `--article-id` to filter some tests. Defaults to null.
 - `revision`: the branch of elife-spectrum to use, for example `origin/new_feature`. Defaults to `master`.
+
+Alternative to `preliminaryStep` and `rollbackStep`:

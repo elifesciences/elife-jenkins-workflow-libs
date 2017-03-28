@@ -1,7 +1,27 @@
 // see elifeSpectrum.txt
 def call(Map parameters) {
-    Closure preliminaryStep = parameters.get('preliminaryStep', {})
-    Closure rollbackStep = parameters.get('rollbackStep', {})
+    Map deploy = parameters.get('deploy', null)
+    Closure preliminaryStep = {}
+    Closure rollbackStep = {}
+    if (deploy) {
+        assert deploy.get('stackname') != null
+        assert deploy.get('revision') != null
+        assert deploy.get('folder') != null
+        preliminaryStep = {
+            builderDeployRevision stackname, revision
+            builderSmokeTests stackname, folder
+        }
+        rollbackStep = {
+            builderDeployRevision stackname, 'approved'
+            builderSmokeTests stackname, folder
+        }
+    }
+    if (parameters.get('preliminaryStep')) {
+        preliminaryStep = parameters.get('preliminaryStep')
+    }
+    if (parameters.get('rollbackStep')) {
+        rollbackStep = parameters.get('rollbackStep')
+    }
     String marker = parameters.get('marker')
     String environmentName = parameters.get('environment', 'end2end')
     Integer processes = parameters.get('processes', 10)
