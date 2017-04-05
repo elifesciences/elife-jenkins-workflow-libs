@@ -25,6 +25,8 @@ def call(Closure body) {
                     timeout(time:120, unit:'MINUTES') {
                         body()
                     }
+                    // delete workspace
+                    deleteDir()
                 } catch (e) {
                     maintainers = findMaintainers 'maintainers.txt'
                     echo "Found maintainers: ${maintainers}"
@@ -34,8 +36,6 @@ def call(Closure body) {
                         echo "Failure email sent to ${address}"
                     }
                     throw e
-                } finally {
-                    deleteDir()
                 }
             }
         }
