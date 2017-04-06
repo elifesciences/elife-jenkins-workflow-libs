@@ -1,4 +1,4 @@
-def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenkins_update_', library=false) {
+def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenkins_update_', library=false, base_branch='develop') {
     if (library) {
         wrapper = elifePipeline
     } else {
