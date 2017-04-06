@@ -29,7 +29,7 @@ def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenki
 
         stage 'Push and pull request', {
             elifeOnlyIf differences, {
-                elifeGithubPullRequest branch, shortDescription, "I have run ${env.BUILD_URL} which resulted in this pull request.", 'develop'
+                elifeGithubPullRequest branch, shortDescription, "I have run ${env.BUILD_URL} which resulted in this pull request.", base_branch
             }
         }
     }
