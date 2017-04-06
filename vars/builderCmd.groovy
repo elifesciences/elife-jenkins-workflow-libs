@@ -27,6 +27,13 @@ def call(stackname, cmd, folder=null, captureOutput=false) {
     if (captureOutput) {
         return sh(script: shellCmd, returnStdout:true)
     } else {
-        sh shellCmd 
+        try {
+            sh shellCmd
+        } catch (e) {
+            print "Caused an error: ${shellCmd}"
+            print "Message: ${e.message}"
+            e.printStackTrace()
+            throw e
+        }
     }
 }
