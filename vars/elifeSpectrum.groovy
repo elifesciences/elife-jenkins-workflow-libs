@@ -64,6 +64,7 @@ def call(Map parameters) {
                 echo "Failure while running spectrum tests: ${e.message}"
                 echo "Attempting to rollback (if the project specifies it) before terminating the build with an error"
                 rollbackStep()
+                echo "Rollback successful"
                 throw e
             }
         }
