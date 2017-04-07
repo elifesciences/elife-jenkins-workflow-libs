@@ -1,11 +1,11 @@
 def call(Map parameters) {
-    assert deploy.get('pipeline') != null
-    assert deploy.get('type') != null
+    assert parameters.get('pipeline') != null
+    assert parameters.get('type') != null
 
-    def pipeline = deploy.get('pipeline')
-    def type = deploy.get('type')
-    def number = deploy.get('number')
-    def commit = deploy.get('commit')
+    def pipeline = parameters.get('pipeline')
+    def type = parameters.get('type')
+    def number = parameters.get('number')
+    def commit = parameters.get('commit')
 
     def additionalArguments = ''
     if (number) {
