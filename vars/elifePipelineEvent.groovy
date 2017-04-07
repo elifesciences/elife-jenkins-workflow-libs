@@ -2,7 +2,7 @@ def call(Map parameters) {
     assert parameters.get('pipeline') != null
     assert parameters.get('type') != null
 
-    def pipeline = parameters.get('pipeline')
+    def pipeline = parameters.get('pipeline').replaceAll("/", "--")
     def type = parameters.get('type')
     def number = parameters.get('number')
     def commit = parameters.get('commit')
