@@ -2,7 +2,7 @@ Records an event about a pipeline for statistical purposes.
 
 Call with named parameters:
 - `pipeline`: name of the pipeline.
-- `type`: `pipeline-started`, `pipeline-success`, `pipeline-failure`.
+- `type`: `pipeline-start`, `pipeline-success`, `pipeline-failure`.
 - `number`: the build number.
 - `commit`: the commit being tested or deployed.
 

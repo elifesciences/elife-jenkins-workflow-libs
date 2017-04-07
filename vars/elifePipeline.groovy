@@ -23,11 +23,32 @@ def call(Closure body) {
                 // TODO: revise when Declarative Pipeline is available
                 try {
                     timeout(time:120, unit:'MINUTES') {
+                        elifePipelineEvent(
+                            pipeline: env.JOB_NAME,
+                            type: 'pipeline-start',
+                            number: env.BUILD_NUMBER
+                            // not always available, e.g. in branches?
+                            // commit: env.GIT_COMMIT 
+                        )
                         body()
+                        elifePipelineEvent(
+                            pipeline: env.JOB_NAME,
+                            type: 'pipeline-success',
+                            number: env.BUILD_NUMBER
+                            // not always available, e.g. in branches?
+                            // commit: env.GIT_COMMIT 
+                        )
                     }
                     // delete workspace
                     deleteDir()
                 } catch (e) {
+                    elifePipelineEvent(
+                        pipeline: env.JOB_NAME,
+                        type: 'pipeline-failure',
+                        number: env.BUILD_NUMBER
+                        // not always available, e.g. in branches?
+                        // commit: env.GIT_COMMIT 
+                    )
                     maintainers = findMaintainers 'maintainers.txt'
                     echo "Found maintainers: ${maintainers}"
                     for (int i = 0; i < maintainers.size(); i++) {
