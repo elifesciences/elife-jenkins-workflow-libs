@@ -16,13 +16,13 @@ def findMaintainers(fileName) {
     return maintainers
 }
 
-def call(Closure body) {
+def call(Closure body, timeoutInMinutes=120) {
     node {
         timestamps {
             wrap([$class: 'AnsiColorBuildWrapper']) {
                 // TODO: revise when Declarative Pipeline is available
                 try {
-                    timeout(time:120, unit:'MINUTES') {
+                    timeout(time:timeoutInMinutes, unit:'MINUTES') {
                         elifePipelineEvent(
                             pipeline: env.JOB_NAME,
                             type: 'pipeline-start',
