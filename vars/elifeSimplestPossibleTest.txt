@@ -1,3 +1,3 @@
-Runs a small spectrum end2end test on the `continuumtest` environment.
+Runs a small spectrum test on the `continuumtest` environment, to verify it is working.
 
 The `environment` parameter can be customized to be e.g. `end2end`.
