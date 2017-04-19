@@ -1,10 +1,10 @@
 def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenkins_update_', library=false, base_branch='develop') {
     if (library) {
-        wrapper = elifePipeline
-    } else {
         wrapper = elifeLibrary
+    } else {
+        wrapper = elifePipeline
     }
-    elifePipeline {
+    wrapper {
         def commit
         def branch
         stage 'Checkout and branch', {
