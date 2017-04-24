@@ -1,3 +1,3 @@
 def call(stackname) {
-    sh "${env.BUILDER_PATH}bldr 'start:${stackname}'"
+    sh "LOG_LEVEL_FILE=DEBUG ${env.BUILDER_PATH}bldr 'start:${stackname}'"
 }
