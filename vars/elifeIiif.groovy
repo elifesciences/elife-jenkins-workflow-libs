@@ -1,4 +1,5 @@
 def call(branch='develop')
+{
     elifePipeline {
         def commit
         stage 'Checkout', {
