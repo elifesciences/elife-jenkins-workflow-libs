@@ -1,0 +1,5 @@
+Runs a (usually small) load test, primarily to make sure that the load testing infrastructure is working.
+
+Call with named parameters:
+- `String environmentName`: `end2end` or `continuumtest`. Defaults to `end2end`.
+- `revision`: the branch of elife-spectrum to use, for example `origin/new_feature`. Defaults to `master`.
