@@ -1,0 +1,4 @@
+In order:
+
+- makes sure `stackname` is up and running
+- provisions `stackname` again to update everything the formula covers.
