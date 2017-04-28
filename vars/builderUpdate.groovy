@@ -1,4 +1,4 @@
-def call(stackname, revision) {
+def call(stackname) {
     builderStart stackname
     sh "${env.BUILDER_PATH}bldr 'update:${stackname}'"
 }
