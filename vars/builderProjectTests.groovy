@@ -22,13 +22,19 @@ def retrieveArtifacts(stackname, testArtifacts) {
     }
 }
 
-def call(stackname, folder, testArtifacts=[]) {
-    def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
-    try {
-        builderCmd stackname, projectTestsCmd
-    } finally {
-        retrieveArtifacts stackname, testArtifacts
+def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
+    for (int i = 0; i < order.size(); i++) {
+        if (order.get(i) == 'smoke') {
+            builderSmokeTests stackname, folder
+        } else if (order.get(i) == 'project') {
+            def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
+            try {
+                builderCmd stackname, projectTestsCmd
+            } finally {
+                retrieveArtifacts stackname, testArtifacts
+            }
+        } else {
+            error("You requested to run '${order.get(i)}' tests, but the only allowed values are 'smoke' and 'project'.");
+        }
     }
-    
-    builderSmokeTests stackname, folder
 }
