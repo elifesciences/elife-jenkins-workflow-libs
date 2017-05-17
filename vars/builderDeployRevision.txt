@@ -3,3 +3,8 @@ In order:
 - makes sure `stackname` is up and running
 - deploys the commit `revision` on `stackname`
 - provisions `stackname` again after the code change to make sure all processes are up-to-date.
+
+If there are multiple servers involved, `concurrency` is useful to decide how to deploy:
+- `serial`: one at a time
+- `parallel`: all together
+- `blue-green`: 50% at a time

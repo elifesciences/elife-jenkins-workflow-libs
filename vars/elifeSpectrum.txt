@@ -1,7 +1,7 @@
 Runs the spectrum (usually end2end) tests.
 
 Call with named parameters:
-- `deploy`: map with keys `stackname`, `revision` and `folder`. Will deploy `revision` to `stackname` as the `preliminaryStep` and run smoke tests in `folder`. Will rollback `stackname` to `approved` (if needed), running smoke tests again.
+- `deploy`: map with keys `stackname`, `revision` and `folder`. Will deploy `revision` to `stackname` as the `preliminaryStep` and run smoke tests in `folder`. Will rollback `stackname` to `approved` (if needed), running smoke tests again. For `concurrency`: `serial`, `parallel`, `blue-green`, See `builderDeployRevision`.
 - `Closure preliminaryStep`: execute after having reserved the environment but before running tests; for example, deploying new code. When `deploy` is specified, this is optional, otherwise overrides the default `preliminaryStep`.
 - `Closure rollbackStep`: execute in case of failure, bringing back the environment to a working combination of versions. When `deploy` is specified, this is optional, otherwise overrides the default `rollbackStep`.
 - `String environmentName`: `end2end` or `continuumtest`. Defaults to `end2end`.

@@ -7,12 +7,13 @@ def call(Map parameters) {
         assert deploy.get('stackname') != null
         assert deploy.get('revision') != null
         assert deploy.get('folder') != null
+        def concurrency = deploy.get('concurrency', 'serial')
         preliminaryStep = {
-            builderDeployRevision deploy.get('stackname'), deploy.get('revision')
+            builderDeployRevision deploy.get('stackname'), deploy.get('revision'), concurrency
             builderSmokeTests deploy.get('stackname'), deploy.get('folder')
         }
         rollbackStep = {
-            builderDeployRevision deploy.get('stackname'), 'approved'
+            builderDeployRevision deploy.get('stackname'), 'approved', concurrency
             builderSmokeTests deploy.get('stackname'), deploy.get('folder')
         }
     }
