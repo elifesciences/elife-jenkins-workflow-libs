@@ -7,15 +7,15 @@ def call(localTestArtifact, stackname=null, remoteTestArtifact = null, allowMiss
             throw new Exception("When specifying a `stackname`, you must also specify a `remoteTestArtifact` to retrieve");
         }
 
-        //echo "Creating empty ${localTestArtifact}"
-        //sh "touch ${localTestArtifact}"
+        echo "Creating empty ${localTestArtifact}"
+        sh "touch ${localTestArtifact}"
         echo "Downloading onto ${localTestArtifact}"
         // builder runs in its own folder as working directory
         def localTestArtifactFullPath = "${env.WORKSPACE}/${localTestArtifact}"
         def allowMissingParameter = allowMissing ? "True" : "False"
         sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${localTestArtifactFullPath},allow_missing=${allowMissingParameter}"
     }
-    if (!fileExists(localTestArtifact)) {
+    if (!readFile(localTestArtifact)) {
         if (allowMissing) {
             echo "Artifact ${localTestArtifact} not found, but was configured to ignore missing artifacts."
             return
