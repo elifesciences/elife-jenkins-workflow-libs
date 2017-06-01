@@ -1,3 +1,3 @@
 def call() {
-    return [/*'elife-libraries--ci', */'elife-libraries--powerful']
+    return ['elife-libraries--ci', 'elife-libraries--powerful']
 }
