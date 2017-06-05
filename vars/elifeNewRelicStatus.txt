@@ -1,0 +1,10 @@
+Returns the status of `applicationId` on New Relic.
+
+Known values:
+
+- `green`
+- `orange`
+- `red`
+- `unknown`
+
+You can find out the `applicationId` from the URL, e.g. `29775807` in https://rpm.newrelic.com/accounts/1451451/applications/29775807
