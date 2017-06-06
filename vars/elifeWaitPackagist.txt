@@ -1,0 +1,3 @@
+Waits for the `revision` of `packageName` to appear on Packagist, so that it can be used in `composer update commands`.
+
+Notice that if a newer revision supercedes the one specified, this task will eventually fail. The rationale is that it's easier to target the newest version (in a new build) rather than immediately having to update again.
