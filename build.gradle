@@ -20,4 +20,6 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.6'
     compile 'org.apache.logging.log4j:log4j-core:2.6.1'
+    testCompile "junit:junit:4.12"
+    testCompile group:'com.lesfurets', name:'jenkins-pipeline-unit', version:'1.0'
 }
