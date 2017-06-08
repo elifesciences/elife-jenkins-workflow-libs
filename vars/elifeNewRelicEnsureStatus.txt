@@ -1,0 +1,3 @@
+Ensure the status of `applicationId` is in the list of values provided by `allowedStatuses`.
+
+For known values, see `elifeNewRelicStatus`, which this step builds upon.
