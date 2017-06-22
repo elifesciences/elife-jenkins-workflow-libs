@@ -23,16 +23,9 @@ def call(stackname, cmd, folder=null, captureOutput=false) {
         additionalBuilderOptions = ",clean_output=1"
     }
     def shellCmd = "${env.BUILDER_PATH}bldr 'cmd:${stackname},${cmd}${additionalBuilderOptions}'"
-    echo "About to execute: ${shellCmd}"
     if (captureOutput) {
         return sh(script: shellCmd, returnStdout:true)
     } else {
-        try {
-            sh shellCmd
-        } catch (e) {
-            echo "Caused an error: ${shellCmd}\nMessage: ${e.message}"
-            e.printStackTrace()
-            throw e
-        }
+        sh shellCmd
     }
 }
