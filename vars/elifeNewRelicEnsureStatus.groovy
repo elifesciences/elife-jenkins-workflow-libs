@@ -3,6 +3,6 @@ def call(applicationId, allowedStatuses) {
     if (allowedStatuses.contains(currentStatus)) {
         echo "New Relic status for ${applicationId} was required to be in ${allowedStatuses}, it is '${currentStatus}'"
     } else {
-        throw new Exception("New Relic status for ${applicationId} was required to be in ${allowedStatuses}, but it is `${currentStatus}`")
+        throw new Exception("New Relic status for ${applicationId} was required to be in ${allowedStatuses}, but it is '${currentStatus}'")
     }
 }
