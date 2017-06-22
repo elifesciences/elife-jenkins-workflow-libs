@@ -9,6 +9,7 @@ def findMaintainers(fileName) {
             maintainer = rows.get(i).trim()
             maintainers << maintainer
         }
+        echo "Found maintainers: ${maintainers}"
     } else {
         echo "No maintainers.txt file found"
     }
@@ -50,7 +51,6 @@ def call(Closure body, timeoutInMinutes=120) {
                         // commit: env.GIT_COMMIT 
                     )
                     maintainers = findMaintainers 'maintainers.txt'
-                    echo "Found maintainers: ${maintainers}"
                     for (int i = 0; i < maintainers.size(); i++) {
                         def address = maintainers.get(i)
                         mail subject: "${env.BUILD_TAG} failed", to: address, from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.BUILD_URL}console"
