@@ -26,7 +26,7 @@ def call(Map parameters) {
             def subrepositorySummary = elifeGitSubrepositorySummary "vendor/${packageName}"
             return "Updated ${packageName} to ${subrepositorySummary}"
         },
-        "${branchPrefix}/"
+        "update_${branchPrefix}/"
     )
 }
 
