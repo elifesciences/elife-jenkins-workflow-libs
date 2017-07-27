@@ -1,0 +1,8 @@
+Runs an `elifeUpdatePipeline` that upgrades a Composer package according to the constraints of `composer.json`. The end result is a new pull request for `composer.lock`.
+
+Call with named parameters:
+- `stackname`: stack name to deploy the main branch of the project to e.g. `journal--ci`.
+- `folder`: folder the project is in on `stackname` e.g. `/srv/journal`.
+- `hostname`: hostname to use for copying down the updated working copy e.g. `ci--journal.elife.internal`.
+- `packageName`: package to upgrade e.g. `elife/api-sdk`.
+- `additionalPackageNames` (optional): other packages, which are not dependencies of `packageName`, that should be upgraded at the same time. These won't be listed in the commit message and description.
