@@ -3,6 +3,7 @@ def call(Integer prNumber, String body, String oncePerPullRequest = null) {
     if (oncePerPullRequest) {
         def matchingLines = sh(script: "number=${prNumber} body='${oncePerPullRequest}' bash -x /usr/local/jenkins-scripts/check_github_pull_request_comment.sh", returnStdout: true)
         if (matchingLines > 0) {
+            echo "Comment already posted on PR ${prNumber}"
             return false
         }
     }
