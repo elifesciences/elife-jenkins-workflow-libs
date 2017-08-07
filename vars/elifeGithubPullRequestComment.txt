@@ -1,0 +1,3 @@
+Posts a comment on the pull request `prNumber` for the current project.
+
+`body` is a string.
