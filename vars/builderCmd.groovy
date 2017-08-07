@@ -4,20 +4,13 @@ def backslash(character, string) {
     return string.replaceAll(character, '\\\\' + character)
 }
 
-def backslashQuotes(string) {
-    def closedQuote = "'"
-    def quote = "\\\\'"
-    def openQuote = "'"
-    return string.replaceAll(/'/, closedQuote + quote + openQuote)
-}
-
 def call(stackname, cmd, folder=null, captureOutput=false) {
     if (folder) {
         cmd = "cd ${folder} && " + cmd;
     }
     cmd = backslash('=', cmd)
     cmd = backslash(',', cmd)
-    cmd = backslashQuotes(cmd)
+    cmd = escapeString(cmd)
     def additionalBuilderOptions = ""
     if (captureOutput) {
         additionalBuilderOptions = ",clean_output=1"
