@@ -19,6 +19,12 @@ def call(branch='develop')
             }
         }
 
+        stage 'Continuumtest', {
+            lock('iiif--continuumtest') {
+                builderDeployRevision 'iiif--continuumtest', commit
+            }
+        }
+
         stage 'Prod', {
             lock('iiif--prod') {
                 builderDeployRevision 'iiif--prod', commit
