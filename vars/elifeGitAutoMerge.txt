@@ -1,0 +1,5 @@
+Auto merges the current `branch`.
+
+`title` must be less than one line and it's good practice for it to be short. The optional `description` is ignored at this time, but is kept to be compatible with `elifeGithubPullRequest` signature.
+
+You can customize the `base` branch to refer to (`origin/master` by default).
