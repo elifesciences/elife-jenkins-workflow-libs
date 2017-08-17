@@ -1,8 +1,5 @@
-def call(branch, title, description = '', base='origin/master') {
-    def pieces = base.split("-")
-    assert pieces.length == 2 : "${pieces} was expected to have 2 elements, the original string conforming to the `origin/...` template"
-    assert pieces[0] == 'origin' : "First element of ${pieces} should be `origin`"
-    def localBase = pieces[1]
+def call(branch, title, description = '', base='master') {
+    def localBase = base
     sh "git checkout ${localBase}"
     sh "git pull origin ${localBase}"
     // TODO: also use description, but it's complex to escape it to pass in on the command line
