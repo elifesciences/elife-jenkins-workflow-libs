@@ -1,8 +1,13 @@
-def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenkins_update_', library=false, base_branch='develop') {
+def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenkins_update_', library=false, base_branch='develop', autoMerge=false) {
     if (library) {
         wrapper = elifeLibrary
     } else {
         wrapper = elifePipeline
+    }
+    if (autoMerge) {
+        publishStep = elifeGitAutoMerge
+    } else {
+        publishStep = elifeGithubPullRequest
     }
     wrapper {
         def commit
@@ -29,7 +34,7 @@ def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenki
 
         stage 'Push and pull request', {
             elifeOnlyIf differences, {
-                elifeGithubPullRequest branch, shortDescription, "I have run ${env.BUILD_URL} which resulted in this pull request.", base_branch
+                publishStep branch, shortDescription, "I have run ${env.BUILD_URL} which resulted in this pull request.", base_branch
             }
         }
     }
