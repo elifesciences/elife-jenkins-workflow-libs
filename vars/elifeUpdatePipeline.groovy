@@ -4,6 +4,7 @@ def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenki
     } else {
         wrapper = elifePipeline
     }
+    def publishStep
     if (autoMerge) {
         publishStep = { branch, title, description, base ->
             elifeGitAutoMerge branch, title, description, base
