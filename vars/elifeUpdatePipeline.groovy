@@ -1,4 +1,5 @@
 def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenkins_update_', library=false, base_branch='develop', autoMerge=false) {
+    def wrapper
     if (library) {
         wrapper = elifeLibrary
     } else {
