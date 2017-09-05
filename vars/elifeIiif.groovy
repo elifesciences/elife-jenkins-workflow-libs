@@ -14,14 +14,18 @@ def call(branch='develop')
         }
 
         stage 'End2end', {
-            lock('iiif--end2end') {
-                builderDeployRevision 'iiif--end2end', commit
+            lock('end2end') {
+                lock('iiif--end2end') {
+                    builderDeployRevision 'iiif--end2end', commit
+                }
             }
         }
 
         stage 'Continuumtest', {
-            lock('iiif--continuumtest') {
-                builderDeployRevision 'iiif--continuumtest', commit
+            lock('continuumtest') {
+                lock('iiif--continuumtest') {
+                    builderDeployRevision 'iiif--continuumtest', commit
+                }
             }
         }
 
