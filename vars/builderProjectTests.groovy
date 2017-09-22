@@ -10,16 +10,6 @@ def retrieveArtifacts(stackname, testArtifacts) {
         builderTestArtifact localTestArtifact, stackname, remoteTestArtifact, true
     }
     echo "Retrieved test artifacts: ${localTestArtifacts}"
-    for (int i = 0; i < localTestArtifacts.size(); i++) {
-        def localTestArtifact = localTestArtifacts.get(i)
-        // TODO: really not necessary?
-        // by bubbling up the original exception we may not need to check these manually
-        /*
-        if (fileExists(localTestArtifact)) {
-            elifeVerifyJunitXml localTestArtifact
-        }
-        */
-    }
 }
 
 def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
