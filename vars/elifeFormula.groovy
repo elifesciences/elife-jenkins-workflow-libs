@@ -29,9 +29,9 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                     }
                 }
 
-                elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applied update successfully', url
+                elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applied update successfully', env.BUILD_URL
             } catch (e) {
-                elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-update', 'Applying update failed', url
+                elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-update', 'Applying update failed', env.BUILD_URL
                 throw e
             } finally {
                 stage 'Cleanup', {
