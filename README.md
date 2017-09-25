@@ -16,4 +16,6 @@ Jenkins however provides the possibility to define custom steps shared by all pi
 
 `$PORT` should be the port you have chosen (e.g. 16022) and `$USERNAME` should be your Jenkins username.
 
+## Known issues
 
+[JENKINS-41497](https://issues.jenkins-ci.org/browse/JENKINS-41497) prevents from using an external Git repository, that should be fetched by Jenkins on new builds.
