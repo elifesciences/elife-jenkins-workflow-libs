@@ -1,4 +1,4 @@
-def elifeFormula(String project, String formula = null) {
+def call(String project, String formula = null) {
     if (formula == null) {
         formula = "${project}-formula"
     }
