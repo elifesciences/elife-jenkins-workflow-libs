@@ -1,0 +1,7 @@
+Should be used as the template for formula pipelines.
+
+Accepts a:
+- `project` parameter specifying the name of the builder project e.g. `medium`.
+- `formula` (optional) parameter specifying the name of the formula repository e.g. `medium-formula`.
+
+Builds on top of `elifePipeline`.
