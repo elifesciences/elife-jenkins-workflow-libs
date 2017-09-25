@@ -28,6 +28,11 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                         builderSmokeTests stackname, smokeTestsFolder
                     }
                 }
+
+                elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applied update successfully', url
+            } catch (e) {
+                elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-update', 'Applying update failed', url
+                throw e
             } finally {
                 stage 'Cleanup', {
                     sh "/srv/builder/bldr ensure_destroyed:${stackname}"
