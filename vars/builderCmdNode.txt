@@ -1,7 +1,7 @@
-Executes `cmd` on `stackname`. Depends on BUILDER_PATH environment variable.
+Executes `cmd` on `stackname` only on `node`. Depends on BUILDER_PATH environment variable.
 
 Optionally specify a `folder` in which to execute the command, to use as the working directory.
 
 Optionally specify to `captureOutput`, in which case the output of the command will be returned rather than printed. Only stdout is considered output; stderr will still be printed.
 
-See also: `builderCmdNode`, which is identical but runs on only one node.
+See also: `builderCmd`, which is identical but runs on all nodes.

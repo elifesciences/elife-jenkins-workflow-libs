@@ -1,5 +1,5 @@
 def call(Integer prNumber, String body, String oncePerPullRequest = null) {
-    def escapedBody = escapeString(body)
+    def escapedBody = _escapeString(body)
     if (oncePerPullRequest) {
         def matchingLines = sh(script: "number=${prNumber} body='${oncePerPullRequest}' bash -x /usr/local/jenkins-scripts/check_github_pull_request_comment.sh", returnStdout: true)
         if (matchingLines > 0) {
