@@ -8,4 +8,5 @@ def call(cmd) {
     cmd = backslash('=', cmd)
     cmd = backslash(',', cmd)
     cmd = _escapeString(cmd)
+    return cmd
 }
