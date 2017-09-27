@@ -10,7 +10,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
         }
 
         elifePullRequestOnly { prNumber ->
-            def instance = "pr-${prNumber}"
+            def instance = "${formula}-pr-${prNumber}"
             def stackname = "${project}--${instance}"
             try {
                 stage 'Basic stack', {
