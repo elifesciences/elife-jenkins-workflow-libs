@@ -1,0 +1,3 @@
+Checks if `stackname` is running for more than `minutes`, and if so stops its nodes to save money while the instance is not being used.
+
+You probably want to take a lock on `stackname` first to avoid conflicting with the builds that use it - that way if a build is running while this step is called, the step will have to wait.

@@ -4,7 +4,7 @@ def call(stacks, lockName = null) {
         def stack = stacks.get(i)
         actions[stack] = {
             lock(stack) {
-                builderStopIfNextHourIsImminent(stack)
+                builderStopIfRunningFor(stack, 30)
             }
         }
     }
