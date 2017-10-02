@@ -13,7 +13,7 @@ def call(Map parameters) {
     def String branchPrefix = basePackageName.replaceAll("[^a-z0-9]", "_")
     def String additionalPackageNames = parameters.get('additionalPackageNames', []).join(" ")
     def currentVersion = {
-        def version = sh(script: "jq '.packages[] | select(.name==\"${packageName}\").dist.reference' < composer.lock", returnStdout: true)
+        def version = sh(script: "jq -r '.packages[] | select(.name==\"${packageName}\").dist.reference' < composer.lock", returnStdout: true)
         echo "Version of ${packageName}: ${version}"
         return version
     }
