@@ -8,20 +8,22 @@ def call(Map parameters) {
         assert deploy.get('revision') != null
         assert deploy.get('folder') != null
         def concurrency = deploy.get('concurrency', 'serial')
-        preliminaryStep = {
-            builderDeployRevision deploy.get('stackname'), deploy.get('revision'), concurrency
-            builderSmokeTests deploy.get('stackname'), deploy.get('folder')
+        if (deploy.get('preliminaryStep')) {
+            preliminaryStep = deploy.get('preliminaryStep')
+        } else {
+            preliminaryStep = {
+                builderDeployRevision deploy.get('stackname'), deploy.get('revision'), concurrency
+                builderSmokeTests deploy.get('stackname'), deploy.get('folder')
+            }
         }
-        rollbackStep = {
-            builderDeployRevision deploy.get('stackname'), 'approved', concurrency
-            builderSmokeTests deploy.get('stackname'), deploy.get('folder')
+        if (deploy.get('rollbackStep')) {
+            rollbackStep = deploy.get('rollbackStep')
+        } else {
+            rollbackStep = {
+                builderDeployRevision deploy.get('stackname'), 'approved', concurrency
+                builderSmokeTests deploy.get('stackname'), deploy.get('folder')
+            }
         }
-    }
-    if (parameters.get('preliminaryStep')) {
-        preliminaryStep = parameters.get('preliminaryStep')
-    }
-    if (parameters.get('rollbackStep')) {
-        rollbackStep = parameters.get('rollbackStep')
     }
     String marker = parameters.get('marker')
     String environmentName = parameters.get('environmentName', 'end2end')
