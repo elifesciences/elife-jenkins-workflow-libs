@@ -36,9 +36,10 @@ def call(Map parameters) {
             if (environmentName == 'end2end') {
                 builderStartAll(elifeEnd2endStacks())
             }
-            preliminaryStep()
 
             try {
+                preliminaryStep()
+
                 def additionalFilteringArguments = ''
                 if (marker) {
                     additionalFilteringArguments = additionalFilteringArguments + "-m ${marker} "
