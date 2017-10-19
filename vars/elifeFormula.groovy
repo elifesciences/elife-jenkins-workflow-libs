@@ -13,26 +13,36 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
             def instance = "${formula}-pr-${prNumber}"
             def stackname = "${project}--${instance}"
             try {
-                stage 'Basic stack', {
-                    sh "/srv/builder/bldr ensure_destroyed:${stackname}"
-                    sh "/srv/builder/bldr masterless.launch:${project},${instance}"
-                }
-
-                stage 'Applying change', {
-                    sh "/srv/builder/bldr masterless.set_versions:${stackname},${formula}@${commit}"
-                    sh "/srv/builder/bldr update:${stackname}"
-                }
-
-                if (smokeTestsFolder) {
-                    stage 'Smoke tests', {
-                        builderSmokeTests stackname, smokeTestsFolder
+                try {
+                    stage 'Basic stack', {
+                        sh "/srv/builder/bldr ensure_destroyed:${stackname}"
+                        sh "/srv/builder/bldr masterless.launch:${project},${instance}"
+                        if (smokeTestsFolder) {
+                            builderSmokeTests stackname, smokeTestsFolder
+                        }
                     }
+
+                    elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-base', 'Original stack creation succeeded', env.BUILD_URL
+                } catch (e) {
+                    elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-base', 'Original stack creation failed', env.BUILD_URL
+                    throw e
                 }
 
-                elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applied update successfully', env.BUILD_URL
-            } catch (e) {
-                elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-update', 'Applying update failed', env.BUILD_URL
-                throw e
+                try {
+                    stage 'Applying change', {
+                        sh "/srv/builder/bldr masterless.set_versions:${stackname},${formula}@${commit}"
+                        sh "/srv/builder/bldr update:${stackname}"
+                        if (smokeTestsFolder) {
+                            builderSmokeTests stackname, smokeTestsFolder
+                        }
+                    }
+
+
+                    elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applying update succeeded', env.BUILD_URL
+                } catch (e) {
+                    elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-update', 'Applying update failed', env.BUILD_URL
+                    throw e
+                }
             } finally {
                 stage 'Cleanup', {
                     sh "/srv/builder/bldr ensure_destroyed:${stackname}"
