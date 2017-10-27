@@ -1,0 +1,7 @@
+Stops `stackname` resources, saving money.
+
+Optional 'resources' supports a list containing:
+- `ec2`
+- `rds`
+
+You probably want to take a lock on `stackname` first to avoid conflicting with the builds that use it - that way if a build is running while this step is called, the step will have to wait.
