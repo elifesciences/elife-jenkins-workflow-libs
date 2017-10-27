@@ -1,0 +1,7 @@
+Executed `builderStop` on all `stacks`, for the long term.
+
+For example, stops RDS instances, which takes >5 minutes to start and stop. Compare with `builderStopAll` which only stops things that can be started again in tens of seconds.
+
+Stopping actions are run in parallel for better performance.
+
+Each stopping action takes a lock with the same name as the stack.
