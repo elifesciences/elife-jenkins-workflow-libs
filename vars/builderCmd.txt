@@ -4,4 +4,6 @@ Optionally specify a `folder` in which to execute the command, to use as the wor
 
 Optionally specify to `captureOutput`, in which case the output of the command will be returned rather than printed. Only stdout is considered output; stderr will still be printed.
 
+Optionally specify `concurrency`: `serial`, `parallel`, `blue-green`. Default is `parallel`.
+
 See also: `builderCmdNode`, which is identical but runs on only one node.
