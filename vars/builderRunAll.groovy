@@ -5,7 +5,7 @@ def call(stacks, cmd, concurrency='serial') {
         actions[stack] = {
             lock(stack) {
                 builderStart(stack)
-                builderCmd(stack, cmd, concurrency)
+                builderCmd(stack, cmd, null, false, concurrency)
             }
         }
     }
