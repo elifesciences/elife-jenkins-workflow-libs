@@ -1,3 +1,3 @@
-Executes `cmd` on all `stacks`.
+Executes `cmd` on all `stacks`. Can be a string or a list of strings.
 
 Optionally specify `concurrency`: `serial`, `parallel`, `blue-green`. Default is `serial` for ease of manipulating load-balanced services without downtime.
