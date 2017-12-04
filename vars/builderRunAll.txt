@@ -1,3 +1,5 @@
 Executes `cmd` on all `stacks`. Can be a string or a list of strings.
 
-Optionally specify `concurrency`: `serial`, `parallel`, `blue-green`. Default is `serial` for ease of manipulating load-balanced services without downtime.
+Optionally specify `branch` to force a branch to be specified on the stacks before running commands such as updates.
+
+Optionally specify `stackConcurrency`: `serial`, `parallel`, `blue-green`. Default is `serial` for ease of manipulating load-balanced services without downtime. This refers to the concurrency *within* the stack: stacks are all worked upon in parallel instead.

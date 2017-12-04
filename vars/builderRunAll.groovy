@@ -1,4 +1,4 @@
-def call(stacks, cmd, concurrency='serial') {
+def call(stacks, cmd, branch=null, stackConcurrency='serial') {
     if (!(cmd instanceof List)) {
         cmd = [cmd]
     }
@@ -8,8 +8,11 @@ def call(stacks, cmd, concurrency='serial') {
         actions[stack] = {
             lock(stack) {
                 builderStart(stack)
+                if (branch) {
+                    sh "${env.BUILDER_PATH}bldr 'buildvars.switch_revision:${stackname},${branch},concurrency=${stackConcurrency}'"
+                }
                 for (i = 0; i < cmd.size(); i++) { 
-                    builderCmd(stack, cmd.get(i), null, false, concurrency)
+                    builderCmd(stack, cmd.get(i), null, false, stackConcurrency)
                 }
             }
         }
