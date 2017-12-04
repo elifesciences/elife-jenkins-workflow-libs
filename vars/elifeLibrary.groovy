@@ -1,5 +1,5 @@
-def call(Closure body, slave='elife-libraries--ci') {
-    elifePipeline {
+def call(Closure body, slave='elife-libraries--ci', timeoutInMinutes=120) {
+    elifePipeline({
         lock(slave) {
             builderStart slave
             jenkinsCli "connect-node ${slave}"
@@ -8,7 +8,7 @@ def call(Closure body, slave='elife-libraries--ci') {
                 deleteDir()
             }
         }
-    }
+    }, 120)
 }
 
 

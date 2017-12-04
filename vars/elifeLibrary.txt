@@ -2,4 +2,6 @@ Similar to `elifePipeline`, but makes the code run on a specialized libraries no
 
 The node will be brought up automatically and connected as a slave if it's not already in this state. A label is used to assign the contents of the job to the node. A lock will be held for the duration of the builds that prevents the node being stopped as long as something is running on it.
 
-If there are multiple libraries nodes, `slave` can be used to select the one the build needs to run on.
+Optionally, `slave` can be used to select the one the build needs to run on if there are multiple libraries nodes.
+
+Optionally, specify `timeoutInMinutes` to override the default timeout for very long builds.
