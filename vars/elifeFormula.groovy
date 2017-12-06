@@ -14,11 +14,26 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
             def stackname = "${project}--${instance}"
             lock (stackname) {
                 try {
+                    stage 'Fresh', {
+                        try {
+                            elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation started', env.RUN_DISPLAY_URL
+                            sh "/srv/builder/bldr ensure_destroyed:${stackname}"
+                            sh "/srv/builder/bldr masterless.launch:${project},${instance},standalone,${formula}@${commit}"
+                            if (smokeTestsFolder) {
+                                builderSmokeTests stackname, smokeTestsFolder
+                            }
+                            elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation succeeded', env.RUN_DISPLAY_URL
+                        } catch (e) {
+                            elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation failed', env.RUN_DISPLAY_URL
+                            throw e
+                        }
+                    }
+
                     stage 'Basic stack', {
                         try {
                             elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-base', 'Original stack creation started', env.RUN_DISPLAY_URL
                             sh "/srv/builder/bldr ensure_destroyed:${stackname}"
-                            sh "/srv/builder/bldr masterless.launch:${project},${instance}"
+                            sh "/srv/builder/bldr masterless.launch:${project},${instance},standalone"
                             if (smokeTestsFolder) {
                                 builderSmokeTests stackname, smokeTestsFolder
                             }
