@@ -58,6 +58,28 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                             throw e
                         }
                     }
+
+                    def variantsTopFilesString = sh script: 'cd salt/; ls -1 example-*.top || true', returnStdout: true
+                    def variantsTopFiles = variantsTopFilesString.readLines()
+                    for (i = 0; i < variantsTopFiles.size(); i++) {
+                        def topFile = variantsTopFiles.get(i)
+                        def variant = topFile - "example-" - ".top"
+
+                        stage "Fresh variant ${variant}", {
+                            try {
+                                elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} stack creation started", env.RUN_DISPLAY_URL
+                                sh "/srv/builder/bldr ensure_destroyed:${stackname}"
+                                sh "BUILDER_TOPFILE=${topFile} /srv/builder/bldr masterless.launch:${project},${instance},standalone,${formula}@${commit}"
+                                if (smokeTestsFolder) {
+                                    builderSmokeTests stackname, smokeTestsFolder
+                                }
+                                elifeGithubCommitStatus commit, 'success', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} creation succeeded", env.RUN_DISPLAY_URL
+                            } catch (e) {
+                                elifeGithubCommitStatus commit, 'failure', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} creation failed", env.RUN_DISPLAY_URL
+                                throw e
+                            }
+                        }
+                    }
                 } finally {
                     stage 'Cleanup', {
                         sh "/srv/builder/bldr ensure_destroyed:${stackname}"

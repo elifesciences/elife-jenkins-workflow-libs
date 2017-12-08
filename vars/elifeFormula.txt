@@ -5,4 +5,10 @@ Accepts a:
 - `smokeTestsFolder` (optional, default `''`) is an absolute path on the instance where smoke tests are located. See `builderSmokeTests`.
 - `formula` (optional, default `${project}-formula`) parameter specifying the name of the formula repository e.g. `medium-formula`.
 
+Provides three or more testing phases:
+- `continuous-integration/jenkins/pr-fresh` tests a stack built from scratch with the new formula.
+- `continuous-integration/jenkins/pr-base` tests a stack built with the original master.
+- `continuous-integration/jenkins/pr-update` tests applies the new formula to the result of `pr-base`.
+- (optional) `continuous-integration/jenkins/pr-fresh-variant` tests variants of the stack built by using `salt/example-*.top` files in the formula, if there are any.example-*.top` files in the formula, if there are any.example-*.top` files in the formula, if there are any.example-*.top` files in the formula, if there are any.
+
 Builds on top of `elifePipeline`.
