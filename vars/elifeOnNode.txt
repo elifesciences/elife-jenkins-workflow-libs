@@ -1,0 +1,5 @@
+Makes code run on a specialized libraries Jenkins node and cleans up right after the build has finished to avoid pull requests occupying too much disk space.
+
+The node will be brought up automatically and connected, if it's not already in this state. A label is used to assign the contents of the job to the node. A lock will be held for the duration of the builds that prevents the node being stopped as long as something is running on it.
+
+Optionally, `nodeName` can be used to select the specific the build needs to run on if there are multiple libraries nodes.
