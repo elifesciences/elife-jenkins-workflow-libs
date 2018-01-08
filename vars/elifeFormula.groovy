@@ -7,15 +7,16 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
         }
 
         elifePullRequestOnly { prNumber ->
+            def instance
             if (formula == null) {
                 formula = "${project}-formula"
                 // simplify the instance name since there is no ambiguity as to which formula we are testing
                 // helps with hostname length limit of 64 bytes on Linux
                 // pr-1--lax.elife.internal
-                def instance = "pr-${prNumber}"
+                instance = "pr-${prNumber}"
             } else {
                 // builder-base-formula-pr-1--heavybox.elife.internal
-                def instance = "${formula}-pr-${prNumber}"
+                instance = "${formula}-pr-${prNumber}"
             }
             def stackname = "${project}--${instance}"
             lock (stackname) {
