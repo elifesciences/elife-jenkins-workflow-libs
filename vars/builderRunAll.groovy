@@ -11,7 +11,7 @@ def call(stacks, cmd, branch=null, stackConcurrency='serial') {
                 if (branch) {
                     sh "${env.BUILDER_PATH}bldr 'buildvars.switch_revision:${stack},${branch},concurrency=${stackConcurrency}'"
                 }
-                for (j = 0; j < cmd.size(); j++) { 
+                for (int j = 0; j < cmd.size(); j++) { 
                     builderCmd(stack, cmd.get(j), null, false, stackConcurrency)
                 }
             }
