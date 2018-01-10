@@ -1,0 +1,1 @@
+Returns a tag with the current date time, such as `20180110115828` for January 10th, 2018 as 11:58:28 UTC.
