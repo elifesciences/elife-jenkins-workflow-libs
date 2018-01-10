@@ -1,3 +1,3 @@
 def call() {
-    return sh('date +"%Y%m%d%H%M%S"', returnStdout: true)
+    return sh(script: 'date +"%Y%m%d%H%M%S"', returnStdout: true).trim()
 }
