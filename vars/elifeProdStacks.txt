@@ -1,0 +1,1 @@
+Returns the list of stacks involved in the `prod` environment, but also belonging to other related environments that people depend upon such as `legacy` and `preview`.
