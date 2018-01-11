@@ -1,1 +1,1 @@
-Returns the list of stacks used as Jenkins slaves. At least the `elifeLibrary` step relies upon them.
+Returns the list of stacks used as Jenkins slaves or indirectly by pipelines. At least the `elifeLibrary` step relies upon them.

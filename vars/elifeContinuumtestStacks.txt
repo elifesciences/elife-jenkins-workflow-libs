@@ -1,1 +1,1 @@
-Returns the list of stacks involved in the `continuumtest` environment, that the `builderProjectTests` step relies upon.
+Returns the list of stacks involved in the `continuumtest` and `continuumtestpreview` environments.

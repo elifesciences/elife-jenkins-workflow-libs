@@ -7,6 +7,8 @@ def call() {
         'elife-metrics--continuumtest',
         'elife-website--continuumtest',
         'iiif--continuumtest',
+        'journal--annotationstest',
+        'journal--continuumtestpreview',
         'journal--continuumtest',
         'journal-cms--continuumtest',
         'lax--continuumtest',
