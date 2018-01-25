@@ -1,5 +1,5 @@
 // intentionally very simple, not relying on any shared structure
-pipeline {
+node {
     stage 'Checkout', {
         checkout scm
     }
