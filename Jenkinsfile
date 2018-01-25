@@ -5,7 +5,7 @@ node {
     }
     
     stage 'Tests', {
-        sh 'gradle test'
+        sh './gradlew test'
     }
 }
 
