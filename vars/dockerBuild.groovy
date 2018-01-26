@@ -1,3 +1,5 @@
 def call(project, tag='latest', organization='elifesciences') {
-    sh "docker build -t ${organization}/${project}:${tag} ."
+    def imageName = "${organization}/${project}"
+    sh "docker build --pull -t ${imageName}:${tag} ."
+    return new DockerImage(this)
 }

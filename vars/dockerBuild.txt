@@ -1,3 +1,5 @@
 Builds a Docker image of `project` from the current folder, tagging it with `tag`. Usually the `organization` is just `elifesciences`.
 
 If you have a `Dockerfile` with a special name or path, look into `docker-compose` to model it in a standard way, rather than add complexity here.
+
+`docker build` will always be executed with `--pull` to avoid outdated local caches of base images.
