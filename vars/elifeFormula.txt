@@ -1,3 +1,5 @@
+Soon to be *deprecated*, see `elifeFormulaParallel`.
+
 Should be used as the template for formula pipelines.
 
 Accepts a:
