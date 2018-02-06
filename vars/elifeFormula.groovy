@@ -18,79 +18,84 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                 // builder-base-formula-pr-1--heavybox.elife.internal
                 instance = "${formula}-pr-${prNumber}"
             }
-            def stackname = "${project}--${instance}"
-            lock (stackname) {
-                try {
-                    stage 'Fresh', {
-                        try {
-                            elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation started', env.RUN_DISPLAY_URL
-                            sh "/srv/builder/bldr ensure_destroyed:${stackname}"
-                            sh "/srv/builder/bldr masterless.launch:${project},${instance},standalone,${formula}@${commit}"
-                            if (smokeTestsFolder) {
-                                builderSmokeTests stackname, smokeTestsFolder
-                            }
-                            elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation succeeded', env.RUN_DISPLAY_URL
-                        } catch (e) {
-                            elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation failed', env.RUN_DISPLAY_URL
-                            throw e
+            def partialStackname = "${project}--${instance}"
+            lock (partialStackname) {
+                actions = [:] 
+                actions['fresh'] = {
+                    try {
+                        elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation started', env.RUN_DISPLAY_URL
+                        sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh"
+                        sh "/srv/builder/bldr masterless.launch:${project},${instance}-fresh,standalone,${formula}@${commit}"
+                        if (smokeTestsFolder) {
+                            builderSmokeTests "${partialStackname}-fresh", smokeTestsFolder
                         }
+                        elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation succeeded', env.RUN_DISPLAY_URL
+                    } catch (e) {
+                        elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation failed', env.RUN_DISPLAY_URL
+                        throw e
+                    } finally {
+                        sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh"
                     }
+                }
 
-                    stage 'Basic stack', {
+                actions['base-update'] = {
+                    try {
                         try {
                             elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-base', 'Original stack creation started', env.RUN_DISPLAY_URL
-                            sh "/srv/builder/bldr ensure_destroyed:${stackname}"
-                            sh "/srv/builder/bldr masterless.launch:${project},${instance},standalone"
+                            sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-base-update"
+                            sh "/srv/builder/bldr masterless.launch:${project},${instance}-base-update,standalone"
                             if (smokeTestsFolder) {
-                                builderSmokeTests stackname, smokeTestsFolder
+                                builderSmokeTests "${partialStackname}-base-update", smokeTestsFolder
                             }
                             elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-base', 'Original stack creation succeeded', env.RUN_DISPLAY_URL
                         } catch (e) {
                             elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-base', 'Original stack creation failed', env.RUN_DISPLAY_URL
                             throw e
                         }
-                    }
 
-                    stage 'Applying change', {
                         try {
                             elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-update', 'Applying update started', env.RUN_DISPLAY_URL
-                            sh "/srv/builder/bldr masterless.set_versions:${stackname},${formula}@${commit}"
-                            sh "/srv/builder/bldr update:${stackname}"
+                            sh "/srv/builder/bldr masterless.set_versions:${partialStackname}-base-update,${formula}@${commit}"
+                            sh "/srv/builder/bldr update:${partialStackname}-base-update"
                             if (smokeTestsFolder) {
-                                builderSmokeTests stackname, smokeTestsFolder
+                                builderSmokeTests "${partialStackname}-base-update", smokeTestsFolder
                             }
                             elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applying update succeeded', env.RUN_DISPLAY_URL
                         } catch (e) {
                             elifeGithubCommitStatus commit, 'failure', 'continuous-integration/jenkins/pr-update', 'Applying update failed', env.RUN_DISPLAY_URL
                             throw e
                         }
+                    } finally {
+                        sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-base-update"
                     }
+                }
 
-                    def variantsTopFilesString = sh script: 'cd salt/; ls -1 example-*.top || true', returnStdout: true
-                    def variantsTopFiles = variantsTopFilesString.readLines()
-                    for (i = 0; i < variantsTopFiles.size(); i++) {
-                        def topFile = variantsTopFiles.get(i)
-                        def variant = topFile - "example-" - ".top"
+                def variantsTopFilesString = sh script: 'cd salt/; ls -1 example-*.top || true', returnStdout: true
+                def variantsTopFiles = variantsTopFilesString.readLines()
+                for (i = 0; i < variantsTopFiles.size(); i++) {
+                    def topFile = variantsTopFiles.get(i)
+                    def variant = topFile - "example-" - ".top"
 
-                        stage "Fresh variant ${variant}", {
-                            try {
-                                elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} stack creation started", env.RUN_DISPLAY_URL
-                                sh "/srv/builder/bldr ensure_destroyed:${stackname}"
-                                sh "BUILDER_TOPFILE=${topFile} /srv/builder/bldr masterless.launch:${project},${instance},standalone,${formula}@${commit}"
-                                if (smokeTestsFolder) {
-                                    builderSmokeTests stackname, smokeTestsFolder
-                                }
-                                elifeGithubCommitStatus commit, 'success', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} creation succeeded", env.RUN_DISPLAY_URL
-                            } catch (e) {
-                                elifeGithubCommitStatus commit, 'failure', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} creation failed", env.RUN_DISPLAY_URL
-                                throw e
+                    actions["fresh variant ${variant}"] = {
+                        try {
+                            elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} stack creation started", env.RUN_DISPLAY_URL
+                            sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh-${variant}"
+                            sh "BUILDER_TOPFILE=${topFile} /srv/builder/bldr masterless.launch:${project},${instance}-fresh-${variant},standalone,${formula}@${commit}"
+                            if (smokeTestsFolder) {
+                                builderSmokeTests "${partialStackname}-fresh-${variant}", smokeTestsFolder
                             }
+                            elifeGithubCommitStatus commit, 'success', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} creation succeeded", env.RUN_DISPLAY_URL
+                        } catch (e) {
+                            elifeGithubCommitStatus commit, 'failure', "continuous-integration/jenkins/pr-fresh-variant-${variant}", "Fresh variant ${variant} creation failed", env.RUN_DISPLAY_URL
+                            throw e
+                        } finally {
+                            sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh-${variant}"
                         }
                     }
-                } finally {
-                    stage 'Cleanup', {
-                        sh "/srv/builder/bldr ensure_destroyed:${stackname}"
-                    }
+                }
+
+                stage "Provisionings", {
+                    parallel actions
                 }
             }
         }
