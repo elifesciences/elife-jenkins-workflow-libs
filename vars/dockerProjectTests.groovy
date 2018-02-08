@@ -1,6 +1,6 @@
 def call(project, commit, /*testArtifacts=[],*/ organization='elifesciences') {
-    def imageName = "${organization}/${project}_ci"
-    def folder = dockerReadEnv imageName, 'PROJECT_FOLDER'
-    sh "chmod 777 build/ && docker run -v \$(pwd)/build:${folder}/build ${imageName}:${commit}"
+    def fullImageName = "${organization}/${project}_ci:${commit}"
+    def folder = dockerReadEnv fullImageName, 'PROJECT_FOLDER'
+    sh "chmod 777 build/ && docker run -v \$(pwd)/build:${folder}/build ${fullImageName}"
     step([$class: 'JUnitResultArchiver', testResults: 'build/*.xml'])
 }
