@@ -1,0 +1,3 @@
+Builds image of `project` from the current folder, tagging it with `commit`. Usually the `organization` is just `elifesciences`.
+
+`Dockerfile.ci` is used by this process, as well as the `myimage:${commit}` tagged base image to start from.
