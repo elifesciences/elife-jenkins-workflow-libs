@@ -1,3 +1,3 @@
 Runs project tests using the `project` `_ci` container image, identified by the `commit` tag.
 
-Artifacts should be produced inside a `build/` directory inside `folder`, so that they can be archived for this run.
+Artifacts should be produced inside a `build/` directory inside `PROJECT_FOLDER`, so that they can be archived for this run. `PROJECT_FOLDER` is read from the image environment itself.

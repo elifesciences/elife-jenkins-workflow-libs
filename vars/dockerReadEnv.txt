@@ -1,0 +1,3 @@
+Reads an environment variable named `variableName` from the Docker image `imageName`.
+
+Pulls the image if necessary.
