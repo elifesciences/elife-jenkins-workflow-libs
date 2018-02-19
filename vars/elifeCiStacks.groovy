@@ -1,6 +1,5 @@
 def call() {
     return [
-        'api-dummy--ci',
         'crm--ci',
         'elife-bot--ci',
         'elife-dashboard--ci',
