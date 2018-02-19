@@ -16,7 +16,6 @@ def call() {
         'pattern-library--ci',
         'peerscout--ci',
         'personalised-covers--ci',
-        'profiles--ci',
         'recommendations--ci',
         'redirects--ci',
         'schematron-validator--ci',
