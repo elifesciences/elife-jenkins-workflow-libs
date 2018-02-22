@@ -18,8 +18,12 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
             builderSmokeTests stackname, folder
         } else if (order.get(i) == 'project') {
             def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
-            try {
+            def actions = [:]
+            actions['project_tests.sh'] = {
                 builderCmd stackname, projectTestsCmd
+            }
+            try {
+                parallel actions
             } finally {
                 retrieveArtifacts stackname, testArtifacts
             }
