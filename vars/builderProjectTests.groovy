@@ -12,7 +12,7 @@ def retrieveArtifacts(stackname, testArtifacts) {
     echo "Retrieved test artifacts: ${localTestArtifacts}"
 }
 
-def defineProjectTests(stackname) {
+def defineProjectTests(stackname, folder) {
     def actions = [:]
     def projectTestsParallelScripts = findFiles(glob: 'project_tests/*')
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
@@ -34,7 +34,7 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
             builderSmokeTests stackname, folder
         } else if (order.get(i) == 'project') {
             try {
-                actions = defineProjectTests stackname
+                actions = defineProjectTests stackname, folder
                 parallel actions
             } finally {
                 retrieveArtifacts stackname, testArtifacts
