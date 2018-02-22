@@ -16,7 +16,7 @@ def defineProjectTests(stackname, folder) {
     def actions = [:]
     def projectTestsParallelScripts = findFiles(glob: 'project_tests/*')
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
-        projectTestsParallelScript = "cd ${folder}; ${projectTestsParallelScripts[i].path}"
+        def projectTestsParallelScript = "cd ${folder}; ${projectTestsParallelScripts[i].path}"
         actions[projectTestsParallelScripts[i].name] = {
             builderCmd stackname, projectTestsParallelScript
         }
