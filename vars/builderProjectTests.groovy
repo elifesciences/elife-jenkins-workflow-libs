@@ -14,13 +14,13 @@ def retrieveArtifacts(stackname, testArtifacts) {
 
 def defineProjectTests(stackname) {
     def actions = [:]
-    //def projectTestsParallelScripts = findFiles(glob: 'project_tests/*')
-    //for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
-    //    projectTestsParallelScript = "cd ${folder}; ${projectTestsScripts[i].path}"
-    //    actions[projectTestsParallelScripts[i].name] = {
-    //        builderCmd stackname, projectTestsParallelScript
-    //    }
-    //}
+    def projectTestsParallelScripts = findFiles(glob: 'project_tests/*')
+    for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
+        projectTestsParallelScript = "cd ${folder}; ${projectTestsScripts[i].path}"
+        actions[projectTestsParallelScripts[i].name] = {
+            builderCmd stackname, projectTestsParallelScript
+        }
+    }
     def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
     actions['project_tests.sh'] = {
         builderCmd stackname, projectTestsCmd
