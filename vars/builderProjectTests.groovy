@@ -12,17 +12,29 @@ def retrieveArtifacts(stackname, testArtifacts) {
     echo "Retrieved test artifacts: ${localTestArtifacts}"
 }
 
+def defineProjectTests(stackname) {
+    def actions = [:]
+    def projectTestsParallelScripts = findFiles(glob: 'project_tests/*')
+    for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
+        projectTestsParallelScript = "cd ${folder}; ${projectTestsScripts[i].path}"
+        actions[projectTestsParallelScripts[i].name] = {
+            builderCmd stackname, projectTestsParallelScript
+        }
+    }
+    def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
+    actions['project_tests.sh'] = {
+        builderCmd stackname, projectTestsCmd
+    }
+    return actions
+}
+
 def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
     for (int i = 0; i < order.size(); i++) {
         if (order.get(i) == 'smoke') {
             builderSmokeTests stackname, folder
         } else if (order.get(i) == 'project') {
-            def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
-            def actions = [:]
-            actions['project_tests.sh'] = {
-                builderCmd stackname, projectTestsCmd
-            }
             try {
+                actions = defineProjectTests stackname
                 parallel actions
             } finally {
                 retrieveArtifacts stackname, testArtifacts
