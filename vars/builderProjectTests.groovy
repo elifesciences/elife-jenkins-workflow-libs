@@ -7,7 +7,7 @@ def retrieveArtifacts(stackname, testArtifacts) {
         def basename = remoteTestArtifact[slash+1..-1]
         def localTestArtifact = "${env.BUILD_TAG}.${basename}"
         localTestArtifacts << localTestArtifact
-        builderTestArtifact localTestArtifact, stackname, remoteTestArtifact, true
+        builderTestArtifact localTestArtifact, stackname, remoteTestArtifact
     }
     echo "Retrieved test artifacts: ${localTestArtifacts}"
 }
