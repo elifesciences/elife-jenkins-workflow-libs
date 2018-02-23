@@ -1,9 +1,6 @@
 def retrieveArtifacts(stackname, testArtifacts) {
     echo "Looking for test artifacts: ${testArtifacts}"
     for (int i = 0; i < testArtifacts.size(); i++) {
-        def remoteTestArtifact = testArtifacts.get(i)
-        def slash = remoteTestArtifact.lastIndexOf('/')
-        def basename = remoteTestArtifact[slash+1..-1]
         builderTestArtifact testArtifacts.get(i), stackname
     }
 }
