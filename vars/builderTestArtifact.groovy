@@ -3,8 +3,8 @@ def call(remoteTestArtifact, stackname) {
     env.WORKSPACE = pwd()
 
     def localTestArtifact = ((remoteTestArtifact =~ /\/(build\/.*)/)[0][1])
-    def slash = localTestArtifact.lastIndexOf('/')
-    def localTestArtifactFolder = localTestArtifact[0..slash]
+    def localSlash = localTestArtifact.lastIndexOf('/')
+    def localTestArtifactFolder = localTestArtifact[0..localSlash]
     def allowMissing = ",allow_missing=True"
     if (localTestArtifact.contains('*')) {
         allowMissing = ""
@@ -13,7 +13,16 @@ def call(remoteTestArtifact, stackname) {
     // builder runs in its own folder as working directory
     echo "Downloading on ${localTestArtifact}"
     sh "mkdir -p ${localTestArtifactFolder}"
-    sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}${allowMissing}"
+    if (localTestArtifact.contains('*')) {
+        def remoteSlash = remoteTestArtifact.lastIndexOf('/')
+        def remoteTestArtifactFolder = remoteTestArtifact[0..remoteSlash]
+        def remoteTestArtifactFolderBasename = (remoteTestArtifactFolder =~ /\/build\/(.*)/)[0][1]
+        sh "${env.BUILDER_PATH}bldr cmd:${stackname},'cd ${remoteTestArtifactFolder}/..; rm -rf artifact.tar; tar -cf artifact.tar $remoteTestArtifactFolderBasename'"
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifactFolder}/../artifact.tar,${env.WORKSPACE}/build/artifact.tar"
+        sh "cd build; tar -xvf artifact.tar"
+    } else {
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}${allowMissing}"
+    }
 
     echo "Found ${localTestArtifact}"
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
