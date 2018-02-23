@@ -4,7 +4,12 @@ def call(cmd, testArtifacts=[]) {
     } finally {
         for (int i = 0; i < testArtifacts.size(); i++) {
             def localTestArtifact = testArtifacts.get(i)
-            builderTestArtifact localTestArtifact, null, null, true
+            if (!readFile(localTestArtifact)) {
+                echo "Artifact ${localTestArtifact} not found"
+                continue
+            }
+            echo "Found ${localTestArtifact}"
+            step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
         }
     }
 }
