@@ -12,7 +12,7 @@ def call(remoteTestArtifact, stackname) {
 
     // builder runs in its own folder as working directory
     echo "Downloading on ${localTestArtifact}"
-    sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}{$allowMissing}"
+    sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}${allowMissing}"
 
     if (!readFile(localTestArtifact)) {
         echo "Artifact ${localTestArtifact} not found"
