@@ -7,7 +7,7 @@ def retrieveArtifacts(stackname, testArtifacts) {
 
 def defineProjectTests(stackname, folder) {
     def actions = [:]
-    def projectTestsParallelScripts = findFiles(glob: 'project_tests/*')
+    def projectTestsParallelScripts = findFiles(glob: '.ci/*')
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
         def projectTestsParallelScript = "cd ${folder}; ${projectTestsParallelScripts[i].path}"
         actions[projectTestsParallelScripts[i].name] = {
@@ -22,7 +22,7 @@ def defineProjectTests(stackname, folder) {
     }
 
     if (!actions) {
-        throw new Exception("No project_tests/ or project_tests.sh script was found")
+        throw new Exception("No .ci/ or project_tests.sh script was found")
     }
 
     return actions

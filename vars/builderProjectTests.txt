@@ -3,7 +3,7 @@ Executes tests inside `folder` on `stackname`. The script may fail, and the erro
 The source of tests are:
 
 - a `project_tests.sh` script
-- any script that is found inside a `project_tests/` folder
+- any script that is found inside a `.ci/` folder
 
 All source are optional, but at least one entry must be found.
 
