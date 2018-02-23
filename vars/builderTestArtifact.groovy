@@ -22,7 +22,7 @@ def call(remoteTestArtifact, stackname) {
         echo "Downloading archive artifact.tar"
         sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifactFolder}/../artifact.tar,${env.WORKSPACE}/build/artifact.tar"
         echo "Extracting artifact.tar"
-        sh "cd build; tar -xvf artifact.tar"
+        sh "rm -rf ${localTestArtifactFolder}; cd build; tar -xvf artifact.tar"
     } else {
         sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}${allowMissing}"
     }
