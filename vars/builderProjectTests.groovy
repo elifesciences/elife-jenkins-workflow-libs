@@ -14,10 +14,17 @@ def defineProjectTests(stackname, folder) {
             builderCmd stackname, projectTestsParallelScript
         }
     }
-    def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
-    actions['project_tests.sh'] = {
-        builderCmd stackname, projectTestsCmd
+    if (fileExists('project_tests.sh')) {
+        def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
+        actions['project_tests.sh'] = {
+            builderCmd stackname, projectTestsCmd
+        }
     }
+
+    if (!actions) {
+        throw new Exception("No project_tests/ or project_tests.sh script was found")
+    }
+
     return actions
 }
 

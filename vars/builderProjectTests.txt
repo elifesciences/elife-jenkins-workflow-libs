@@ -1,6 +1,11 @@
-Executes a `project_tests.sh` inside `folder` on `stackname`. The script may fail, and the error will propagate up.
+Executes tests inside `folder` on `stackname`. The script may fail, and the error will propagate up.
 
-TODO: Will also execute, in parallel with the `project_tests.sh` script, any script that is found inside a `project_tests/` folder.
+The source of tests are:
+
+- a `project_tests.sh` script
+- any script that is found inside a `project_tests/` folder
+
+All source are optional, but at least one entry must be found.
 
 Pass `testArtifacts=['/srv/journal/build/behat.xml', ...]` to specify a list of test artifacts to process with `builderTestArtifact`, when they exist. Even when a failure is happening, an attempt to retrieve these artifacts till still be made.
 
