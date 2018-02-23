@@ -9,7 +9,7 @@ def call(remoteTestArtifact, stackname) {
 
     def slash = remoteTestArtifact.lastIndexOf('/')
     def basename = remoteTestArtifact[slash+1..-1]
-    def localTestArtifact = "${localTestArtifactFolderFullPath}${basename}"
+    def localTestArtifact = "build/${basename}"
 
     if (!readFile(localTestArtifact)) {
         echo "Artifact ${localTestArtifact} not found"
