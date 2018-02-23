@@ -1,15 +1,11 @@
 def retrieveArtifacts(stackname, testArtifacts) {
-    def localTestArtifacts = []
     echo "Looking for test artifacts: ${testArtifacts}"
     for (int i = 0; i < testArtifacts.size(); i++) {
         def remoteTestArtifact = testArtifacts.get(i)
         def slash = remoteTestArtifact.lastIndexOf('/')
         def basename = remoteTestArtifact[slash+1..-1]
-        def localTestArtifact = "${env.BUILD_TAG}.${basename}"
-        localTestArtifacts << localTestArtifact
-        builderTestArtifact localTestArtifact, stackname, remoteTestArtifact
+        builderTestArtifact testArtifacts.get(i), stackname
     }
-    echo "Retrieved test artifacts: ${localTestArtifacts}"
 }
 
 def defineProjectTests(stackname, folder) {
