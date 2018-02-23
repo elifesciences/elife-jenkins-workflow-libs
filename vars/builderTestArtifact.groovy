@@ -15,10 +15,6 @@ def call(remoteTestArtifact, stackname) {
     sh "mkdir -p ${localTestArtifactFolder}"
     sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}${allowMissing}"
 
-    if (!readFile(localTestArtifact)) {
-        echo "Artifact ${localTestArtifact} not found"
-        return
-    }
     echo "Found ${localTestArtifact}"
     step([$class: "JUnitResultArchiver", testResults: localTestArtifact])
 }
