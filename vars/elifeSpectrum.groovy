@@ -57,7 +57,8 @@ def call(Map parameters) {
                 
                 def testXmlArtifact = "${env.BUILD_TAG}.${environmentName}.junit.xml"
                 sh "cp ${env.SPECTRUM_PREFIX}build/junit.xml ${testXmlArtifact}"
-                builderTestArtifact testXmlArtifact
+                echo "Found: ${testXmlArtifact}"
+                step([$class: "JUnitResultArchiver", testResults: testXmlArtifact])
 
                 def testLogArtifact = "${env.BUILD_TAG}.${environmentName}.log"
                 sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
