@@ -53,24 +53,29 @@ def call(Map parameters) {
                     // before starting the whole suite, run simple smoke test first
                     sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_TIMEOUT=120 sudo -H -u elife ${env.SPECTRUM_PREFIX}execute-simplest-possible-test.sh"
                 }
-                sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} sudo -H -u elife ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}|| echo TESTS FAILED"
+                sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} sudo -H -u elife ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
                 
-                def testXmlArtifact = "${env.BUILD_TAG}.${environmentName}.junit.xml"
-                sh "cp ${env.SPECTRUM_PREFIX}build/junit.xml ${testXmlArtifact}"
-                echo "Found: ${testXmlArtifact}"
-                step([$class: "JUnitResultArchiver", testResults: testXmlArtifact])
-
-                def testLogArtifact = "${env.BUILD_TAG}.${environmentName}.log"
-                sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
-                archive testLogArtifact
-
-                elifeVerifyJunitXml testXmlArtifact
             } catch (e) {
                 echo "Failure while running spectrum tests: ${e.message}"
                 echo "Attempting to rollback (if the project specifies it) before terminating the build with an error"
                 rollbackStep()
                 echo "Rollback successful"
                 throw e
+            } finally {
+                def testXmlArtifact = "${env.BUILD_TAG}.${environmentName}.junit.xml"
+                if (fileExists("${env.SPECTRUM_PREFIX}build/junit.xml")) {
+                    sh "cp ${env.SPECTRUM_PREFIX}build/junit.xml ${testXmlArtifact}"
+                    echo "Found: ${testXmlArtifact}"
+                    step([$class: "JUnitResultArchiver", testResults: testXmlArtifact])
+                }
+
+                if (fileExists("${env.SPECTRUM_PREFIX}build/test.log")) {
+                    def testLogArtifact = "${env.BUILD_TAG}.${environmentName}.log"
+                    sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
+                    archive testLogArtifact
+                }
+
+                elifeVerifyJunitXml testXmlArtifact
             }
         }
     }
