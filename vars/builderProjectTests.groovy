@@ -10,14 +10,23 @@ def defineProjectTests(stackname, folder) {
     def projectTestsParallelScripts = findFiles(glob: '.ci/*')
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
         def projectTestsParallelScript = "cd ${folder}; ${projectTestsParallelScripts[i].path}"
-        actions[projectTestsParallelScripts[i].name] = {
-            builderCmd stackname, projectTestsParallelScript
+        def name = "${projectTestsParallelScripts[i].name}"
+        actions[] = {
+            elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/${name}", "${name} started", env.RUN_DISPLAY_URL
+            try {
+                builderCmd stackname, projectTestsParallelScript
+                elifeGithubCommitStatus commit, 'success', "continuous-integration/jenkins/${name}", "${name} succeeded", env.RUN_DISPLAY_URL
+            } catch (e) {
+                elifeGithubCommitStatus commit, 'failure', "continuous-integration/jenkins/${name}", "${name} failed: ${e.message}", env.RUN_DISPLAY_URL
+                throw e
+            }
         }
     }
     if (fileExists('project_tests.sh')) {
         def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
         actions['project_tests.sh'] = {
             builderCmd stackname, projectTestsCmd
+            elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation started', env.RUN_DISPLAY_URL
         }
     }
 

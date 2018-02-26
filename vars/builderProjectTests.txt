@@ -10,3 +10,5 @@ All source are optional, but at least one entry must be found.
 Pass `testArtifacts=['/srv/journal/build/behat.xml', ...]` to specify a list of test artifacts to process with `builderTestArtifact`, when they exist. Even when a failure is happening, an attempt to retrieve these artifacts till still be made.
 
 `builderSmokeTests` is also executed, and its (possible) failure will be propagated to the build as per the other tests.
+
+Separate commit statuses are produced for each check, named `continuous-integration/jenkins/...`.
