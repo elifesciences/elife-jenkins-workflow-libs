@@ -12,15 +12,19 @@ def defineProjectTests(stackname, folder) {
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
         def projectTestsParallelScript = "cd ${folder}; ${projectTestsParallelScripts[i].path}"
         def name = "${projectTestsParallelScripts[i].name}"
-        actions[name] = withCommitStatus({
-            builderCmd stackname, projectTestsParallelScript
-        }, name, commit)
+        actions[name] = {
+            withCommitStatus({
+                builderCmd stackname, projectTestsParallelScript
+            }, name, commit)
+        }
     }
     if (fileExists('project_tests.sh')) {
         def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
-        actions['project_tests.sh'] = withCommitStatus({
-            builderCmd stackname, projectTestsCmd
-        }, 'project_tests.sh', commit)
+        actions['project_tests.sh'] = {
+            withCommitStatus({
+                builderCmd stackname, projectTestsCmd
+            }, 'project_tests.sh', commit)
+        }
     }
 
     if (!actions) {
