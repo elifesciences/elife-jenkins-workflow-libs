@@ -43,6 +43,7 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
             builderSmokeTests stackname, folder
         } else if (order.get(i) == 'project') {
             try {
+                builderCmd stackname, "cd ${folder}; rm -rf build/*"
                 actions = defineProjectTests stackname, folder
                 parallel actions
             } finally {
