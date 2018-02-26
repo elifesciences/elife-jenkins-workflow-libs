@@ -8,3 +8,5 @@ If there are multiple servers involved, `concurrency` is useful to decide how to
 - `serial`: one at a time
 - `parallel`: all together
 - `blue-green`: 50% at a time
+
+A commit status is also produced, named `continuous-integration/jenkins/deploy`.
