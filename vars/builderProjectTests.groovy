@@ -11,7 +11,7 @@ def defineProjectTests(stackname, folder) {
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
         def projectTestsParallelScript = "cd ${folder}; ${projectTestsParallelScripts[i].path}"
         def name = "${projectTestsParallelScripts[i].name}"
-        actions[] = {
+        actions[name] = {
             elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/${name}", "${name} started", env.RUN_DISPLAY_URL
             try {
                 builderCmd stackname, projectTestsParallelScript
