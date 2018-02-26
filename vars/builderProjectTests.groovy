@@ -6,6 +6,7 @@ def retrieveArtifacts(stackname, testArtifacts) {
 }
 
 def defineProjectTests(stackname, folder) {
+    def String commit = elifeGitRevision()
     def actions = [:]
     def projectTestsParallelScripts = findFiles(glob: '.ci/*')
     for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
@@ -13,13 +14,13 @@ def defineProjectTests(stackname, folder) {
         def name = "${projectTestsParallelScripts[i].name}"
         actions[name] = withCommitStatus({
             builderCmd stackname, projectTestsParallelScript
-        }, name)
+        }, name, commit)
     }
     if (fileExists('project_tests.sh')) {
         def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
         actions['project_tests.sh'] = withCommitStatus({
             builderCmd stackname, projectTestsCmd
-        }, 'project_tests.sh')
+        }, 'project_tests.sh', commit)
     }
 
     if (!actions) {

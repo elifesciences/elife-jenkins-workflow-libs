@@ -1,4 +1,4 @@
-def call(Closure body, String name) {
+def call(Closure body, String name, String commit) {
     elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/${name}", "${name} started", env.RUN_DISPLAY_URL
     try {
         body()
