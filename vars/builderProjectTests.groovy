@@ -1,7 +1,11 @@
-def retrieveArtifacts(stackname, testArtifacts) {
+def retrieveArtifacts(stackname, testArtifacts, folder) {
     echo "Looking for test artifacts: ${testArtifacts}"
     for (int i = 0; i < testArtifacts.size(); i++) {
-        builderTestArtifact testArtifacts.get(i), stackname
+        def testArtifact = testArtifacts.get(i)
+        if (testArtifact[0..0] != '/') {
+            testArtifact = "${folder}/${testArtifact}"
+        }
+        builderTestArtifact testArtifact, stackname
     }
 }
 
@@ -45,7 +49,7 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
                 actions = defineProjectTests stackname, folder
                 parallel actions
             } finally {
-                retrieveArtifacts stackname, testArtifacts
+                retrieveArtifacts stackname, testArtifacts, folder
             }
         } else {
             error("You requested to run '${order.get(i)}' tests, but the only allowed values are 'smoke' and 'project'.");
