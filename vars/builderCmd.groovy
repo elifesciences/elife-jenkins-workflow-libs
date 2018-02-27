@@ -14,6 +14,6 @@ def call(stackname, cmd, folder=null, captureOutput=false, concurrency=null) {
     if (captureOutput) {
         return sh(script: shellCmd, returnStdout:true)
     } else {
-        sh shellCmd
+        sh(script: shellCmd)
     }
 }
