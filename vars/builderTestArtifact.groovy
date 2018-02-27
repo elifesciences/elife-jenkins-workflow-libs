@@ -2,9 +2,9 @@ def call(remoteTestArtifact, stackname) {
     // https://issues.jenkins-ci.org/browse/JENKINS-33511
     env.WORKSPACE = pwd()
 
+    def remoteTestArtifactObject = new RemoteTestArtifact(remoteTestArtifact)
+    def localTestArtifactFolder = remoteTestArtifactObject.localTestArtifactFolder()
     def localTestArtifact = ((remoteTestArtifact =~ /\/?(build\/.*)/)[0][1])
-    def localSlash = localTestArtifact.lastIndexOf('/')
-    def localTestArtifactFolder = localTestArtifact[0..localSlash]
     def allowMissing = ",allow_missing=True"
     if (localTestArtifact.contains('*')) {
         allowMissing = ""
