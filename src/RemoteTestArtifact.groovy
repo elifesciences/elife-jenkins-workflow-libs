@@ -6,6 +6,11 @@ public class RemoteTestArtifact implements Serializable
     {
         this.path = path
     }
+    
+    public String path()
+    {
+        return this.path
+    }
 
     public String localTestArtifactFolder()
     {

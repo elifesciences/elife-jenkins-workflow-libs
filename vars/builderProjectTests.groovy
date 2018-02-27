@@ -5,7 +5,7 @@ def retrieveArtifacts(stackname, testArtifacts, folder) {
         if (testArtifact[0..0] != '/') {
             testArtifact = "${folder}/${testArtifact}"
         }
-        builderTestArtifact testArtifact, stackname
+        builderTestArtifact(new RemoteTestArtifact(testArtifact), stackname)
     }
 }
 
