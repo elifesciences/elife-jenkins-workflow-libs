@@ -5,11 +5,6 @@ def call(remoteTestArtifact, stackname) {
     def remoteTestArtifactObject = new RemoteTestArtifact(remoteTestArtifact)
     def localTestArtifactFolder = remoteTestArtifactObject.localTestArtifactFolder()
     def localTestArtifact = remoteTestArtifactObject.localTestArtifact()
-    def allowMissing = ",allow_missing=True"
-    if (localTestArtifact.contains('*')) {
-        allowMissing = ""
-    }
-
     // builder runs in its own folder as working directory
     echo "Downloading: ${localTestArtifact}"
     sh "mkdir -p ${localTestArtifactFolder}"
@@ -24,7 +19,7 @@ def call(remoteTestArtifact, stackname) {
         echo "Extracting artifact.tar"
         sh "rm -rf ${localTestArtifactFolder}; cd build; tar -xvf artifact.tar"
     } else {
-        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder}${allowMissing}"
+        sh "${env.BUILDER_PATH}bldr download_file:${stackname},${remoteTestArtifact},${env.WORKSPACE}/${localTestArtifactFolder},allow_missing=True"
     }
 
     echo "Found ${localTestArtifact}"
