@@ -4,7 +4,7 @@ def call(remoteTestArtifact, stackname) {
 
     def remoteTestArtifactObject = new RemoteTestArtifact(remoteTestArtifact)
     def localTestArtifactFolder = remoteTestArtifactObject.localTestArtifactFolder()
-    def localTestArtifact = ((remoteTestArtifact =~ /\/?(build\/.*)/)[0][1])
+    def localTestArtifact = remoteTestArtifactObject.localTestArtifact()
     def allowMissing = ",allow_missing=True"
     if (localTestArtifact.contains('*')) {
         allowMissing = ""

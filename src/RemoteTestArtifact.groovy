@@ -14,4 +14,9 @@ public class RemoteTestArtifact implements Serializable
         def localTestArtifactFolder = localTestArtifact[0..localSlash]
         return localTestArtifactFolder
     }
+
+    public String localTestArtifact()
+    {
+        return (this.path =~ /\/?(build\/.*)/)[0][1]
+    }
 }
