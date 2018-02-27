@@ -11,7 +11,7 @@ class TestExampleJob extends BasePipelineTest {
     }
 
     @Test
-    void should_execute_without_errors() throws Exception {
+    void should_use_docker_class_without_errors() throws Exception {
         def script = runScript("samples/docker.groovy")
         script.execute();
         printCallStack()
