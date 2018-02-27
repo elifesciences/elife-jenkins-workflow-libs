@@ -19,4 +19,15 @@ public class RemoteTestArtifact implements Serializable
     {
         return (this.path =~ /\/?(build\/.*)/)[0][1]
     }
+
+    public String remoteTestArtifactFolder()
+    {
+        def remoteSlash = this.path.lastIndexOf('/')
+        return this.path[0..remoteSlash]
+    }
+
+    public String remoteTestArtifactFolderBasename()
+    {
+        return (this.remoteTestArtifactFolder() =~ /\/build\/(.*)/)[0][1]
+    }
 }

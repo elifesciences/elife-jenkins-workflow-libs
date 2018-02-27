@@ -17,5 +17,14 @@ class TestRemoteTestArtifact {
         assertEquals('build/', a.localTestArtifactFolder())
         assertEquals('build/phpunit.xml', a.localTestArtifact())
     }
+
+    @Test
+    void works_with_star_matchers() throws Exception {
+        def a = new RemoteTestArtifact('/srv/journal/build/phpunit/*.xml');
+        assertEquals('build/phpunit/', a.localTestArtifactFolder())
+        assertEquals('build/phpunit/*.xml', a.localTestArtifact())
+        assertEquals('/srv/journal/build/phpunit/', a.remoteTestArtifactFolder())
+        assertEquals('phpunit/', a.remoteTestArtifactFolderBasename())
+    }
 }
 
