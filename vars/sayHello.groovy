@@ -1,3 +1,8 @@
-def call(String name = 'human') {
-    echo "Hello, ${name}."
+println("loaded sayHello")
+
+def call(name = 'human') {
+    echo "Just hello"
+    //echo "Hello, ${name}."
 }
+
+return this
