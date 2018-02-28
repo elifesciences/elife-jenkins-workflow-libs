@@ -14,5 +14,19 @@ class TestDockerCompose {
                 .toString()
         );
     }
+
+    @Test
+    void should_implement_a_run_command() throws Exception {
+        assertEquals(
+            'IMAGE_TAG=123456 docker-compose -f docker-compose.ci.yml run --name profiles_ci_project_tests ci ./project_tests.sh',
+            DockerCompose
+                .command('run')
+                .withEnvironment('IMAGE_TAG', '123456')
+                .withOption('name', 'profiles_ci_project_tests')
+                .withArgument('ci')
+                .withArgument('./project_tests.sh')
+                .toString()
+        );
+    }
 }
 

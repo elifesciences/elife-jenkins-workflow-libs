@@ -7,10 +7,10 @@ public class Environment implements Serializable {
     }
 
     public String asPrefix() {
-        String prefix = ''
+        def prefixList = []
         this.contents.each({ n, v ->
-            prefix = "${prefix}${n}=${v} "
+            prefixList.add("${n}=${v}")
         })
-        return prefix
+        return prefixList.join(' ')
     }
 }
