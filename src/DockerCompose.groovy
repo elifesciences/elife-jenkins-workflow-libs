@@ -24,7 +24,7 @@ public class DockerCompose implements Serializable {
         return this
     }
 
-    public DockerCompose withOption(String name, value)
+    public DockerCompose withOption(String name, value = null)
     {
         this.options[name] = value
         return this
@@ -38,14 +38,25 @@ public class DockerCompose implements Serializable {
 
     public String toString()
     {
-        def pieces = [
-            environment.asPrefix(),
-            "docker-compose -f ${file} ${name}",
-        ]
+        def pieces = []
+        if (environment.asPrefix()) {
+            pieces.add(environment.asPrefix())
+        }
+        pieces.add("docker-compose -f ${file} ${name}")
         if (options) {
             def optionsList = []
             options.each({ n, v ->
-                optionsList.add("--${n} ${v}")
+                def dashes
+                if (n.size() == 1) {
+                    dashes = '-'
+                } else {
+                    dashes = '--'
+                }
+                def value = ''
+                if (v != null) {
+                    value = " ${v}"
+                }
+                optionsList.add("${dashes}${n}${value}")
             })
             pieces.add(optionsList.join(' '))
         }

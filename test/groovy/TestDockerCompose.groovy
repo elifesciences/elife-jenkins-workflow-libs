@@ -28,5 +28,16 @@ class TestDockerCompose {
                 .toString()
         );
     }
+
+    @Test
+    void should_implement_a_up_command() throws Exception {
+        assertEquals(
+            'docker-compose -f docker-compose.ci.yml up -d',
+            DockerCompose
+                .command('up')
+                .withOption('d')
+                .toString()
+        );
+    }
 }
 
