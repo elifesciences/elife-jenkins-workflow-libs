@@ -2,8 +2,8 @@ import DockerCompose
 
 def call(project, tag='latest', testArtifacts=[])
 {
+    def String container = "${project}_ci_project_tests"
     try {
-        def String container = "${project}_ci_project_tests"
         sh "docker rm ${container} || true"
 
         sh DockerCompose
