@@ -10,8 +10,8 @@ def call(project, tag='latest', Map configuration) {
         sh "docker wait ${waitFor.get(i)}"
     }
 
-    def smokeTests = configuration.get('smokeTests', {})
-    smokeTests.each({ container, path ->
+    def scripts = configuration.get('scripts', {})
+    scripts.each({ container, path ->
         sh DockerCompose
             .command('exec')
             .withEnvironment('IMAGE_TAG', tag)
