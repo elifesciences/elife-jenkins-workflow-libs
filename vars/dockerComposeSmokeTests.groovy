@@ -22,6 +22,9 @@ def call(project, tag='latest', Map configuration) {
                 .toString()
         })
     } finally {
-        // docker compose -f ... down
+        sh DockerCompose
+            .command('down')
+            .withEnvironment('IMAGE_TAG', tag)
+            .toString()
     }
 }
