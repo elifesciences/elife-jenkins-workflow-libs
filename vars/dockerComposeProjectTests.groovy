@@ -1,6 +1,6 @@
 import DockerCompose
 
-def call(project, tag='latest')
+def call(project, tag='latest', testArtifacts=[])
 {
     try {
         def String container = "${project}_ci_project_tests"
@@ -13,12 +13,12 @@ def call(project, tag='latest')
             .withArgument('ci')
             .withArgument('./project_tests.sh')
             .toString()
-
-        // TODO: extract in dockerComposeSmokeTests
-        // docker-compose up
-        // optionally docker wait
     } finally {
-        // docker cp test artifacts
-        // docker compose down
+        for (int i = 0; i < testArtifacts.size(); i++) {
+            def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(i))
+            sh "docker cp ${container}:${remoteTestArtifact.path()} ${remoteTestArtifact.localTestArtifactFolder()"
+            step([$class: "JUnitResultArchiver", testResult: remoteTestArtifact.localTestArtifact()])
+        }
+        sh "docker rm ${container}"
     }
 }

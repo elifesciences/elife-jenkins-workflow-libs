@@ -1,3 +1,5 @@
 Runs project tests on `project` on Docker images tagged with `tag`.
 
 The `ci` image is used to run the `./project_tests.sh` script.
+
+Optionally artifacts to be retrieved can be specified as a list in the `testArtifacts` argument.
