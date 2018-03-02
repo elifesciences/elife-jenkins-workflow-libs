@@ -15,7 +15,8 @@ def call(project, commit, testArtifacts=[], organization='elifesciences') {
         for (int i = 0; i < testArtifacts.size(); i++) {
             def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(i))
             sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
-            step([$class: 'JUnitResultArchiver', testResults: testArtifacts.get(i)])
+            step([$class: 'JUnitResultArchiver', testResults: remoteTestArtifact.localTestArtifact()])
         }
+        sh "docker rm ${container}"
     }
 }
