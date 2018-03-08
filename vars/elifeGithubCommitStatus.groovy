@@ -1,3 +1,5 @@
+import Revision
+
 def call(commit, status, context, description='elifeGithubCommitStatus step', targetUrl='') {
     def revision = new Revision(commit)
     if (revision.isBranch()) {
