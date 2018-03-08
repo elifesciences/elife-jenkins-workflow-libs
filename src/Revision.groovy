@@ -9,4 +9,8 @@ public class Revision {
         def isCommit = this.label ==~ /[0-9a-f]{40}/
         return !isCommit
     }
+
+    public String toString() {
+        return label
+    }
 }
