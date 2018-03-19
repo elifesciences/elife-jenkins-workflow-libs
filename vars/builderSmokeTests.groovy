@@ -3,5 +3,5 @@ def call(stackname, folder) {
     def smokeTestsCmd = "smoke-tests ${folder}"
     def smokeTests = withCommitStatus({
         builderCmd stackname, smokeTestsCmd
-    }, 'smoke_tests.sh', commit)
+    }, 'smoke_tests', commit)
 }

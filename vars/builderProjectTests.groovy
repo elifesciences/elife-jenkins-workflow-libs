@@ -27,7 +27,7 @@ def defineProjectTests(stackname, folder) {
         actions['project_tests.sh'] = {
             withCommitStatus({
                 builderCmd stackname, projectTestsCmd
-            }, 'project_tests.sh', commit)
+            }, 'project_tests', commit)
         }
     }
 
