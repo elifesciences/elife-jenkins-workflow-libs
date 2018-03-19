@@ -1,4 +1,4 @@
-def call(stackname, folder) {
+def call(stackname, folder, commitStatusName='smoke_tests') {
     def String commit = elifeGitRevision()
     def smokeTestsCmd = "smoke-tests ${folder}"
     def smokeTests = withCommitStatus({

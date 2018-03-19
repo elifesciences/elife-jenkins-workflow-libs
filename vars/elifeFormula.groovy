@@ -27,7 +27,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                         sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh"
                         sh "/srv/builder/bldr masterless.launch:${project},${instance}-fresh,standalone,${formula}@${commit}"
                         if (smokeTestsFolder) {
-                            builderSmokeTests "${partialStackname}-fresh", smokeTestsFolder
+                            builderSmokeTests "${partialStackname}-fresh", smokeTestsFolder, 'pr-fresh/smoke_tests'
                         }
                         elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation succeeded', env.RUN_DISPLAY_URL
                     } catch (e) {
@@ -45,7 +45,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                             sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-base-update"
                             sh "/srv/builder/bldr masterless.launch:${project},${instance}-base-update,standalone"
                             if (smokeTestsFolder) {
-                                builderSmokeTests "${partialStackname}-base-update", smokeTestsFolder
+                                builderSmokeTests "${partialStackname}-base-update", smokeTestsFolder, 'pr-base/smoke_tests'
                             }
                             elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-base', 'Original stack creation succeeded', env.RUN_DISPLAY_URL
                         } catch (e) {
@@ -58,7 +58,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                             sh "/srv/builder/bldr masterless.set_versions:${partialStackname}-base-update,${formula}@${commit}"
                             sh "/srv/builder/bldr update:${partialStackname}-base-update"
                             if (smokeTestsFolder) {
-                                builderSmokeTests "${partialStackname}-base-update", smokeTestsFolder
+                                builderSmokeTests "${partialStackname}-base-update", smokeTestsFolder, 'pr-update/smoke_tests'
                             }
                             elifeGithubCommitStatus commit, 'success', 'continuous-integration/jenkins/pr-update', 'Applying update succeeded', env.RUN_DISPLAY_URL
                         } catch (e) {
