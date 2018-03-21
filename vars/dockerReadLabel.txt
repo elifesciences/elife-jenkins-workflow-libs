@@ -1,0 +1,3 @@
+Reads a label named `labelName` from the Docker image `imageName`.
+
+Pulls the image if necessary.
