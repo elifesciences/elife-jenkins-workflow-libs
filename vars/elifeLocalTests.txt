@@ -1,7 +1,7 @@
-Executes `cmd` in the current workspace and bubbles up any failure.
+Executes `cmd`, optional argument, in the current workspace and bubbles up any failure.
 
 In addition to `cmd`, will also execute, in parallel, any script inside an optional `.ci` folder.
 
-All of the checks will be reported as independent commit statuses on the relative pull request, if there is one.
+All of the checks will be reported as independent commit statuses on the relative pull request, if there is one. At least one check must be found in order to avoid a failure.
 
 Before letting exceptions raise, archives the artifacts listed in `testArtifacts`.

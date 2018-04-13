@@ -26,7 +26,7 @@ def defineLocalTests(projectTestsCommand=null) {
     return actions
 }
 
-def call(cmd, testArtifacts=[]) {
+def call(cmd=null, testArtifacts=[]) {
     actions = defineLocalTests(cmd)
     try {
         parallel actions
