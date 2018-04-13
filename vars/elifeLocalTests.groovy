@@ -1,15 +1,16 @@
 def defineLocalTests(projectTestsCommand=null) {
     def String commit = elifeGitRevision()
     def actions = [:]
-    def projectTestsParallelScripts = findFiles(glob: '.ci/*')
-    for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
-        def name = "${projectTestsParallelScripts[i].name}"
-        actions[name] = {
-            withCommitStatus({
-                sh "${projectTestsParallelScripts[i].path}"
-            }, name, commit)
-        }
-    }
+    //def projectTestsParallelScripts = findFiles(glob: '.ci/*')
+    //for (int i = 0; i < projectTestsParallelScripts.size(); i++) {
+    //    def name = "${projectTestsParallelScripts[i].name}"
+    //    def path = "${projectTestsParallelScripts[i].path}"
+    //    actions[name] = {
+    //        withCommitStatus({
+    //            sh path
+    //        }, name, commit)
+    //    }
+    //}
     if (projectTestsCommand) {
         actions['project_tests.sh'] = {
             withCommitStatus({

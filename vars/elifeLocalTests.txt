@@ -1,3 +1,7 @@
 Executes `cmd` in the current workspace and bubbles up any failure.
 
-However, before letting exceptions raise, archives the artifacts listed in `testArtifacts`.
+In addition to `cmd`, will also execute, in parallel, any script inside an optional `.ci` folder.
+
+All of the checks will be reported as independent commit statuses on the relative pull request, if there is one.
+
+Before letting exceptions raise, archives the artifacts listed in `testArtifacts`.
