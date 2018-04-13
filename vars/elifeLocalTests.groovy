@@ -13,7 +13,7 @@ def defineLocalTests() {
     if (fileExists('project_tests.sh')) {
         actions['project_tests.sh'] = {
             withCommitStatus({
-                sh 'project_tests.sh'
+                sh './project_tests.sh'
             }, 'project_tests', commit)
         }
     }
