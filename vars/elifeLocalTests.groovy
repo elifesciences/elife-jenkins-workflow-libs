@@ -1,4 +1,4 @@
-def defineLocalTests() {
+def defineLocalTests(projectTestsCommand=null) {
     def String commit = elifeGitRevision()
     def actions = [:]
     def projectTestsParallelScripts = findFiles(glob: '.ci/*')
@@ -10,10 +10,10 @@ def defineLocalTests() {
             }, name, commit)
         }
     }
-    if (fileExists('project_tests.sh')) {
+    if (projectTestsCommand) {
         actions['project_tests.sh'] = {
             withCommitStatus({
-                sh './project_tests.sh'
+                sh projectTestsCommand
             }, 'project_tests', commit)
         }
     }
@@ -26,7 +26,7 @@ def defineLocalTests() {
 }
 
 def call(cmd, testArtifacts=[]) {
-    actions = defineLocalTests()
+    actions = defineLocalTests(cmd)
     try {
         parallel actions
     } finally {
