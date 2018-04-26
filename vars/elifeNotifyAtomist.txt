@@ -1,0 +1,7 @@
+Taken from https://docs.atomist.com/user/#jenkins
+
+`buildStatus` can be:
+- `STARTED` (with `STARTED` as `buildPhase`) 
+- `SUCCESS`
+- `UNSTABLE`
+- `FAILURE`
