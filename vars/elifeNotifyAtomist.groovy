@@ -1,5 +1,7 @@
 import groovy.json.JsonOutput
 
+def slackTeamId = 'T025LBBQS'
+
 def getSCMInformation() {
     def gitUrl = sh(returnStdout: true, script: 'git config --get remote.origin.url').trim()
     def gitSha = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
@@ -8,7 +10,7 @@ def getSCMInformation() {
 }
 
 def call(buildStatus, buildPhase="FINALIZED",
-                  endpoint="https://webhook.atomist.com/atomist/jenkins/teams/TEAM_ID") {
+                  endpoint="https://webhook.atomist.com/atomist/jenkins/teams/${slackTeamId}") {
 
     def payload = JsonOutput.toJson([
         name: env.JOB_NAME,
