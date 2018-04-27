@@ -2,7 +2,7 @@ def call(project, tag='latest', Map configuration) {
     withCommitStatus({
         try {
             sh DockerCompose
-                .command('up')
+                .command('up', ['docker-compose.yml', 'docker-compose.ci.yml'])
                 .withEnvironment('IMAGE_TAG', tag)
                 .withOption('d')
                 .withOption('force-recreate')
@@ -15,7 +15,7 @@ def call(project, tag='latest', Map configuration) {
             def scripts = configuration.get('scripts', {})
             scripts.each({ container, path ->
                 sh DockerCompose
-                    .command('exec')
+                    .command('exec', ['docker-compose.yml', 'docker-compose.ci.yml'])
                     .withEnvironment('IMAGE_TAG', tag)
                     .withOption('T')
                     .withArgument(container)
@@ -24,7 +24,7 @@ def call(project, tag='latest', Map configuration) {
             })
         } finally {
             sh DockerCompose
-                .command('down')
+                .command('down', ['docker-compose.yml', 'docker-compose.ci.yml'])
                 .withEnvironment('IMAGE_TAG', tag)
                 .toString()
         }

@@ -2,20 +2,20 @@ import Environment
 
 public class DockerCompose implements Serializable {
     private String name
-    private String file
+    private List files
     private Environment environment = new Environment()
     private Map options = [:]
     private List arguments = []
 
-    public static DockerCompose command(String name, String file = 'docker-compose.ci.yml')
+    public static DockerCompose command(String name, List files = ['docker-compose.ci.yml'])
     {
-        return new DockerCompose(name, file);
+        return new DockerCompose(name, files);
     }
 
-    public DockerCompose(String name, String file)
+    public DockerCompose(String name, List files)
     {
         this.name = name
-        this.file = file
+        this.files = files
     }
 
     public DockerCompose withEnvironment(String name, String value)
@@ -42,7 +42,11 @@ public class DockerCompose implements Serializable {
         if (environment.asPrefix()) {
             pieces.add(environment.asPrefix())
         }
-        pieces.add("docker-compose -f ${file} ${name}")
+        def filesArgument = ''
+        files.each({ f -> 
+            filesArgument = filesArgument + "-f ${f} "
+        })
+        pieces.add("docker-compose ${filesArgument}${name}")
         if (options) {
             def optionsList = []
             options.each({ n, v ->

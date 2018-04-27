@@ -8,7 +8,7 @@ def call(project, tag='latest', testArtifacts=[])
             sh "docker rm ${container} || true"
 
             sh DockerCompose
-                .command('run')
+                .command('run', ['docker-compose.yml', 'docker-compose.ci.yml'])
                 .withEnvironment('IMAGE_TAG', tag)
                 .withOption('name', container)
                 .withArgument('ci')
