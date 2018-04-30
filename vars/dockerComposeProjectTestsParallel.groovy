@@ -2,7 +2,7 @@ import DockerCompose
 
 def call(project, tag='latest', testArtifacts=[])
 {
-    action = { stackname, command, label ->
+    action = { stackname, command, folder, label ->
         withCommitStatus({
             def String container = "${project}_ci_${label}"
             try {
