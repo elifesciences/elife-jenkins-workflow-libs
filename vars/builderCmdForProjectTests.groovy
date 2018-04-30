@@ -1,4 +1,4 @@
-def call(stackname, command, label) {
+def call(stackname, command, folder, label) {
     echo "builderCmdForProjectTests: ${stackname}, ${command}, ${label}"
-    builderCmd stackname, command
+    builderCmd stackname, "cd ${folder}; ${command}"
 }
