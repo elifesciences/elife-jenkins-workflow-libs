@@ -9,11 +9,6 @@ def retrieveArtifacts(stackname, testArtifacts, folder) {
     }
 }
 
-def builderCmdAdapter(stackname, command, label) {
-    echo "builderCmdAdapter: ${stackname}, ${command}, ${label}"
-    builderCmd stackname, command
-}
-
 def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
     for (int i = 0; i < order.size(); i++) {
         if (order.get(i) == 'smoke') {
@@ -22,7 +17,7 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
             try {
                 def allArtifacts = testArtifacts.join(' ')
                 builderCmd stackname, "cd ${folder}; rm -rf ${allArtifacts}"
-                actions = _defineProjectTests(stackname, folder, builderCmd)
+                actions = _defineProjectTests(stackname, folder, builderCmdForProjectTests)
                 echo "Actions created"
                 actions.each({ n, v -> 
                     echo "Name of action: ${n}"
