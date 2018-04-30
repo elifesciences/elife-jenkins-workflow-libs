@@ -23,6 +23,11 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
                 def allArtifacts = testArtifacts.join(' ')
                 builderCmd stackname, "cd ${folder}; rm -rf ${allArtifacts}"
                 actions = _defineProjectTests(stackname, folder, builderCmdAdapter)
+                echo "Actions created"
+                actions.each({ n, v -> 
+                    echo "Name of action: ${n}"
+                })
+                echo "Executing actions"
                 parallel actions
             } finally {
                 retrieveArtifacts stackname, testArtifacts, folder
