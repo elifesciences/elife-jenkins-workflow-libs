@@ -2,9 +2,9 @@ import DockerCompose
 
 def call(project, tag='latest', testArtifacts=[])
 {
-    action = { stackname, command ->
+    action = { stackname, command, label ->
         withCommitStatus({
-            def String container = "${project}_ci_project_tests"
+            def String container = "${project}_ci_{$label}"
             try {
                 sh "docker rm ${container} || true"
 
@@ -13,7 +13,7 @@ def call(project, tag='latest', testArtifacts=[])
                     .withEnvironment('IMAGE_TAG', tag)
                     .withOption('name', container)
                     .withArgument('ci')
-                    .withArgument('./project_tests.sh')
+                    .withArgument(command)
                     .toString()
             } finally {
                 for (int i = 0; i < testArtifacts.size(); i++) {
