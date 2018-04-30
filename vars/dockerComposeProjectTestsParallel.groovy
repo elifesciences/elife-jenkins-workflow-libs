@@ -1,6 +1,6 @@
 import DockerCompose
 
-def call(project, tag='latest', testArtifacts=[])
+def call(project, tag='latest', testArtifacts=[:])
 {
     action = { stackname, command, folder, label ->
         withCommitStatus({
@@ -16,8 +16,8 @@ def call(project, tag='latest', testArtifacts=[])
                     .withArgument(command)
                     .toString()
             } finally {
-                for (int i = 0; i < testArtifacts.size(); i++) {
-                    def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(i))
+                if (testArtifacts.containsKey(label)) {
+                    def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(name))
                     sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
                     step([$class: "JUnitResultArchiver", testResults: remoteTestArtifact.localTestArtifact()])
                 }
