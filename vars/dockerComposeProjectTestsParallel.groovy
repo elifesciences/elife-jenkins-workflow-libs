@@ -20,6 +20,8 @@ def call(project, tag='latest', testArtifacts=[:])
                     def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(name))
                     sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
                     step([$class: "JUnitResultArchiver", testResults: remoteTestArtifact.localTestArtifact()])
+                } else {
+                    echo "No test artifacts defined for ${label}"
                 }
                 sh "docker rm ${container}"
             }
