@@ -7,7 +7,7 @@ def call(stackname, folder, callable) {
         def name = "${projectTestsParallelScripts[i].name}"
         actions[name] = {
             withCommitStatus({
-                callable stackname, projectTestsParallelScript
+                callable stackname, projectTestsParallelScript, name
             }, name, commit)
         }
     }
@@ -15,7 +15,7 @@ def call(stackname, folder, callable) {
         def projectTestsCmd = "cd ${folder}; ./project_tests.sh"
         actions['project_tests.sh'] = {
             withCommitStatus({
-                callable stackname, projectTestsCmd
+                callable stackname, projectTestsCmd, 'project_tests.sh'
             }, 'project_tests', commit)
         }
     }

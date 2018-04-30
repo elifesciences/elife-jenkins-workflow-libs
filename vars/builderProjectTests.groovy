@@ -17,7 +17,9 @@ def call(stackname, folder, testArtifacts=[], order=['project', 'smoke']) {
             try {
                 def allArtifacts = testArtifacts.join(' ')
                 builderCmd stackname, "cd ${folder}; rm -rf ${allArtifacts}"
-                actions = _defineProjectTests stackname, folder, builderCmd
+                actions = _defineProjectTests(stackname, folder, { stackname, command, label ->
+                    builderCmd stackname, command
+                })
                 parallel actions
             } finally {
                 retrieveArtifacts stackname, testArtifacts, folder
