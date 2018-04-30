@@ -29,4 +29,5 @@ def call(project, tag='latest', testArtifacts=[])
     actions.each({ n, v -> 
         echo "Name of action: ${n}"
     })
+    parallel actions
 }
