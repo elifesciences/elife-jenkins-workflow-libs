@@ -10,6 +10,7 @@ def retrieveArtifacts(stackname, testArtifacts, folder) {
 }
 
 def builderCmdAdapter(stackname, command, label) {
+    echo "builderCmdAdapter: ${stackname}, ${command}, ${label}"
     builderCmd stackname, command
 }
 
