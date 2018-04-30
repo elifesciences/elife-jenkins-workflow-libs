@@ -4,7 +4,7 @@ def call(project, tag='latest', testArtifacts=[])
 {
     action = { stackname, command, label ->
         withCommitStatus({
-            def String container = "${project}_ci_{$label}"
+            def String container = "${project}_ci_${label}"
             try {
                 sh "docker rm ${container} || true"
 
