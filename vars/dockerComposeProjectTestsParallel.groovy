@@ -18,9 +18,9 @@ def call(project, tag='latest', testArtifacts=[:])
             } finally {
                 echo "Test artifacts: ${testArtifacts.keySet()}"
                 testArtifacts.keySet().each({ k ->
-                    echo k.getClass()
-                    echo label.getClass()
-                    echo label.equals(k)
+                    echo k.getClass().toString()
+                    echo label.getClass().toString()
+                    echo label.equals(k).toString()
                 })
                 if (testArtifacts.containsKey(label)) {
                     def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(label))
