@@ -7,7 +7,7 @@ def call(stackname, folder, callable) {
         def name = "${projectTestsParallelScripts[i].name}"
         actions[name] = {
             withCommitStatus({
-                callable stackname, projectTestsParallelScript, folder, name
+                callable stackname, projectTestsParallelScript, folder, name.toString()
             }, name, commit)
         }
     }
