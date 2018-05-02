@@ -16,7 +16,7 @@ def call(project, tag='latest', testArtifacts=[:])
                     .withArgument(command)
                     .toString()
             } finally {
-                echo testArtifacts.keySet()
+                echo "Test artifacts: ${testArtifacts.keySet()}"
                 if (testArtifacts.containsKey(label)) {
                     def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(label))
                     sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
