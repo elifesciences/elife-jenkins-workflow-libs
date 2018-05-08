@@ -21,6 +21,11 @@ def call(project, tag='latest', testArtifacts=[])
                 step([$class: "JUnitResultArchiver", testResults: remoteTestArtifact.localTestArtifact()])
             }
             sh "docker rm ${container} --volumes"
+            sh DockerCompose
+                .command('down', ['docker-compose.yml', 'docker-compose.ci.yml'])
+                .withEnvironment('IMAGE_TAG', tag)
+                .withOption('volumes')
+                .toString()
         }
     }, 'project-tests', tag)
 }
