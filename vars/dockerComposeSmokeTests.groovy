@@ -26,6 +26,7 @@ def call(project, tag='latest', Map configuration) {
             sh DockerCompose
                 .command('down', ['docker-compose.yml', 'docker-compose.ci.yml'])
                 .withEnvironment('IMAGE_TAG', tag)
+                .withOption('volumes')
                 .toString()
         }
     }, 'smoke_tests', tag)
