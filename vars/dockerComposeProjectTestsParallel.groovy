@@ -37,7 +37,7 @@ def call(project, tag='latest', testArtifacts=[:])
         sh DockerCompose
             .command('down', ['docker-compose.yml', 'docker-compose.ci.yml'])
             .withEnvironment('IMAGE_TAG', tag)
-            .withOptions('volumes')
+            .withOption('volumes')
             .toString()
     }
 }
