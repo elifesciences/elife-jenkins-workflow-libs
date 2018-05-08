@@ -31,5 +31,13 @@ def call(project, tag='latest', testArtifacts=[:])
     actions.each({ n, v -> 
         echo "Name of action: ${n}"
     })
-    parallel actions
+    try {
+        parallel actions
+    } finally {
+        sh DockerCompose
+            .command('down', ['docker-compose.yml', 'docker-compose.ci.yml'])
+            .withEnvironment('IMAGE_TAG', tag)
+            .withOptions('volumes')
+            .toString()
+    }
 }
