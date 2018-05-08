@@ -10,7 +10,7 @@ def call(project, commit, testArtifacts=[], organization='elifesciences') {
             testArtifacts = ["${folder}/build/*.xml"]
         }
         try {
-            sh "docker rm ${container} || true"
+            sh "docker rm ${container} --volumes || true"
             sh "docker run --name ${container} ${fullImageName}"
         } finally { 
             for (int i = 0; i < testArtifacts.size(); i++) {
@@ -18,7 +18,7 @@ def call(project, commit, testArtifacts=[], organization='elifesciences') {
                 sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
                 step([$class: 'JUnitResultArchiver', testResults: remoteTestArtifact.localTestArtifact()])
             }
-            sh "docker rm ${container}"
+            sh "docker rm ${container} --volumes"
         }
     }, 'project-tests', commit)
 }
