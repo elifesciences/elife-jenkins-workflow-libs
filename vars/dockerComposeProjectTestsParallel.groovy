@@ -29,9 +29,6 @@ def call(project, tag='latest', testArtifacts=[:])
         }, 'project-tests', tag)
     }
     def actions = _defineProjectTests('unused', '/srv/journal', action)
-    actions.each({ n, v -> 
-        echo "Name of action: ${n}"
-    })
     try {
         parallel actions
     } finally {
