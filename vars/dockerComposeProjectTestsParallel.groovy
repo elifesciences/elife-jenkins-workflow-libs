@@ -18,6 +18,7 @@ def call(project, tag='latest', testArtifacts=[:])
             } finally {
                 if (testArtifacts.containsKey(label)) {
                     def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(label))
+                    sh "mkdir -p ${remoteTestArtifact.localTestArtifactFolder()}"
                     sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
                     step([$class: "JUnitResultArchiver", testResults: remoteTestArtifact.localTestArtifact()])
                 } else {

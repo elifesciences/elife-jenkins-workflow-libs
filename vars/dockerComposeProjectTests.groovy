@@ -17,6 +17,7 @@ def call(project, tag='latest', testArtifacts=[])
         } finally {
             for (int i = 0; i < testArtifacts.size(); i++) {
                 def remoteTestArtifact = new RemoteTestArtifact(testArtifacts.get(i))
+                sh "mkdir -p ${remoteTestArtifact.localTestArtifactFolder()}"
                 sh "docker cp ${container}:${remoteTestArtifact.remoteTestArtifactFolder()}/. ${remoteTestArtifact.localTestArtifactFolder()}"
                 step([$class: "JUnitResultArchiver", testResults: remoteTestArtifact.localTestArtifact()])
             }
