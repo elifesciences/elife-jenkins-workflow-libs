@@ -6,7 +6,7 @@ def call(project, tag='latest', testArtifacts=[:])
         withCommitStatus({
             def String container = "${project}_ci_${label}"
             try {
-                sh "docker rm ${container} || true"
+                sh "docker rm ${container} --volumes || true"
 
                 sh DockerCompose
                     .command('run', ['docker-compose.yml', 'docker-compose.ci.yml'])
@@ -23,7 +23,7 @@ def call(project, tag='latest', testArtifacts=[:])
                 } else {
                     echo "No test artifacts defined for ${label}"
                 }
-                sh "docker rm ${container}"
+                sh "docker rm ${container} --volumes"
             }
         }, 'project-tests', tag)
     }
