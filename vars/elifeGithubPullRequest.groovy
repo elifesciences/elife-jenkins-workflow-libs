@@ -1,5 +1,8 @@
+import EscapeString
+
 def call(branch, title, description = '', base='master', temporaryFile = 'pull-request.log') {
-    def status = sh(script: "hub issue | grep \"${title}\"", returnStatus: true)
+    def existingPrCheck = "bash -c \"hub issue | grep " + EscapeString.forBashSingleQuotes(title) + "\""
+    def status = sh(script: existingPrCheck, returnStatus: true)
     echo "Status: ${status}"
     def isThereAnExistingPullRequest = (status == 0)
     if (isThereAnExistingPullRequest) {
