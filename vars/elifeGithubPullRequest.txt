@@ -1,5 +1,7 @@
 Opens a pull request with the current `branch`, after pushing it to origin.
 
-`title` must be less than one line and it's good practice for it to be short. The optional `description` can be as long as you want and can contain Markdown formatting.
+`title` must be less than one line and it's good practice for it to be short. If there is already a pull request with the same title (e.g. "Update drupal/core to 8.5.4") a new pull request won't be opened to avoid proliferation: make sure different updates result in unique titles.
+
+The optional `description` can be as long as you want and can contain Markdown formatting.
 
 You can customize the `base` branch to refer to (`origin/master` by default), and the `temporaryFile` to be used.
