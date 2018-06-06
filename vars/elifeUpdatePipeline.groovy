@@ -33,7 +33,7 @@ def call(Closure updateStep, Closure describeStep, branchPrefix='automated_jenki
         stage 'Commit', {
             differences = elifeGitDifferences()
             elifeOnlyIf differences, {
-                shortDescription = describeStep()
+                shortDescription = describeStep().trim()
                 elifeGitCommit shortDescription
             }
         }
