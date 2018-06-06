@@ -1,11 +1,8 @@
 import EscapeString
 
 def call(branch, title, description = '', base='master', temporaryFile = 'pull-request.log') {
-    def existingPrCheck = "bash -c \"hub issue | grep " + EscapeString.forBashSingleQuotes(title) + "\""
-    def status = sh(script: existingPrCheck, returnStatus: true)
-    echo "Status: ${status}"
-    def isThereAnExistingPullRequest = (status == 0)
-    if (isThereAnExistingPullRequest) {
+    def issuesList = sh script: "hub issue", returnStdout: true
+    if (issuesList.contains(title)) {
         echo "There is already an existing PR with title: ${title}"
         return
     }
