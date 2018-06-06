@@ -6,6 +6,8 @@ def call(branch, title, description = '', base='master', temporaryFile = 'pull-r
     if (issuesList.contains(title)) {
         echo "There is already an existing PR with title: ${title}"
         return
+    } else {
+        echo "No PR with title: ${title}"
     }
     sh "git push origin ${branch}"
     def fullText = title + "\n\n" + description
