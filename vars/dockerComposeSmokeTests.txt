@@ -3,5 +3,5 @@ Runs the specified smoke tests on `project` on Docker images tagged with `tag`.
 `configuration` contains the following keys:
 
 - `waitFor` (optional): names of containers whose successful exit must be wait for before starting smoke tests (e.g. database migrations such as `profiles_migrate_1`).
-- `scripts`: a `Map` of simple container names to scripts to run inside them (e.g. `'wsgi':'./smoke_tests_wsgi.sh'`)
+- `services`: a `Map` of simple container names to scripts to run inside them (e.g. `'wsgi':'./smoke_tests_wsgi.sh'`)
 - `blackbox`: a list of scripts to be run outside of the containers (e.g. `'curl -v localhost:8080 ...'`)

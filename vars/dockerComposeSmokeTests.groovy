@@ -12,8 +12,13 @@ def call(project, tag='latest', Map configuration) {
                 sh "docker wait ${waitFor.get(i)}"
             }
 
-            def scripts = configuration.get('scripts', [:])
-            scripts.each({ container, path ->
+            def services = configuration.get('services', [:])
+            // deprecated fallback
+            if (!services) {
+                services = configuration.get('scripts', [:])
+            }
+            // end of deprecated fallback
+            services.each({ container, path ->
                 sh DockerCompose
                     .command('exec', ['docker-compose.yml', 'docker-compose.ci.yml'])
                     .withEnvironment('IMAGE_TAG', tag)
