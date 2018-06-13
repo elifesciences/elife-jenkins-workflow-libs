@@ -22,6 +22,11 @@ def call(project, tag='latest', Map configuration) {
                     .withArgument(path)
                     .toString()
             })
+
+            def blackbox = configuration.get('blackbox', {})
+            scripts.each({ path ->
+                sh path
+            })
         } finally {
             sh DockerCompose
                 .command('down', ['docker-compose.yml', 'docker-compose.ci.yml'])
