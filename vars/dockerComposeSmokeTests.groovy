@@ -12,7 +12,7 @@ def call(project, tag='latest', Map configuration) {
                 sh "docker wait ${waitFor.get(i)}"
             }
 
-            def scripts = configuration.get('scripts', {})
+            def scripts = configuration.get('scripts', [:])
             scripts.each({ container, path ->
                 sh DockerCompose
                     .command('exec', ['docker-compose.yml', 'docker-compose.ci.yml'])
@@ -23,8 +23,8 @@ def call(project, tag='latest', Map configuration) {
                     .toString()
             })
 
-            def blackbox = configuration.get('blackbox', {})
-            scripts.each({ path ->
+            def blackbox = configuration.get('blackbox', [])
+            blackbox.each({ path ->
                 sh path
             })
         } finally {
