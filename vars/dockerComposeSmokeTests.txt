@@ -1,4 +1,4 @@
-Runs the specified smoke tests on `project` on Docker images tagged with `tag`.
+Runs the specified smoke tests in the current project on Docker images tagged with `tag`.
 
 `configuration` contains the following keys:
 

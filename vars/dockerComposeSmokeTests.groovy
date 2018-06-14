@@ -1,4 +1,10 @@
-def call(project, tag='latest', Map configuration) {
+def call(tag='latest', /*Map*/configuration, third_argument = null) {
+    // support call(tag, configuration)
+    if (third_argument) {
+        project = tag // first argument, unused
+        tag = configuration // second argument
+        configuration = third_argument
+    }
     withCommitStatus({
         try {
             sh DockerCompose
