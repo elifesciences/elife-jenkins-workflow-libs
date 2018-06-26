@@ -16,14 +16,16 @@ public class DockerImage implements Serializable {
         this.tag = tag
     }
 
-    public void pull()
+    public DockerImage pull()
     {
         this.steps.sh "docker pull ${repository}:${tag}"
+        return this
     }
 
-    public void push()
+    public DockerImage push()
     {
         this.steps.sh "docker push ${repository}:${tag}"
+        return this
     }
 
     public DockerImage tag(newTag)
