@@ -16,6 +16,18 @@ class TestDockerCompose {
     }
 
     @Test
+    void should_implement_a_verbose_build_command() throws Exception {
+        assertEquals(
+            'IMAGE_TAG=123456 docker-compose -f docker-compose.ci.yml --verbose build',
+            DockerCompose
+                .command('build')
+                .withGeneralOption('verbose')
+                .withEnvironment('IMAGE_TAG', '123456')
+                .toString()
+        );
+    }
+
+    @Test
     void should_implement_a_run_command() throws Exception {
         assertEquals(
             'IMAGE_TAG=123456 docker-compose -f docker-compose.ci.yml run --name profiles_ci_project_tests ci ./project_tests.sh',

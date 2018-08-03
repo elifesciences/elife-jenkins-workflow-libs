@@ -4,6 +4,7 @@ public class DockerCompose implements Serializable {
     private String name
     private List files
     private Environment environment = new Environment()
+    private Map generalOptions = [:]
     private Map options = [:]
     private List arguments = []
 
@@ -21,6 +22,12 @@ public class DockerCompose implements Serializable {
     public DockerCompose withEnvironment(String name, String value)
     {
         this.environment.set(name, value)
+        return this
+    }
+
+    public DockerCompose withGeneralOption(String name/*, value = null*/)
+    {
+        this.generalOptions[name] = null
         return this
     }
 
@@ -46,7 +53,11 @@ public class DockerCompose implements Serializable {
         files.each({ f -> 
             filesArgument = filesArgument + "-f ${f} "
         })
-        pieces.add("docker-compose ${filesArgument}${name}")
+        def generalOptionsArgument = ''
+        generalOptions.each({ n, _v ->
+            generalOptionsArgument = generalOptionsArgument + "--${n} "
+        })
+        pieces.add("docker-compose ${filesArgument}${generalOptionsArgument}${name}")
         if (options) {
             def optionsList = []
             options.each({ n, v ->
