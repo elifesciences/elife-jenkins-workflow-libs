@@ -1,0 +1,3 @@
+Runs `command` using the `docker-compose` `service`, cleaning up after the run.
+
+Strongly suggested to specify the `tag` that will be passed as `IMAGE_TAG` to the `docker-compose.ci.yml`.
