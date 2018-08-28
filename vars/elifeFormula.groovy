@@ -105,7 +105,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null, Li
                                 if (smokeTestsFolder) {
                                     builderSmokeTests "${partialStackname}-fresh-${alternative}", smokeTestsFolder
                                 }
-                            }, "continuous-integration/jenkins/pr-fresh-alternative-${alternative}", commit)
+                            }, "pr-fresh-alternative-${alternative}", commit)
                         } finally {
                             sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh-${alternative}"
                         }
