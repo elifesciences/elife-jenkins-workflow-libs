@@ -1,4 +1,4 @@
-def call(String project, String smokeTestsFolder = '', String formula = null) {
+def call(String project, String smokeTestsFolder = '', String formula = null, List alternatives = []) {
     elifePipeline {
         def commit
         stage 'Checkout', {
@@ -90,6 +90,24 @@ def call(String project, String smokeTestsFolder = '', String formula = null) {
                             throw e
                         } finally {
                             sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh-${variant}"
+                        }
+                    }
+                }
+
+                for (i = 0; i < alternatives.size(); i++) {
+                    def alternative = alternatives.get(i)
+
+                    actions["fresh alternative ${alternative}"] = {
+                        try {
+                            withCommitStatus({
+                                sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh-${alternative}"
+                                sh "/srv/builder/bldr masterless.launch:${project},${instance}-fresh-${alternative},${alternative},${formula}@${commit}"
+                                if (smokeTestsFolder) {
+                                    builderSmokeTests "${partialStackname}-fresh-${alternative}", smokeTestsFolder
+                                }
+                            }, "continuous-integration/jenkins/pr-fresh-alternative-${alternative}", commit)
+                        } finally {
+                            sh "/srv/builder/bldr ensure_destroyed:${partialStackname}-fresh-${alternative}"
                         }
                     }
                 }

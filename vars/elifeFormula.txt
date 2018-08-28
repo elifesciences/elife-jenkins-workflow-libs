@@ -4,13 +4,15 @@ Accepts a:
 - `project` parameter specifying the name of the builder project e.g. `medium`.
 - `smokeTestsFolder` (optional, default `''`) is an absolute path on the instance where smoke tests are located. See `builderSmokeTests`.
 - `formula` (optional, default `${project}-formula`) parameter specifying the name of the formula repository e.g. `medium-formula`.
+- `alternatives` (optional, default `[]`) parameter specifying additional builder alternative configurations to run, with respect to `standalone`.
 
 Provides three or more checks:
 
 - `continuous-integration/jenkins/pr-fresh` tests a stack built from scratch with the new formula.
 - `continuous-integration/jenkins/pr-base` tests a stack built with the original master.
 - `continuous-integration/jenkins/pr-update` tests applies the new formula to the result of `pr-base`.
-- (optional) `continuous-integration/jenkins/pr-fresh-variant` tests variants of the stack built by using `salt/example-*.top` files in the formula, if there are any.example-*.top` files in the formula, if there are any.example-*.top` files in the formula, if there are any.example-*.top` files in the formula, if there are any.
+- (optional) `continuous-integration/jenkins/pr-fresh-$variant` tests variants of the stack built by using `salt/example-*.top` files in the formula, if there are any.
+- (optional) `continuous-integration/jenkins/pr-fresh-$alternative` tests alternatives of the stack built by using an `aws-alt` configuration from builder.
 
 Checks are built in parallel and independently from each other. `continuous-integration/jenkins/pr-head` represents the whole build, so it will be red if at least one of the checks is red.
 
