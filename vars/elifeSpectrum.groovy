@@ -73,6 +73,7 @@ def call(Map parameters) {
                     def testLogArtifact = "${env.BUILD_TAG}.${environmentName}.log"
                     sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
                     archive testLogArtifact
+                    sh "rm ${env.SPECTRUM_PREFIX}build/test.log"
                 }
 
                 elifeVerifyJunitXml testXmlArtifact
