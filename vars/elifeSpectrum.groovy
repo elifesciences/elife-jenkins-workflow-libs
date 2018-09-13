@@ -75,6 +75,8 @@ def call(Map parameters) {
                     archive testLogArtifact
                 }
 
+                sh "cd ${env.SPECTRUM_PREFIX}; sudo -H -u elife ./reset-build.sh"
+
                 elifeVerifyJunitXml testXmlArtifact
             }
         }
