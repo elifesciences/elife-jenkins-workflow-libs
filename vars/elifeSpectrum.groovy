@@ -67,14 +67,12 @@ def call(Map parameters) {
                     sh "cp ${env.SPECTRUM_PREFIX}build/junit.xml ${testXmlArtifact}"
                     echo "Found: ${testXmlArtifact}"
                     step([$class: "JUnitResultArchiver", testResults: testXmlArtifact])
-                    sh "rm ${env.SPECTRUM_PREFIX}build/junit.xml"
                 }
 
                 if (fileExists("${env.SPECTRUM_PREFIX}build/test.log")) {
                     def testLogArtifact = "${env.BUILD_TAG}.${environmentName}.log"
                     sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
                     archive testLogArtifact
-                    sh "rm ${env.SPECTRUM_PREFIX}build/test.log"
                 }
 
                 elifeVerifyJunitXml testXmlArtifact
