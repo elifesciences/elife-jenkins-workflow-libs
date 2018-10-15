@@ -3,6 +3,3 @@ def call(Closure body, nodeName='elife-libraries--ci', timeoutInMinutes=120) {
         elifeOnNode(body, nodeName)
     }, 120)
 }
-
-
-      
