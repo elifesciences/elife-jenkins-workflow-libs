@@ -1,1 +1,3 @@
 Cleans up elife-bot data from the end2end environment, primarily to avoid storage costs for S3 buckets.
+
+Also cleans up elife-spectrum local files that may have been left over from previous test runs.

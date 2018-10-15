@@ -1,4 +1,8 @@
 def call() {
-    sh "cd ${env.SPECTRUM_PREFIX}; sudo -H -u elife ${env.SPECTRUM_PREFIX}checkout.sh master"
-    sh "cd ${env.SPECTRUM_PREFIX}; sudo -H -u elife ${env.SPECTRUM_PREFIX}clean.sh"
+    lock('spectrum') {
+        elifeOnNode({
+            sh "cd ${env.SPECTRUM_PREFIX}; ./checkout.sh ${revision}"
+            sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} ./clean.sh"
+        }, 'elife-libraries--spectrum')
+    }
 }
