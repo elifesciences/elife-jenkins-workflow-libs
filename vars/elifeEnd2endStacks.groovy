@@ -6,6 +6,7 @@ def call() {
         'elife-bot--end2end',
         'elife-dashboard--end2end',
         'elife-metrics--end2end',
+        'elife-xpub--end2end',
         'iiif--end2end',
         'journal--end2end',
         'journal-cms--end2end',
