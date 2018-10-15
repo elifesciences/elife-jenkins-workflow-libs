@@ -12,8 +12,8 @@ def call(Map parameters) {
             builderStartAll(stacks)
 
             elifeOnNode({
-                sh "cd ${env.SPECTRUM_PREFIX}; sudo -H -u elife ${env.SPECTRUM_PREFIX}checkout.sh ${revision}"
-                sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} sudo -H -u elife ${env.SPECTRUM_PREFIX}load-small.sh"
+                sh "cd ${env.SPECTRUM_PREFIX}; ./checkout.sh ${revision}"
+                sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} ./load-small.sh"
             }, 'elife-libraries--spectrum')
         }
     }
