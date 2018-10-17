@@ -1,7 +1,9 @@
 // intentionally very simple, not relying on any shared structure
 node {
+    def commit
     stage 'Checkout', {
         checkout scm
+        commit = elifeGitRevision()
     }
     
     stage 'Tests', {
@@ -18,6 +20,7 @@ node {
             //   authenticated
 
             sh 'git remote add local-jenkins ssh://elife-alfred-user@localhost:16022/workflowLibs.git'
+            sh "git checkout master && git reset --hard ${commit}"
             sh 'git push local-jenkins master'
         }
     }
