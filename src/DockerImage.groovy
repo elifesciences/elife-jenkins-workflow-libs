@@ -33,5 +33,16 @@ public class DockerImage implements Serializable {
         this.steps.sh "docker tag ${repository}:${tag} ${repository}:${newTag}"
         return new DockerImage(steps, repository, newTag)
     }
+
+    public DockerImage renameAndTag(newRepository, newTag)
+    {
+        this.steps.sh "docker tag ${repository}:${tag} ${newRepository}:${newTag}"
+        return new DockerImage(steps, newRepository, newTag)
+    }
+
+    public DockerImage addSuffixAndTag(suffix, newTag)
+    {
+        return this.renameAndTag(repository + suffix, newTag)
+    }
 }
 
