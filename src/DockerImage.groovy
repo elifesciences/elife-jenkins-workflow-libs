@@ -40,7 +40,7 @@ public class DockerImage implements Serializable {
         return new DockerImage(steps, newRepository, newTag)
     }
 
-    public DockerImage tagWithSuffix(newTag, suffix)
+    public DockerImage addSuffixAndTag(suffix, newTag)
     {
         return this.renameAndTag(repository + suffix, newTag)
     }
