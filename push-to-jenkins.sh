@@ -12,7 +12,7 @@ host="$2"
 port="$3"
 
 # TODO: only add remote if not existing
-if git remote | grep jenkins; then
+if git remote | grep '^jenkins$'; then
     git remote rm jenkins
     git remote add jenkins "ssh://${username}@${host}:${port}/workflowLibs.git"
 fi
