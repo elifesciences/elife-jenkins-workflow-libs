@@ -11,6 +11,11 @@ username="$1"
 host="$2"
 port="$3"
 
+if ! git diff --exit-code; then
+    echo "This script cannot be run with uncommitted changes; exiting."
+    exit 2
+fi
+
 # TODO: only add remote if not existing
 if git remote | grep '^jenkins$'; then
     git remote rm jenkins
