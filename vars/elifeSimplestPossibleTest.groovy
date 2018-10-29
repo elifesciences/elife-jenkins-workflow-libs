@@ -1,7 +1,7 @@
-def call(environment='continuumtest') {
+def call(environmentName='continuumtest') {
     lock('spectrum') {
-        lock(environment) {
-            if (environment == 'end2end') {
+        lock(environmentName) {
+            if (environmentName == 'end2end') {
                 builderStartAll(elifeEnd2endStacks())
             }
             elifeOnNode({
