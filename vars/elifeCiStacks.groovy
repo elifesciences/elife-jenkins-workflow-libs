@@ -3,7 +3,6 @@ def call() {
         'crm--ci',
         'elife-bot--ci',
         'elife-dashboard--ci',
-        'elife-ink--ci',
         'elife-metrics--ci',
         'elife-xpub--ci',
         'journal--ci',
