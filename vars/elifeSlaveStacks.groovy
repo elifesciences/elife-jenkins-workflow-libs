@@ -6,6 +6,5 @@ def call() {
         'elife-libraries--powerful3',
         'elife-libraries--spectrum',
         'containers--medium',
-        'anonymous--continuum'
     ]
 }
