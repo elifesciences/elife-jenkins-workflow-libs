@@ -1,3 +1,3 @@
-def call(command) {
-    sh "${env.JENKINS_CLI} ${command}"
+def call(command, returnStdout=false) {
+    return sh(script: "${env.JENKINS_CLI} ${command}", returnStdout: returnStdout)
 }
