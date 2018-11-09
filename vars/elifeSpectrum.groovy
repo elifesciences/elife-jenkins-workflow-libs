@@ -80,7 +80,8 @@ def call(Map parameters) {
                         archive testLogArtifact
                     }
                     
-                    archiveArtifacts artifacts: 'build/screenshots/*.png', allowEmptyArchive: true
+                    sh "cp ${env.SPECTRUM_PREFIX}build/screenshots/*.png . || true"
+                    archiveArtifacts artifacts: '*.png', allowEmptyArchive: true
 
                     sh "cd ${env.SPECTRUM_PREFIX}; ./reset-build.sh"
 
