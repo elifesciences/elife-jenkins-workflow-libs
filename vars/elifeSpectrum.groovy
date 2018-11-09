@@ -80,7 +80,6 @@ def call(Map parameters) {
                         archive testLogArtifact
                     }
                     
-                    sh "find ${env.SPECTRUM_PREFIX}build"
                     sh "cp ${env.SPECTRUM_PREFIX}build/screenshots/*.png . || true"
                     archiveArtifacts artifacts: '*.png', allowEmptyArchive: true
 
