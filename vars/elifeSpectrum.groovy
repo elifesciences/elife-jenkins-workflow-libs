@@ -79,6 +79,8 @@ def call(Map parameters) {
                         sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
                         archive testLogArtifact
                     }
+                    
+                    archiveArtifacts artifacts: 'build/screenshots/*.png', allowEmptyArchive: true
 
                     sh "cd ${env.SPECTRUM_PREFIX}; ./reset-build.sh"
 
