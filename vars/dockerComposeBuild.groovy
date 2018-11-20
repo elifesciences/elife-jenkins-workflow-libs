@@ -12,7 +12,7 @@ def call(tag='latest')
             .toString()
     } catch (Exception e) {
         echo "Exception class: "
-        echo e.getClass()
+        echo e.getClass().toString()
         echo "Exception message: "
         echo e.getMessage()
         throw e
