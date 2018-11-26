@@ -40,7 +40,9 @@ def call(Map parameters) {
             builderStartAll(stacks)
 
             try {
-                preliminaryStep()
+                withCommitStatus({
+                    preliminaryStep()
+                }, "end2end/deploy", revision)
 
                 def additionalFilteringArguments = ''
                 if (marker) {
@@ -50,19 +52,24 @@ def call(Map parameters) {
                     additionalFilteringArguments = additionalFilteringArguments + "--article-id=${articleId} "
                 }
 
-                elifeOnNode({
-                    sh "cd ${env.SPECTRUM_PREFIX}; ${env.SPECTRUM_PREFIX}checkout.sh ${revision}"
-                    if (!additionalFilteringArguments) {
-                        // before starting the whole suite, run simple smoke test first
-                        sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_TIMEOUT=120 ${env.SPECTRUM_PREFIX}execute-simplest-possible-test.sh"
-                    }
-                    sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
-                }, 'elife-libraries--spectrum')
+                withCommitStatus({
+                    elifeOnNode({
+                        sh "cd ${env.SPECTRUM_PREFIX}; ${env.SPECTRUM_PREFIX}checkout.sh ${revision}"
+                        if (!additionalFilteringArguments) {
+                            // before starting the whole suite, run simple smoke test first
+                            sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_TIMEOUT=120 ${env.SPECTRUM_PREFIX}execute-simplest-possible-test.sh"
+                        }
+                        sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
+                    }, 'elife-libraries--spectrum')
+                }, "end2end/spectrum", revision)
             } catch (e) {
-                echo "Failure while running spectrum tests: ${e.message}"
-                echo "Attempting to rollback (if the project specifies it) before terminating the build with an error"
-                rollbackStep()
-                echo "Rollback successful"
+                withCommitStatus({
+                    echo "Failure while running spectrum tests: ${e.message}"
+                    echo "Attempting to rollback (if the project specifies it) before terminating the build with an error"
+                        preliminaryStep()
+                    rollbackStep()
+                    echo "Rollback successful"
+                }, "end2end/rollback", revision)
                 throw e
             } finally {
                 

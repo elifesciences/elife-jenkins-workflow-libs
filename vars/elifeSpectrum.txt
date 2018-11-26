@@ -10,4 +10,10 @@ Call with named parameters:
 - `articleId`: specifies the `--article-id` to filter some tests. Defaults to null.
 - `revision`: the branch of elife-spectrum to use, for example `origin/new_feature`. Defaults to `master`.
 
-Alternative to `preliminaryStep` and `rollbackStep`:
+https://github.com/libero/sample-configuration/blob/db13022565551f9671463f00b1ae8b7d3c5c4ce8/.travis/smoke-test.sh#L4
+
+Produces the following Github status checks:
+
+- `end2end/deploy` showing if the new revision can be deployed successfully
+- `end2end/test` showing if `elife-spectrum` tests have been successfully run
+- `end2end/rollback` if rollback was necessary (after a test failure)
