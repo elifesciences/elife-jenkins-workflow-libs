@@ -61,7 +61,7 @@ def call(Map parameters) {
                         }
                         sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
                     }, 'elife-libraries--spectrum')
-                }, "end2end/spectrum", revision)
+                }, "end2end/test", revision)
             } catch (e) {
                 withCommitStatus({
                     echo "Failure while running spectrum tests: ${e.message}"
