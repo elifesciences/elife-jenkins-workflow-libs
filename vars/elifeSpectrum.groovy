@@ -55,9 +55,7 @@ def call(Map parameters) {
             builderStartAll(stacks)
 
             try {
-                withCommitStatus({
-                    preliminaryStep()
-                }, "end2end/deploy", commitStatusRevision)
+                preliminaryStep()
 
                 def additionalFilteringArguments = ''
                 if (marker) {
