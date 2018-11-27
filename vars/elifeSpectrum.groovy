@@ -34,14 +34,18 @@ def call(Map parameters) {
     String commitStatusRevision = null
     echo "projectRevision: ${projectRevision}"
     if (parameters.get('revision')) {
+        echo "choice 1"
         // elife-spectrum run
         commitStatusRevision = parameters.get('revision')
     } else if (projectRevision) {
+        echo "choice 2"
         // project test-* pipeline run
         commitStatusRevision = projectRevision
     } else {
+        echo "choice 3"
         commitStatusRevision = 'master'
     }
+    echo "commitStatusRevision: ${commitStatusRevision}"
     String articleId = parameters.get('articleId')
 
     lock('spectrum') {
