@@ -34,15 +34,19 @@ def call(Map parameters) {
     if (!spectrumRevision) {
         spectrumRevision = 'master'
     }
+    String repository = null
     String commitStatusRevision = null
     if (parameters.get('revision')) {
         // elife-spectrum run
         commitStatusRevision = parameters.get('revision')
+        repository = 'elifesciences/elife-spectrum'
     } else if (projectRevision) {
         // project test-* pipeline run
         commitStatusRevision = projectRevision
+        repository = parameters.get('repository')
     } else {
         commitStatusRevision = 'master'
+        repository = 'elifesciences/elife-spectrum'
     }
     String articleId = parameters.get('articleId')
 
