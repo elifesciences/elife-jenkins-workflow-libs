@@ -5,8 +5,8 @@ def call(commitOrMap, status=null, context=null, description='elifeGithubCommitS
         commitSha = commitOrMap['commit']
         status = commitOrMap['status']
         context = commitOrMap['context']
-        description = commitOrMap['description']
-        targetUrl = commitOrMap['targetUrl']
+        description = commitOrMap.get('description', 'elifeGithubCommitStatus step')
+        targetUrl = commitOrMap.get('targetUrl', '')
         repository = commitOrMap.get('repository', '')
     } else {
         commitSha = commitOrMap
