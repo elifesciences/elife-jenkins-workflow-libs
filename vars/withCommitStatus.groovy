@@ -1,6 +1,7 @@
-def call(Closure body, String name, String commit) {
+def call(Closure body, String name, String commit, String repository = null) {
     elifeGithubCommitStatus(
         'commit': commit, 
+        'repository': repository,
         'status': 'pending',
         'context': "continuous-integration/jenkins/${name}",
         'description': "${name} started", 
