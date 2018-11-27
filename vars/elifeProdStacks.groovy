@@ -2,7 +2,6 @@ def call() {
     return [
         'annotations--prod',
         'api-gateway--prod',
-        'crm--prod',
         'elife-api--legacy',
         'jats4r--2016-08-22',
         'digests--prod',

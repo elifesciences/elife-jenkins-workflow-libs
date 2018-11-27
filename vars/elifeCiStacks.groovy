@@ -1,6 +1,5 @@
 def call() {
     return [
-        'crm--ci',
         'elife-bot--ci',
         'elife-dashboard--ci',
         'elife-metrics--ci',
