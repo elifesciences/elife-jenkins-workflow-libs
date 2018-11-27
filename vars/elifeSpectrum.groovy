@@ -3,16 +3,18 @@ def call(Map parameters) {
     Map deploy = parameters.get('deploy', null)
     Closure preliminaryStep = {}
     Closure rollbackStep = {}
+    String projectRevision = null
     if (deploy) {
         assert deploy.get('stackname') != null
         assert deploy.get('revision') != null
+        projectRevision = deploy.get('revision')
         assert deploy.get('folder') != null
         def concurrency = deploy.get('concurrency', 'serial')
         if (deploy.get('preliminaryStep')) {
             preliminaryStep = deploy.get('preliminaryStep')
         } else {
             preliminaryStep = {
-                builderDeployRevision deploy.get('stackname'), deploy.get('revision'), concurrency
+                builderDeployRevision deploy.get('stackname'), projectRevision, concurrency
                 builderSmokeTests deploy.get('stackname'), deploy.get('folder')
             }
         }
@@ -29,6 +31,16 @@ def call(Map parameters) {
     String environmentName = parameters.get('environmentName', 'end2end')
     Integer processes = parameters.get('processes', 10)
     String spectrumRevision = parameters.get('revision', 'master')
+    String commitStatusRevision = null
+    if (parameters.get('revision')) {
+        // elife-spectrum run
+        commitStatusRevision = parameters.get('revision')
+    } else if (projectRevision) {
+        // project test-* pipeline run
+        commitStatusRevision = projectRevision
+    } else {
+        commitStatusRevision = 'master'
+    }
     String articleId = parameters.get('articleId')
 
     lock('spectrum') {
@@ -42,7 +54,7 @@ def call(Map parameters) {
             try {
                 withCommitStatus({
                     preliminaryStep()
-                }, "end2end/deploy", spectrumRevision)
+                }, "end2end/deploy", commitStatusRevision)
 
                 def additionalFilteringArguments = ''
                 if (marker) {
@@ -61,7 +73,7 @@ def call(Map parameters) {
                         }
                         sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
                     }, 'elife-libraries--spectrum')
-                }, "end2end/test", spectrumRevision)
+                }, "end2end/test", commitStatusRevision)
             } catch (e) {
                 withCommitStatus({
                     echo "Failure while running spectrum tests: ${e.message}"
@@ -69,7 +81,7 @@ def call(Map parameters) {
                         preliminaryStep()
                     rollbackStep()
                     echo "Rollback successful"
-                }, "end2end/rollback", spectrumRevision)
+                }, "end2end/rollback", commitStatusRevision)
                 throw e
             } finally {
                 
