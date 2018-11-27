@@ -9,7 +9,7 @@ Call with named parameters:
 - `marker`: filter for the group of tests to run, often the name of a project like `recommendations`. Defaults to null.
 - `articleId`: specifies the `--article-id` to filter some tests. Defaults to null.
 - `revision`: the branch of elife-spectrum to use, for example `origin/new_feature`. Defaults to `master`.
-- `repository`: the Github repository we are testing, to be used for commit statuses. Defaults to the currently checked out project the Jenkinsfile comes from, `elifesciences/...`.
+- `commitStatus`: map with keys `repository` and `revision`. Describes the Github repository and commit we are testing, to be used for commit statuses. Defaults to the currently checked out project the Jenkinsfile comes from, `elifesciences/...` and its commit SHA.
 
 https://github.com/libero/sample-configuration/blob/db13022565551f9671463f00b1ae8b7d3c5c4ce8/.travis/smoke-test.sh#L4
 

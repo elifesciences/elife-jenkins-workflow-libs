@@ -34,19 +34,28 @@ def call(Map parameters) {
     if (!spectrumRevision) {
         spectrumRevision = 'master'
     }
-    String repository = null
+    def Map commitStatus = parameters.get('commitStatus', [:])
+    if (commitStatus.get('repository')) {
+        assert commitStatus.get('revision') != null
+    }
+    String commitStatusRepository = null
     String commitStatusRevision = null
     if (parameters.get('revision')) {
         // elife-spectrum run
+        commitStatusRepository = 'elifesciences/elife-spectrum'
         commitStatusRevision = parameters.get('revision')
-        repository = 'elifesciences/elife-spectrum'
+    } else if (commitStatus.get('repository')) {
+        // elife-xpub-deployment run, pushing commit status to elife-xpub
+        commitStatusRepository = commitStatus.get('repository')
+        commitStatusRevision = commitStatus.get('revision')
     } else if (projectRevision) {
-        // project test-* pipeline run
+        // project test-* pipeline run, pushing commit status to itself
         commitStatusRevision = projectRevision
-        repository = parameters.get('repository')
+        commitStatusRepository = null
     } else {
+        // should probably never happen
+        commitStatusRepository = 'elifesciences/elife-spectrum'
         commitStatusRevision = 'master'
-        repository = 'elifesciences/elife-spectrum'
     }
     String articleId = parameters.get('articleId')
 
