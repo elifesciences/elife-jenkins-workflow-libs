@@ -33,6 +33,7 @@ def call(Map parameters) {
     String spectrumRevision = parameters.get('revision', 'master')
     String commitStatusRevision = null
     echo "projectRevision: ${projectRevision}"
+    echo "parameters.get('revision'): ${parameters.get('revision')}"
     if (parameters.get('revision')) {
         echo "choice 1"
         // elife-spectrum run
