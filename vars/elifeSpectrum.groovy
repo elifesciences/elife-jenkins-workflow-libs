@@ -3,7 +3,7 @@ def call(Map parameters) {
     Map deploy = parameters.get('deploy', null)
     Closure preliminaryStep = {}
     Closure rollbackStep = {}
-    String projectRevision = null
+    def String projectRevision = null
     if (deploy) {
         assert deploy.get('stackname') != null
         assert deploy.get('revision') != null
