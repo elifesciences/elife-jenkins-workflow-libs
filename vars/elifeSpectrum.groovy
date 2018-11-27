@@ -28,7 +28,7 @@ def call(Map parameters) {
     String marker = parameters.get('marker')
     String environmentName = parameters.get('environmentName', 'end2end')
     Integer processes = parameters.get('processes', 10)
-    String revision = parameters.get('revision', 'master')
+    String spectrumRevision = parameters.get('revision', 'master')
     String articleId = parameters.get('articleId')
 
     lock('spectrum') {
@@ -42,7 +42,7 @@ def call(Map parameters) {
             try {
                 withCommitStatus({
                     preliminaryStep()
-                }, "end2end/deploy", revision)
+                }, "end2end/deploy", spectrumRevision)
 
                 def additionalFilteringArguments = ''
                 if (marker) {
@@ -54,14 +54,14 @@ def call(Map parameters) {
 
                 withCommitStatus({
                     elifeOnNode({
-                        sh "cd ${env.SPECTRUM_PREFIX}; ${env.SPECTRUM_PREFIX}checkout.sh ${revision}"
+                        sh "cd ${env.SPECTRUM_PREFIX}; ${env.SPECTRUM_PREFIX}checkout.sh ${spectrumRevision}"
                         if (!additionalFilteringArguments) {
                             // before starting the whole suite, run simple smoke test first
                             sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_TIMEOUT=120 ${env.SPECTRUM_PREFIX}execute-simplest-possible-test.sh"
                         }
                         sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
                     }, 'elife-libraries--spectrum')
-                }, "end2end/test", revision)
+                }, "end2end/test", spectrumRevision)
             } catch (e) {
                 withCommitStatus({
                     echo "Failure while running spectrum tests: ${e.message}"
@@ -69,7 +69,7 @@ def call(Map parameters) {
                         preliminaryStep()
                     rollbackStep()
                     echo "Rollback successful"
-                }, "end2end/rollback", revision)
+                }, "end2end/rollback", spectrumRevision)
                 throw e
             } finally {
                 
