@@ -1,3 +1,5 @@
+import Stack
+
 def call(stackname, folder, commitStatusName='smoke_tests') {
     def stack = Stack.fromName(stackname)
     def String commit = elifeGitRevision()
