@@ -30,23 +30,20 @@ def call(Map parameters) {
     String marker = parameters.get('marker')
     String environmentName = parameters.get('environmentName', 'end2end')
     Integer processes = parameters.get('processes', 10)
-    String spectrumRevision = parameters.get('revision', 'master')
+    def String spectrumRevision = parameters.get('revision')
+    if (!spectrumRevision) {
+        spectrumRevision = 'master'
+    }
     String commitStatusRevision = null
-    echo "projectRevision: ${projectRevision}"
-    echo "parameters.get('revision'): ${parameters.get('revision')}"
     if (parameters.get('revision')) {
-        echo "choice 1"
         // elife-spectrum run
         commitStatusRevision = parameters.get('revision')
     } else if (projectRevision) {
-        echo "choice 2"
         // project test-* pipeline run
         commitStatusRevision = projectRevision
     } else {
-        echo "choice 3"
         commitStatusRevision = 'master'
     }
-    echo "commitStatusRevision: ${commitStatusRevision}"
     String articleId = parameters.get('articleId')
 
     lock('spectrum') {
