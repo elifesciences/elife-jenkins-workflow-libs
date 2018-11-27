@@ -9,4 +9,4 @@ If there are multiple servers involved, `concurrency` is useful to decide how to
 - `parallel`: all together
 - `blue-green`: 50% at a time
 
-A commit status is also produced, named `continuous-integration/jenkins/{environment}/deploy` where `environment` can be `ci`, `end2end`.
+A commit status is also produced, named `continuous-integration/jenkins/{environment}/deploy` where `environment` can be `ci`, `end2end`, ...

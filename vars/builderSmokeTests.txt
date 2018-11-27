@@ -1,1 +1,3 @@
 If a `smoke_tests.sh` file is found in `folder` on `stackname`, it is executed. These tests should target the real application, but on localhost so that they may be executed on any environment and machine.
+
+A commit status is also produced, named `continuous-integration/jenkins/{environment}/smoke-tests` where `environment` can be `ci`, `end2end`, ...
