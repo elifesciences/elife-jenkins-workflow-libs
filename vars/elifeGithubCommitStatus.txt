@@ -1,9 +1,13 @@
 Sends a commit status notification for the `commit`, which needs to originate from Github or to have been previously pushed there.
 
-`commit` is a sha.
-`status` is usually `success` or `failure`, but can also be `pending` to give feedback to the user that the a build is still working.
-`context` is what is checked by Github for required commit statuses, like `continuous-integration/jenkins/pr-head`.
-`description` (optional) is free text that will appear in the pull request, if there is one.
-'targetUrl' (optional) is the URL the link being created on Github will point to.
+Pass a `Map` of parameters:
+
+- `commit` is a sha.
+- `status` is usually `success` or `failure`, but can also be `pending` to give feedback to the user that the a build is still working.
+- `context` is what is checked by Github for required commit statuses, like `continuous-integration/jenkins/pr-head`.
+- `description` (optional) is free text that will appear in the pull request, if there is one.
+- 'targetUrl' (optional) is the URL the link being created on Github will point to.
 
 Normally this is not needed as Jenkins reports commit statuses automatically. However, sometimes in the meanders of automation you want to manually push to a branch that is protected and requires some commit statuses to be green. If you have just run the tests for that version of the code, just set the commit status manually before pushing.
+
+Also used by `withCommitStatus` which is popular to give feedback on the different stages of a build, or environments that a commit gets deployed on.
