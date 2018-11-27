@@ -87,7 +87,7 @@ def call(Map parameters) {
                         }
                         sh "cd ${env.SPECTRUM_PREFIX}; SPECTRUM_ENVIRONMENT=${environmentName} SPECTRUM_PROCESSES=${processes} ${env.SPECTRUM_PREFIX}execute.sh ${additionalFilteringArguments}"
                     }, 'elife-libraries--spectrum')
-                }, "end2end/test", commitStatusRevision)
+                }, "${environmentName}/test", commitStatusRevision)
             } catch (e) {
                 withCommitStatus({
                     echo "Failure while running spectrum tests: ${e.message}"
@@ -95,7 +95,7 @@ def call(Map parameters) {
                         preliminaryStep()
                     rollbackStep()
                     echo "Rollback successful"
-                }, "end2end/rollback", commitStatusRevision)
+                }, "${environmentName}/rollback", commitStatusRevision)
                 throw e
             } finally {
                 
