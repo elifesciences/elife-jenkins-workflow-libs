@@ -1,6 +1,6 @@
 import Revision
 
-def call(commitOrMap, status, context, description='elifeGithubCommitStatus step', targetUrl='') {
+def call(commitOrMap, status=null, context=null, description='elifeGithubCommitStatus step', targetUrl='') {
     if (commitOrMap instanceof Map) {
         commitSha = commitOrMap['commit']
         status = commitOrMap['status']
