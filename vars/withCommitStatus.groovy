@@ -1,5 +1,11 @@
 def call(Closure body, String name, String commit) {
-    elifeGithubCommitStatus commit, 'pending', "continuous-integration/jenkins/${name}", "${name} started", env.RUN_DISPLAY_URL
+    elifeGithubCommitStatus(
+        'commit': commit, 
+        'status': 'pending',
+        'context': "continuous-integration/jenkins/${name}",
+        'description': "${name} started", 
+        'displayUrl': env.RUN_DISPLAY_URL
+    )
     try {
         body()
         elifeGithubCommitStatus commit, 'success', "continuous-integration/jenkins/${name}", "${name} succeeded", env.RUN_DISPLAY_URL
