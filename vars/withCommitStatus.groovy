@@ -9,9 +9,23 @@ def call(Closure body, String name, String commit, String repository = null) {
     )
     try {
         body()
-        elifeGithubCommitStatus commit, 'success', "continuous-integration/jenkins/${name}", "${name} succeeded", env.RUN_DISPLAY_URL
+        elifeGithubCommitStatus(
+            'commit': commit, 
+            'repository': repository,
+            'status': 'success',
+            'context': "continuous-integration/jenkins/${name}",
+            'description': "${name} succeeded",
+            'displayUrl': env.RUN_DISPLAY_URL
+        )
     } catch (e) {
-        elifeGithubCommitStatus commit, 'failure', "continuous-integration/jenkins/${name}", "${name} failed: ${e.message}", env.RUN_DISPLAY_URL
+        elifeGithubCommitStatus(
+            'commit': commit,
+            'repository': repository,
+            'status': 'failure',
+            'context': "continuous-integration/jenkins/${name}",
+            'description': "${name} failed: ${e.message}",
+            'displayUrl': env.RUN_DISPLAY_URL
+        )
         throw e
     }
 }
