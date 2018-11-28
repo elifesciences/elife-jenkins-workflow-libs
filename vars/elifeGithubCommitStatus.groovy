@@ -13,6 +13,7 @@ def call(commitOrMap, status=null, context=null, description='elifeGithubCommitS
         }
     } else {
         commitSha = commitOrMap
+        repository = ''
     }
     def revision = new Revision(commitSha)
     if (revision.isBranch()) {
