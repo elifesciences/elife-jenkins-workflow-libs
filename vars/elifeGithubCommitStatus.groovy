@@ -15,6 +15,6 @@ def call(commitOrMap, status=null, context=null, description='elifeGithubCommitS
     if (revision.isBranch()) {
         echo "No commit status to update for branch ${revision.toString()}"
     } else {
-        sh "commit=${commitSha} status=${status} context=${context} description='${description}' target_url='${targetUrl}' /usr/local/jenkins-scripts/notify_github_commit_status.sh"
+        sh "repository=${repository} commit=${commitSha} status=${status} context=${context} description='${description}' target_url='${targetUrl}' /usr/local/jenkins-scripts/notify_github_commit_status.sh"
     }
 }
