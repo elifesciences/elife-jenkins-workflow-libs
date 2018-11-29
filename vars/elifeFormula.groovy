@@ -114,7 +114,9 @@ def call(String project, String smokeTestsFolder = '', String formula = null, Li
 
                 if (fileExists('helm')) {
                     actions["helm/lint"] = {
-                        sh "cd helm/ && helm lint *"
+                        withCommitStatus({
+                            sh "cd helm/ && helm lint *"
+                        }, "helm/lint", commit)
                     }
                 }
 
