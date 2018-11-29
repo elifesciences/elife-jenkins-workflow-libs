@@ -6,11 +6,11 @@ def call(Closure body, nameOrMap, String commit = null, String repository = null
         commit = nameOrMap['commit']
         repository = nameOrMap.get('repository', null)
         targetUrl = nameOrMap.get('targetUrl')
-        if (!targetUrl) {
-            targetUrl = env.RUN_DISPLAY_URL
-        }
     } else {
         name = nameOrMap
+    }
+    if (!targetUrl) {
+        targetUrl = env.RUN_DISPLAY_URL
     }
     elifeGithubCommitStatus(
         'commit': commit, 
