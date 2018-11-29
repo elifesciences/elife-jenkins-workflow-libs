@@ -1,3 +1,8 @@
 Executes `body` while adding `pending`, `success` or `failure` commit statuses on Github for the corresponding `commit`.
 
-`name` should be conforming to `[a-z0-9\-]+` as it will be preceded by `continuous-integration/jenkins/`.
+`nameOrMap` should be a map containing:
+
+- `name`: conforming to `[a-z0-9\-]+` as it will be preceded by `continuous-integration/jenkins/` e.g. `deploy-for-review`
+- `commit`: conforming to `[a-z0-9]{40}` as it must be a real commit present on Github for the current project e.g. `7a4e58f920158040fd77ccd5edcbd192cef322c2`
+- `repository` (optional): the Github repository to record the commit status in e.g. `elifesciences/elife-xpub`. Defaults to the currently checked out Git repository.
+- `targetUrl` (optional): the URL the commit status will link to e.g. `https://example.com/my-build/42`. Defaults to the url of the Jenkins build.
