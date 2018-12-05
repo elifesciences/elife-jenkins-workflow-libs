@@ -1,7 +1,7 @@
 def call(Closure body, nameOrMap, String commit = null, String repository = null) {
     def String name
     def String targetUrl
-    if (name instanceof Map) {
+    if (nameOrMap instanceof Map) {
         name = nameOrMap['name']
         commit = nameOrMap['commit']
         repository = nameOrMap.get('repository', null)
