@@ -16,6 +16,18 @@ public class DockerImage implements Serializable {
         this.tag = tag
     }
 
+    public String repository() {
+        return this.repository
+    }
+
+    public String tag() {
+        return this.tag
+    }
+
+    public String toString() {
+        return "${this.repository()}:${this.tag()}"
+    }
+
     public DockerImage pull()
     {
         this.steps.sh "docker pull ${repository}:${tag}"
