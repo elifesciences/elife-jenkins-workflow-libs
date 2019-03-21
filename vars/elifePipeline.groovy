@@ -59,7 +59,9 @@ def call(Closure body, timeoutInMinutes=120) {
                             mail subject: "${env.BUILD_TAG} failed", to: notification.value(), from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
                             echo "Failure email sent to ${notification.value()}"
                         } else {
-                            echo "Slack notification to be sent to ${notification.value()}"
+                            def slackMessage = "*${env.BUILD_TAG}* failed: ${e.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
+                            elifeSlack slackMessage, notification.value()
+                            echo "Slack notification sent to ${notification.value()}"
                         }
                     }
                     throw e
