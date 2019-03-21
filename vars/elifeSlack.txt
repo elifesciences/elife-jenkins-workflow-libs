@@ -1,1 +1,3 @@
-Sends a `message` to the configured Slack channel.
+Sends a `message` to the configured Slack `channel`.
+
+`channel` must have a leading `#` e.g. `#deployments`.
