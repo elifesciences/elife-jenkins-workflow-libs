@@ -3,6 +3,10 @@ import Notification
 def findMaintainers(fileName) {
     def maintainers = []
 
+    if (!fileExists('.git')) {
+        checkout scm
+    }
+
     if (fileExists(fileName)) {
         echo "Found maintainers file ${fileName}" 
         def maintainersFile = readFile fileName
