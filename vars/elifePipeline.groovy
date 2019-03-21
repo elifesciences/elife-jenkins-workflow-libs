@@ -1,3 +1,5 @@
+import Notification
+
 def findMaintainers(fileName) {
     def maintainers = []
 
@@ -52,9 +54,15 @@ def call(Closure body, timeoutInMinutes=120) {
                     )
                     maintainers = findMaintainers 'maintainers.txt'
                     for (int i = 0; i < maintainers.size(); i++) {
-                        def address = maintainers.get(i)
-                        mail subject: "${env.BUILD_TAG} failed", to: address, from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
-                        echo "Failure email sent to ${address}"
+                        def notification = Notification.fromMaintainersFileValue(maintainers.get(i))
+                        if (notification.type() == Notification.EMAIL) {
+                            mail subject: "${env.BUILD_TAG} failed", to: notification.value(), from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
+                            echo "Failure email sent to ${notification.value()}"
+                        } else {
+                            def slackMessage = "*${env.BUILD_TAG}* failed: ${e.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
+                            elifeSlack slackMessage, notification.value()
+                            echo "Slack notification sent to ${notification.value()}"
+                        }
                     }
                     throw e
                 }
