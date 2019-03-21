@@ -3,6 +3,7 @@ import Notification
 def findMaintainers(fileName) {
     def maintainers = []
 
+    // TODO: what is there is no .git repository? Do we use in-line Jenkinsfile?
     if (!fileExists('.git')) {
         checkout scm
     }
@@ -62,7 +63,7 @@ def call(Closure body, timeoutInMinutes=120) {
                         if (notification.type() == Notification.EMAIL) {
                             mail subject: "${env.BUILD_TAG} failed", to: notification.value(), from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
                             echo "Failure email sent to ${notification.value()}"
-                        } else {
+                        } else if (notification.type() == Notification.SLACK) {
                             def slackMessage = "*${env.BUILD_TAG}* failed: ${e.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
                             elifeSlack slackMessage, notification.value()
                             echo "Slack notification sent to ${notification.value()}"
