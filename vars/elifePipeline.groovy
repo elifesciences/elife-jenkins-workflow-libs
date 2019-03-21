@@ -4,11 +4,9 @@ def findMaintainers(fileName) {
     def maintainers = []
 
     // TODO: what is there is no .git repository? Do we use in-line Jenkinsfile?
-    if (!fileExists('.git')) {
-        echo "Checking out .git repository to find maintainers"
-        checkout scm
-        sh "git log | head"
-    }
+    // we probably need to do this all the time, but careful not to mess with files being written by the build? Those files should probably be in .gitignore anyway
+    echo "Checking out .git repository to make sure we find maintainers"
+    checkout scm
 
     if (fileExists(fileName)) {
         echo "Found maintainers file ${fileName}" 
