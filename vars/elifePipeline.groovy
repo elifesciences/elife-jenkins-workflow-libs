@@ -5,7 +5,9 @@ def findMaintainers(fileName) {
 
     // TODO: what is there is no .git repository? Do we use in-line Jenkinsfile?
     if (!fileExists('.git')) {
+        echo "Checking out .git repository to find maintainers"
         checkout scm
+        sh "git log | head"
     }
 
     if (fileExists(fileName)) {
