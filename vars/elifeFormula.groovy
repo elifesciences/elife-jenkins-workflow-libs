@@ -4,7 +4,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null, Li
         stage 'Checkout', {
             checkout scm
             commit = elifeGitRevision()
-            sh "vault.sh token lookup"
+            sh "/usr/local/bin/vault.sh token lookup"
         }
 
         elifePullRequestOnly { prNumber ->
