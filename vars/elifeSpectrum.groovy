@@ -92,7 +92,6 @@ def call(Map parameters) {
                 withCommitStatus({
                     echo "Failure while running spectrum tests: ${e.message}"
                     echo "Attempting to rollback (if the project specifies it) before terminating the build with an error"
-                        preliminaryStep()
                     rollbackStep()
                     echo "Rollback successful"
                 }, "${environmentName}/rollback", commitStatusRevision, commitStatusRepository)
