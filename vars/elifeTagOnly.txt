@@ -1,0 +1,3 @@
+Executes `body` only in a tag pipeline (defined as "in organization folders"), nor in mainline pipelines or pull requests.
+
+`body` is passed a single parameter, a `String` containing the name of the tag created on the project. Groovy closures can avoid this parameter by [not defining it](http://groovy-lang.org/closures.html#implicit-it), so it is optional to accept it.
