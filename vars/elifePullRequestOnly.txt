@@ -1,3 +1,3 @@
-Executes `body` only in a pull request pipeline (defined as "in organization folders"), nor in mainline pipelines.
+Executes `body` only in a pull request pipeline (defined as "in organization folders"), nor in mainline pipelines or tags.
 
 `body` is passed a single parameter, an `Integer` containing the number of the pull request for the project. Groovy closures can avoid this parameter by [not defining it](http://groovy-lang.org/closures.html#implicit-it), so it is optional to accept it.
