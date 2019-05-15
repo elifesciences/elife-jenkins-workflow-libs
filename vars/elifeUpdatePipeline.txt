@@ -8,4 +8,13 @@ In order:
 `updateStep` should `git add` the modification it wants to include, but without committing them. In case `updateStep` does not produce changes, the pipeline stops.
 
 `branchPrefix` can be used to customize the name to use; it will be concatenated to the build number for uniqueness.
-`library` can be set to `true` if the project is a library, so that the build can be run on a library slave.
+
+`library` can be set to `true` if the project is a library, so that the build can be run on a library slave. `library` can also be set to any `Closure` to use it as a wrapper, for example to run the build on another node:
+
+```
+def wrapper = { body ->
+    node('containers-jenkins-plugin') {
+        body()
+    }
+}
+```
