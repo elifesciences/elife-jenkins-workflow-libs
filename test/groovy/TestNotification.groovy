@@ -18,7 +18,7 @@ class TestNotification {
     }
 
     @Test
-    void should_recognize_slack_channels_using_an_hash() throws Exception {
+    void should_recognize_slack_channels_using_a_hash() throws Exception {
         def notification = Notification.fromMaintainersFileValue("#xpub-tech")
         assertEquals Notification.SLACK, notification.type()
         assertEquals "#xpub-tech", notification.value()
