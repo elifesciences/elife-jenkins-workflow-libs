@@ -67,6 +67,8 @@ def call(Closure body, timeoutInMinutes=120) {
                             def slackMessage = ":red: *${env.BUILD_TAG}* failed: ${e.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
                             elifeSlack slackMessage, notification.value()
                             echo "Slack notification sent to ${notification.value()}"
+                        } else if (notification.type() == Notification.NONE) {
+                            echo "Unrecognizable notification: ${notification.value()}"
                         }
                     }
                     throw e

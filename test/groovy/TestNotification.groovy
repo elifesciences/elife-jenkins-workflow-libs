@@ -23,5 +23,12 @@ class TestNotification {
         assertEquals Notification.SLACK, notification.type()
         assertEquals "#xpub-tech", notification.value()
     }
+
+    @Test
+    void should_skip_unsupported_values() throws Exception {
+        def notification = Notification.fromMaintainersFileValue("gibberish")
+        assertEquals Notification.NONE, notification.type()
+        assertEquals "gibberish", notification.value()
+    }
 }
 

@@ -1,6 +1,7 @@
 public class Notification implements Serializable {
     public static final String SLACK = 'slack'
     public static final String EMAIL = 'email'
+    public static final String NONE = 'none'
     private static final String SLACK_HOST_FOR_REGEX = 'elifesciences\\.slack\\.com'
     private final String type
     private final String value
@@ -9,10 +10,12 @@ public class Notification implements Serializable {
         def slackChannelMatcher = value =~ /${SLACK_HOST_FOR_REGEX}(#.+)/
         if (slackChannelMatcher) {
             return new Notification(SLACK, slackChannelMatcher[0][1])
-        } else if (value.contains("#")) { 
+        } else if (value.contains("#")) {
             return new Notification(SLACK, value)
-        } else {
+        } else if (value.contains("@")) {
             return new Notification(EMAIL, value)
+        } else {
+            return new Notification(NONE, value)
         }
     }
 
