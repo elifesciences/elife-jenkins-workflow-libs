@@ -11,10 +11,24 @@ class TestNotification {
     }
 
     @Test
-    void should_recognize_slack_channels() throws Exception {
+    void should_recognize_slack_channels_using_an_host_and_an_hash() throws Exception {
+        def notification = Notification.fromMaintainersFileValue("elifesciences.slack.com#xpub-tech")
+        assertEquals Notification.SLACK, notification.type()
+        assertEquals "#xpub-tech", notification.value()
+    }
+
+    @Test
+    void should_recognize_slack_channels_using_a_hash() throws Exception {
         def notification = Notification.fromMaintainersFileValue("#xpub-tech")
         assertEquals Notification.SLACK, notification.type()
         assertEquals "#xpub-tech", notification.value()
+    }
+
+    @Test
+    void should_skip_unsupported_values() throws Exception {
+        def notification = Notification.fromMaintainersFileValue("gibberish")
+        assertEquals Notification.NONE, notification.type()
+        assertEquals "gibberish", notification.value()
     }
 }
 
