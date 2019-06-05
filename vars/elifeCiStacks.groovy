@@ -4,7 +4,6 @@ def call() {
         'elife-dashboard--ci',
         'elife-metrics--ci',
         'elife-xpub--ci',
-        'journal--ci',
         'journal-cms--ci',
         'iiif--ci',
         'lax--ci',
