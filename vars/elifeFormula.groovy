@@ -130,6 +130,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null, Li
         elifeTagOnly { tag ->
             if (fileExists('helm')) {
                 stage 'Publish helm chart', {
+                    sh 'helm init --client-only'
                     sh 'cd helm && rm -f *.tgz'
                     sh 'cd helm/*/ && helm dependency update .'
                     sh 'cd helm && helm package $(ls -d */)'
