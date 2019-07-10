@@ -1,0 +1,3 @@
+Counts the number of tests run according to `testArtifact` and fails the build if under a minimum number. 
+
+The file must follow the JUnit XML report conventions.
