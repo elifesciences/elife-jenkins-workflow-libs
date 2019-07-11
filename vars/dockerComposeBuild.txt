@@ -1,3 +1,7 @@
 Runs a `docker-compose build` with special options.
 
 Strongly suggested to specify the `tag` that will be passed as `IMAGE_TAG` to the `docker-compose.ci.yml`.
+
+An `options` map can be specified as the second argument:
+
+- `parallel`: `false|true`; whether to build images in parallel. Defaults to `false`.
