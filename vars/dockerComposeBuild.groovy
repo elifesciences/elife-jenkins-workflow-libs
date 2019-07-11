@@ -12,6 +12,9 @@ def call(tag='latest', Map options=[:])
             if (options.get('parallel', false)) {
                 command = command.withOption('parallel')
             }
+            if (options.get('no-cache', false)) {
+                command = command.withOption('no-cache')
+            }
             command = command
                 .withEnvironment('IMAGE_TAG', tag)
                 .toString()

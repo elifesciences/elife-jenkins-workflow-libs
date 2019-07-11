@@ -5,3 +5,4 @@ Strongly suggested to specify the `tag` that will be passed as `IMAGE_TAG` to th
 An `options` map can be specified as the second argument:
 
 - `parallel`: `false|true`; whether to build images in parallel. Defaults to `false`.
+- `no-cache`: `false|true`; whether to avoid using the cache e.g. for reliable performance tests.
