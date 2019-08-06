@@ -1,5 +1,6 @@
 def call() {
     return [
+        'bioprotocol--ci',
         'elife-bot--ci',
         'elife-dashboard--ci',
         'elife-metrics--ci',
