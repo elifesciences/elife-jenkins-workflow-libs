@@ -8,7 +8,6 @@ def call() {
         'journal-cms--ci',
         'iiif--ci',
         'lax--ci',
-        'medium--ci',
         'observer--ci',
         'pattern-library--ci',
         'peerscout--ci',
