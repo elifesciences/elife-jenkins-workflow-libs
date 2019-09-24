@@ -12,7 +12,6 @@ def call() {
         'journal--continuumtest',
         'journal-cms--continuumtest',
         'lax--continuumtest',
-        'medium--continuumtest',
         //'observer--continuumtest',
         //'peerscout--continuumtest',
         'personalised-covers--continuumtest',

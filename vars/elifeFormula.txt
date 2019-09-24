@@ -1,9 +1,9 @@
 Should be used as the template for formula pipelines.
 
 Accepts a:
-- `project` parameter specifying the name of the builder project e.g. `medium`.
+- `project` parameter specifying the name of the builder project e.g. `journal`.
 - `smokeTestsFolder` (optional, default `''`) is an absolute path on the instance where smoke tests are located. See `builderSmokeTests`.
-- `formula` (optional, default `${project}-formula`) parameter specifying the name of the formula repository e.g. `medium-formula`.
+- `formula` (optional, default `${project}-formula`) parameter specifying the name of the formula repository e.g. `journal-formula`.
 - `alternatives` (optional, default `[]`) parameter specifying additional builder alternative configurations to run, with respect to `standalone`.
 
 Provides three or more checks:

@@ -13,7 +13,6 @@ def call() {
         'journal--prod',
         'journal-cms--prod',
         'lax--prod',
-        'medium--prod',
         'observer--prod',
         'pattern-library--prod',
         'peerscout--prod',
