@@ -10,7 +10,6 @@ def call() {
         'lax--ci',
         'observer--ci',
         'pattern-library--ci',
-        'peerscout--ci',
         'personalised-covers--ci',
         'redirects--ci',
         'schematron-validator--ci',

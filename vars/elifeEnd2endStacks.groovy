@@ -13,9 +13,6 @@ def call() {
         'journal-cms--end2end',
         'lax--end2end',
         'observer--end2end',
-        // excluded because it does not interact with other end2end projects,
-        // nor it uses spectrum tests
-        //'peerscout--end2end',
         'personalised-covers--end2end',
         'profiles--end2end',
         'recommendations--end2end',

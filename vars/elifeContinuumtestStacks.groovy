@@ -13,7 +13,6 @@ def call() {
         'journal-cms--continuumtest',
         'lax--continuumtest',
         //'observer--continuumtest',
-        //'peerscout--continuumtest',
         'personalised-covers--continuumtest',
         'profiles--continuumtest',
         'recommendations--continuumtest',

@@ -15,7 +15,6 @@ def call() {
         'lax--prod',
         'observer--prod',
         'pattern-library--prod',
-        'peerscout--prod',
         'personalised-covers--prod',
         'profiles--prod',
         'recommendations--prod',
