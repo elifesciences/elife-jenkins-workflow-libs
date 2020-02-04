@@ -1,4 +1,8 @@
-Builds a Docker image of `project` from the current folder, tagging it with `tag`. Usually the `organization` is just `elifesciences`.
+Builds a Docker image of `project` from the current folder, tagging it with `tag`.
+
+Usually the `organization` is just `elifesciences`.
+
+`buildArgs` allow to pass in a map of build arguments for the Dockerfile.
 
 If you have a `Dockerfile` with a special name or path, look into `docker-compose` to model it in a standard way first. If you really are a special case, pass the `dockerfileSuffix` parameter.
 
