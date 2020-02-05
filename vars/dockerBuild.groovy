@@ -1,3 +1,5 @@
+import Docker
+
 def call(project, tag='latest', dockerfileSuffix = null, organization='elifesciences', buildArgs=[:]) {
     sh "docker-wait-daemon"
     def imageName = "${organization}/${project}"
@@ -5,10 +7,10 @@ def call(project, tag='latest', dockerfileSuffix = null, organization='elifescie
     if (dockerfileSuffix) {
         dockerfile = "${dockerfile}.${dockerfileSuffix}"
     }
-    def buildArgsOption = ''
-    for (argName in buildArgs) {
-        buildArgsOption += " --build-arg ${argName.key}=${argName.value}"
-    }
-    sh "docker build --pull -f ${dockerfile} -t ${imageName}:${tag} .${buildArgsOption}"
-    //return new DockerImage(this)
+    sh Docker.command('build')
+        .withOption('pull')
+        .withOption('f', dockerfile)
+        .withOption('t', "${imageName}:${tag}")
+        .withOption('build-arg', buildArgs)
+        .withPath('.')
 }
