@@ -6,8 +6,8 @@ def call(project, tag='latest', dockerfileSuffix = null, organization='elifescie
         dockerfile = "${dockerfile}.${dockerfileSuffix}"
     }
     def buildArgsOption = ''
-    for (def argName in buildArgs) {
-        buildArgsOption += " --build-arg ${argName}=${buildArgs[argName]}"
+    for (argName in buildArgs) {
+        buildArgsOption += " --build-arg ${argName.key}=${argName.value}"
     }
     sh "docker build --pull -f ${dockerfile} -t ${imageName}:${tag} .${buildArgsOption}"
     //return new DockerImage(this)
