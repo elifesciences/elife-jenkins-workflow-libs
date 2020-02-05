@@ -12,7 +12,6 @@ def call() {
         'pattern-library--ci',
         'personalised-covers--ci',
         'redirects--ci',
-        'schematron-validator--ci',
         'search--ci'
     ]
 }

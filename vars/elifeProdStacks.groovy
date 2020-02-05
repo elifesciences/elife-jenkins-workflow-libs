@@ -19,7 +19,6 @@ def call() {
         'profiles--prod',
         'recommendations--prod',
         'redirects--prod',
-        'schematron-validator--prod',
         'search--prod'
     ]
 }
