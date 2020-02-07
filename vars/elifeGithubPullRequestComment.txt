@@ -1,5 +1,0 @@
-Posts a comment on the pull request `prNumber` for the current project.
-
-`body` is a string.
-
-`oncePerPullRequest` is `null` by default. If a string is passed, the existence of a Github comment containing that string will prevent a new comment from being created. Use this to only post once per pull request rather than for every run.
