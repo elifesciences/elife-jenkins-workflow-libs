@@ -13,4 +13,5 @@ def call(project, tag='latest', dockerfileSuffix = null, organization='elifescie
         .withOption('t', "${imageName}:${tag}")
         .withOption('build-arg', buildArgs)
         .withArgument('.')
+        .toString()
 }
