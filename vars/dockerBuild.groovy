@@ -12,5 +12,5 @@ def call(project, tag='latest', dockerfileSuffix = null, organization='elifescie
         .withOption('f', dockerfile)
         .withOption('t', "${imageName}:${tag}")
         .withOption('build-arg', buildArgs)
-        .withPath('.')
+        .withArgument('.')
 }
