@@ -3,7 +3,6 @@ def call() {
         'annotations--prod',
         'api-gateway--prod',
         'elife-api--legacy',
-        'jats4r--2016-08-22',
         'digests--prod',
         'elife-bot--prod',
         'elife-dashboard--prod',
