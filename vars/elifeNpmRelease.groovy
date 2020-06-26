@@ -28,7 +28,7 @@ def call() {
     assert published : "error fetching list of published packages for '${pkgname}'"
 
     // if the package version is present in the list of published versions, do nothing
-    if pkgver in published {
+    if (published.containsKey(pkgver)) {
         println "Package '${pkgname}' has already published version '${pkgver}' on npm. Nothing to do."
         return
     }
