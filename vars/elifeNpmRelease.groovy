@@ -1,17 +1,17 @@
 def packageVersion() {
     // TODO: return null on empty or error
-    return "cat package.json | jq .version"
+    return sh(script: "cat package.json | jq .version", returnStdout: true)
 }
 
 def packageName() {
     // TODO: return null on empty or error
-    return sh "cat package.json | jq .name"
+    return sh(script: "cat package.json | jq .name", returnStdout: true)
 }
 
 def publishedVersions() {
     // TODO: return an empty list if nothing has been published
     // TODO: return null on error
-    results = sh "npm show ${packageName()} version"
+    results = sh(script: "npm show ${packageName()} version", returnStdout: true)
     return results.split()
 }
 
