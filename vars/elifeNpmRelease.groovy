@@ -18,7 +18,7 @@ def packageName() {
 
 def publishedVersions(pkgname) {
     // do I need a try+catch when I'm capturing the retval?
-    retval = sh(script: "npm view \"${pkgname}\" version", returnStatus=true).trim()
+    retval = sh(script: "npm view \"${pkgname}\" version", returnStatus: true).trim()
     if (retval == 1) {
         // package doesn't exist/nothing has been published
         return []
