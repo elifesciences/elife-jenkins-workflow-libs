@@ -51,11 +51,11 @@ def call() {
    
     // if we're having problems talking to npm, die loudly
     published = publishedVersions(pkgname)
-    assert published : "error fetching list of published packages for '${pkgname}'"
+    assert published != null : "error fetching list of published packages for '${pkgname}'"
 
     // if the package version is present in the list of published versions, do nothing
-    if (published.containsKey(pkgver)) {
-        println "Package '${pkgname}' has already published version '${pkgver}' on npm. Nothing to do."
+    if (published.contains(pkgver)) {
+        echo "Package '${pkgname}' has already published version '${pkgver}' on npm. Nothing to do."
         return
     }
     
