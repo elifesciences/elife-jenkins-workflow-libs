@@ -19,9 +19,9 @@ def packageName() {
 def publishedVersions(pkgname) {
     // do I need a try+catch when I'm capturing the retval?
     retval = sh(script: "npm view \"${pkgname}\" version", returnStatus: true)
-    echo "got retval ${retval}"
+    println "got retval ${retval}"
     if (retval != 0) {
-	echo "Error fetching list of npm packages for ${pkgname} (package may not exist)"
+	echo "Problem fetching releases for ${pkgname} (package may not exist)"
         return []
     }
     try {
@@ -46,7 +46,7 @@ def call() {
    
     // if we're having problems talking to npm, die loudly
     published = publishedVersions(pkgname)
-    assert published != null : "error fetching list of published packages for '${pkgname}'"
+    assert published != null : "error fetching releases for '${pkgname}'"
 
     // if the package version is present in the list of published versions, do nothing
     if (published.contains(pkgver)) {
