@@ -17,9 +17,7 @@ def packageName() {
 }
 
 def publishedVersions(pkgname) {
-    // do I need a try+catch when I'm capturing the retval?
-    retval = sh(script: "npm view \"${pkgname}\" version", returnStatus: true)
-    println "got retval ${retval}"
+    retval = sh(script: "npm view \"${pkgname}\" version --loglevel silent", returnStatus: true)
     if (retval != 0) {
 	echo "Problem fetching releases for ${pkgname} (package may not exist)"
         return []
@@ -27,7 +25,7 @@ def publishedVersions(pkgname) {
     try {
         // now that we know versions exist
         // run command *again* to capture the list of versions on stdout
-        // todo: can I captured stdout + retval in one go??
+        // TODO: can I capture stdout + retval in one go??
         results = sh(script: "npm view \"${pkgname}\" version", returnStdout: true).trim()
         return results.split()
     } catch (Exception e) {
@@ -53,9 +51,15 @@ def call() {
         echo "Package '${pkgname}' has already published version '${pkgver}' on npm. Nothing to do."
         return
     }
+
+    retval = sh(script: "npm install", returnStatus: true)
+    assert retval == 0 : "failed to build package"
     
     // state at this point: this version of this package does not exist on npm
     
-    // TODO: where to pull token from?
-    sh "npm publish --dry-run"
+    withCredentials([string(credentialsId: 'npm-credentials', variable: 'NPM_TOKEN')]) {
+        sh "echo \"//registry.npmjs.org/:_authToken=\${NPM_TOKEN}\" > .npmrc"
+        retval = sh(script: "npm publish --access public --dry-run", returnStatus: true)
+        assert retval == 0 : "failed to publish package '${pkgname}'"
+    }
 }
