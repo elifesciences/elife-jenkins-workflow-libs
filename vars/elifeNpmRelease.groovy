@@ -20,14 +20,9 @@ def publishedVersions(pkgname) {
     // do I need a try+catch when I'm capturing the retval?
     retval = sh(script: "npm view \"${pkgname}\" version", returnStatus: true)
     echo "got retval ${retval}"
-    if (retval == 1) {
-        // package doesn't exist/nothing has been published
+    if (retval != 0) {
+	echo "Error fetching list of npm packages for ${pkgname} (package may not exist)"
         return []
-    }
-    else if (retval > 1) {
-        // unhandled error talking to npm
-        echo "Error attempting to list npm packages for ${pkgname}"
-        return null
     }
     try {
         // now that we know versions exist
