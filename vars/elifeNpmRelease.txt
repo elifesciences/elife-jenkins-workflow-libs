@@ -1,0 +1,3 @@
+Creates a release of this project to NPM.
+
+Inspects the `package.json` file for `name` and `version` values and calls `npm publish` if this version of this project has not been published.
