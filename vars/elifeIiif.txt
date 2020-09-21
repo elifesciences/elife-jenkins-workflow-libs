@@ -1,3 +1,0 @@
-Builds a commit of the IIIF server, bringing it to production. This is a bit atypical because it's off-the-shelf software. Also we keep what would be the Jenkinsfile in this step because we don't want to modify the original repository, only to pull commits from upstream.
-
-This could become the pipeline of the formula.
