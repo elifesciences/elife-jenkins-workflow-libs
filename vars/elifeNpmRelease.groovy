@@ -59,6 +59,7 @@ def call() {
     
     withCredentials([string(credentialsId: 'npm-credentials', variable: 'NPM_TOKEN')]) {
         command "echo \"//registry.npmjs.org/:_authToken=\${NPM_TOKEN}\" > .npmrc"
+        command "npm run prepare"
         command "npm publish --access public"
         assert retval == 0 : "failed to publish package '${pkgname}'"
     }
