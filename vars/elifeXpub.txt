@@ -1,1 +1,0 @@
-Pipeline for listening to changes to https://gitlab.coko.foundation/yld/xpub and triggering internal updates on every new commit there.
