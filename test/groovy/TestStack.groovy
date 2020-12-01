@@ -6,7 +6,7 @@ class TestStack {
 
     @Test
     void should_parse_project_and_environment() throws Exception {
-        assertEquals('elife-xpub', Stack.fromName('elife-xpub--ci').project())
-        assertEquals('ci', Stack.fromName('elife-xpub--ci').environment())
+        assertEquals('elife-bot', Stack.fromName('elife-bot--ci').project())
+        assertEquals('ci', Stack.fromName('elife-bot--ci').environment())
     }
 }
