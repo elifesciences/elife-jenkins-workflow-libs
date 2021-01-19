@@ -1,1 +1,1 @@
-Creates a release of this project to Pypi.
+Calls `setup.py` to build Python distributables and uploads the result to `test.pypi.org` or `pypi.org`.
