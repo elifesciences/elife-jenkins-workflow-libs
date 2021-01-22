@@ -1,12 +1,18 @@
-This repository contains the eLife custom steps for Jenkins 2 pipelines (built with the Pipeline plugin, formerly known as Workflow).
+This repository contains the eLife custom steps for Jenkins 2 pipelines (built with the Pipeline plugin, formerly known 
+as Workflow).
 
 ## Rationale
 
-Jenkins supports the definition of pipelines through code, in the form of Groovy scripts. Pipelines can check out a project, deploy it on different environments, build artifacts, run tests.
+Jenkins supports the definition of pipelines through code, in the form of Groovy scripts. 
+Pipelines can check out a project, deploy it on different environments, build artifacts, run tests.
 
-Jenkins pipelines can be specified either through the Jenkins user interface (which will store them in the giant pile of XML™) or inside projects in a top-level `Jenkinsfile`. In both cases they may become longer and longer and contain duplicated code from other projects.
+Jenkins pipelines can be specified either through the Jenkins user interface (which will store them in the giant pile 
+of XML™) or inside projects in a top-level `Jenkinsfile`. In both cases they may become longer and longer and contain 
+duplicated code from other projects.
 
-Jenkins however provides the possibility to define custom steps shared by all pipelines, in the form of a Git repository. Jenkins implements [a ssh server](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+SSH) that instead of giving you a shell access to its machine lets you pull and push from its own few repositories.
+Jenkins however provides the possibility to define custom steps shared by all pipelines, in the form of a Git 
+repository. Jenkins implements [a ssh server](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+SSH) that instead of 
+giving you a shell access to its machine lets you pull and push from its own few repositories.
 
 ## Usage
 
@@ -18,4 +24,5 @@ Jenkins however provides the possibility to define custom steps shared by all pi
 
 ## Known issues
 
-[JENKINS-41497](https://issues.jenkins-ci.org/browse/JENKINS-41497) prevents from using an external Git repository, that should be fetched by Jenkins on new builds.
+[JENKINS-41497](https://issues.jenkins-ci.org/browse/JENKINS-41497) prevents from using an external Git repository, 
+that should be fetched by Jenkins on new builds.
