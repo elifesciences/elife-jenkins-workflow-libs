@@ -22,15 +22,13 @@ def script () {
     return '''#!/bin/bash
 # usage: `./release.sh [<test|live>]`
 # calls `setup.py` to build Python distributables and uploads the result to `test.pypi.org` or `pypi.org`
-set -eu
+set -euo pipefail
 
 index=${1:-"test"}
 
 pypi_repository="testpypi"
-pypi_url="https://test.pypi.org/pypi"
-if [ "$index" = "live" ]; then
+if [ "$index" == "live" ]; then
     pypi_repository="pypi"
-    pypi_url="https://pypi.org/pypi"
 fi
 
 # avoid setting this on the command line, it will be visible in your history.
@@ -41,8 +39,9 @@ if [ -z "$token" ]; then
 fi
 
 echo "--- building"
-rm -rf ./release-venv/ dist/ build/ *.egg-info
+rm -rf ./release-venv/ dist/ build/ ./*.egg-info
 python3 -m venv release-venv
+# shellcheck disable=SC1091
 source release-venv/bin/activate
 python3 -m pip install --upgrade pip setuptools wheel twine
 python3 setup.py sdist bdist_wheel
@@ -52,26 +51,31 @@ python3 -m twine check \
     --strict \
     dist/*
 
-echo "--- checking against remote release"
-local_version=$(python3 setup.py --version)
-local_version="($local_version)" # hack
+# lsh@2021-01-26: pypi disabled the 'search' service on live with no intent to turn it back on.
+# I can't test for the already released version so we're just going to have to push the package and see if it gets rejected.
 
-package_name=$(python3 setup.py --name)
-# "elife-dummy-python-release-project (0.0.1)                      - A small example package"  =>  "(0.0.1)"
-remote_version=$(pip search "$package_name" --index "$pypi_url" --isolated | grep "$package_name" | awk '{ print $2 }')
-if [ "$local_version" = "$remote_version" ]; then
-    echo "Local version '$local_version' is the same as the remote version '$remote_version'. Not releasing."
-    exit 0 # not a failure case
-else
-    echo "Local version '$local_version' not found remotely, releasing."
-fi
+local_version=$(python3 setup.py --version)
 
 echo "--- uploading"
+set +e
 python3 -m twine upload \
     --repository "$pypi_repository" \
     --username "__token__" \
     --password "$token" \
-    dist/*
+    dist/* > release-output.txt 2>&1
+rc=$?
+set -e
+
+cat release-output.txt
+
+if [ "$rc" == "0" ]; then
+    exit 0
+elif grep "File already exists." release-output.txt --silent; then
+    echo "Local version '$local_version' is the same as the remote version. Not releasing."
+    exit 0 # not a failure case
+else
+    exit 1
+fi
 '''
 }
 
@@ -89,7 +93,7 @@ def call(index='live') {
     assert (index == 'test' || index == 'live'): "pypi index must be either 'test' or 'live'"
     writeScript "pypi-release.sh"
     withCredentials([string(credentialsId: "pypi-credentials--${index}", variable: 'TWINE_PASSWORD')]) {
-        retval = command "./pypi-release.sh --index ${index}"
+        retval = command "./pypi-release.sh ${index}"
         assert retval == 0 : "failed to publish package"
     }
 }
