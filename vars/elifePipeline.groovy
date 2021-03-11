@@ -1,19 +1,39 @@
 import Notification
+import groovy.json.JsonSlurper
+
+def parseMaintainerAliases() {
+    // maps an alias, typically a github username, to an email address
+    def maintainerAliasesFile = new File("/path/to/maintainer-aliases.json")
+    if (maintainerAliasesFile.exists()) {
+        echo "Found maintainer aliases file ${maintainerAliasesFile.path}"
+        return (Map) new JsonSlurper().parseText(maintainerAliasesFile)
+    }
+    else {
+        // return the given `alias` if maintainer map file not found
+        echo "Maintainer aliases file not found: ${maintainerAliasesFile.path}"
+        return new HashMap()
+    }
+}
 
 def findMaintainers(fileName) {
     def maintainers = []
 
     // TODO: what is there is no .git repository? Do we use in-line Jenkinsfile?
-    // we probably need to do this all the time, but careful not to mess with files being written by the build? Those files should probably be in .gitignore anyway
+    // we probably need to do this all the time, but careful not to mess with files being written by the build?
+    // Those files should probably be in .gitignore anyway
     echo "Checking out .git repository to make sure we find maintainers"
     checkout scm
 
     if (fileExists(fileName)) {
-        echo "Found maintainers file ${fileName}" 
-        def maintainersFile = readFile fileName
+        echo "Found maintainers file ${fileName}"
+
+        def maintainersFile = readFile(fileName)
+        def maintainerAliases = parseMaintainersMap()
+
         def rows = maintainersFile.tokenize("\n")
         for (int i = 0; i < rows.size(); i++) {
             maintainer = rows.get(i).trim()
+            maintainer = maintainerAliases.get(maintainer, maintainer)
             maintainers << maintainer
         }
         echo "Found maintainers: ${maintainers}"
