@@ -1,19 +1,49 @@
 import Notification
+import groovy.json.JsonSlurper
+
+def aliasMapPath() {
+    return "/etc/github-email-aliases.json"
+}
+
+def parseMaintainerAliases() {
+    /* maps an alias, typically a github username, to an email address:
+        
+        $ cat /etc/github-email-aliases.json 
+        {
+          "bar": "bar@example.com",
+          "foo": "foo@example.org"
+        }
+    */
+    def maintainerAliasesFile = new File(aliasMapPath())
+    if (maintainerAliasesFile.exists()) {
+        echo "Found maintainer aliases file ${maintainerAliasesFile.path}"
+        return (Map) new JsonSlurper().parse(maintainerAliasesFile)
+    }
+    else {
+        echo "Maintainer aliases file not found: ${maintainerAliasesFile.path}"
+        return new HashMap()
+    }
+}
 
 def findMaintainers(fileName) {
     def maintainers = []
 
     // TODO: what is there is no .git repository? Do we use in-line Jenkinsfile?
-    // we probably need to do this all the time, but careful not to mess with files being written by the build? Those files should probably be in .gitignore anyway
+    // we probably need to do this all the time, but careful not to mess with files being written by the build?
+    // Those files should probably be in .gitignore anyway
     echo "Checking out .git repository to make sure we find maintainers"
     checkout scm
 
     if (fileExists(fileName)) {
-        echo "Found maintainers file ${fileName}" 
-        def maintainersFile = readFile fileName
+        echo "Found maintainers file ${fileName}"
+
+        def maintainersFile = readFile(fileName)
+        def maintainerAliases = parseMaintainerAliases()
+
         def rows = maintainersFile.tokenize("\n")
         for (int i = 0; i < rows.size(); i++) {
             maintainer = rows.get(i).trim()
+            maintainer = maintainerAliases.get(maintainer, maintainer)
             maintainers << maintainer
         }
         echo "Found maintainers: ${maintainers}"
@@ -63,12 +93,15 @@ def call(Closure body, timeoutInMinutes=120) {
                         if (notification.type() == Notification.EMAIL) {
                             mail subject: "${env.BUILD_TAG} failed", to: notification.value(), from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
                             echo "Failure email sent to ${notification.value()}"
+
                         } else if (notification.type() == Notification.SLACK) {
                             def slackMessage = ":red: *${env.BUILD_TAG}* failed: ${e.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
                             elifeSlack slackMessage, notification.value()
                             echo "Slack notification sent to ${notification.value()}"
+
                         } else if (notification.type() == Notification.NONE) {
-                            echo "Unrecognizable notification: ${notification.value()}"
+                            echo "Unknown alias or notification type '${notification.value()}'"
+                            echo "See ${aliasMapPath()} for known aliases."
                         }
                     }
                     throw e
