@@ -22,7 +22,7 @@ def script () {
     return '''#!/bin/bash
 # usage: `./release.sh [<test|live>]`
 # calls `setup.py` to build Python distributables and uploads the result to `test.pypi.org` or `pypi.org`
-set -euo pipefail
+set -exuo pipefail
 
 index=${1:-"test"}
 
