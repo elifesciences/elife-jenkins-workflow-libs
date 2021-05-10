@@ -18,7 +18,7 @@ def script () {
     //releaseScriptString = libraryResource 'pypi-release.sh' 
     //writeFile file: 'pypi-release.sh', text: releaseScriptString
     // if anyone can figure out a way of reading this from the 'resources/' directory where it belongs, let me know
-    
+
     return '''#!/bin/bash
 # usage: `./release.sh [<test|live>]`
 # calls `setup.py` to build Python distributables and uploads the result to `test.pypi.org` or `pypi.org`
@@ -54,8 +54,8 @@ python3 -m twine check \
     --strict \
     dist/*
 
-# lsh@2021-01-26: pypi disabled the 'search' service on live with no intent to turn it back on.
-# I can't test for the already released version so we're just going to have to push the package and see if it gets rejected.
+# lsh@2021-01-26: pypi disabled the 'search' service on it's live server with no intent to turn it back on.
+# I can't test for the already-released version so we just have to push the package and see if it gets rejected.
 
 local_version=$(python3 setup.py --version)
 
@@ -72,6 +72,7 @@ set -e
 cat release-output.txt
 
 if [ "$rc" == "0" ]; then
+    # successful release!
     exit 0
 elif grep "File already exists." release-output.txt --silent; then
     echo "Local version '$local_version' is the same as the remote version. Not releasing."
@@ -87,7 +88,7 @@ def writeScript(pathToResource) {
     releaseScript = new File(pwd() + "/" + pathToResource)
     releaseScript.setText(script())
     command "chmod +x ${releaseScript.name}" // make local file executable
-    
+
     // "/var/lib/jenkins/workspace/release/dummy-python-release-project/pypi-release.sh"
     return releaseScript.absolutePath 
 }
@@ -98,5 +99,6 @@ def call(index='live') {
     withCredentials([string(credentialsId: "pypi-credentials--${index}", variable: 'TWINE_PASSWORD')]) {
         retval = command "./pypi-release.sh ${index}"
         assert retval == 0 : "failed to publish package"
+        return sh(script:"source venv/bin/activate && python3 setup.py --version", returnStdout:true)
     }
 }
