@@ -1,0 +1,1 @@
+Tags a repository with the given `tag` at the optional `revision` and pushes the results back to its origin.
