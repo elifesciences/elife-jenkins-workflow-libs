@@ -43,6 +43,8 @@ rm -rf ./release-venv/ dist/ build/ ./*.egg-info
 python3 -m venv release-venv
 # shellcheck disable=SC1091
 source release-venv/bin/activate
+# needed later to execute 'activate' as 'source' not available
+chmod +x release-venv/bin/activate
 python3 -m pip install --upgrade pip wheel
 # twine has a transitive dependency on cryptography that requires pip upgraded *first* else it attempts to build it
 # using the rust programming language.
@@ -99,6 +101,6 @@ def call(index='live') {
     withCredentials([string(credentialsId: "pypi-credentials--${index}", variable: 'TWINE_PASSWORD')]) {
         retval = command "./pypi-release.sh ${index}"
         assert retval == 0 : "failed to publish package"
-        return sh(script:"source venv/bin/activate && python3 setup.py --version", returnStdout:true)
+        return sh(script:"./release-venv/bin/activate && python3 setup.py --version", returnStdout:true)
     }
 }
