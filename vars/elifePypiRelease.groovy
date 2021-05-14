@@ -56,7 +56,7 @@ python3 -m twine check \
     --strict \
     dist/*
 
-# lsh@2021-01-26: pypi disabled the 'search' service on it's live server with no intent to turn it back on.
+# lsh@2021-01-26: pypi disabled the 'search' service on its live server with no intent to turn it back on.
 # I can't test for the already-released version so we just have to push the package and see if it gets rejected.
 
 local_version=$(python3 setup.py --version)
