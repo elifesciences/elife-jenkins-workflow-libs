@@ -4,12 +4,13 @@ def call() {
         'elife-bot--ci',
         'elife-dashboard--ci',
         'elife-metrics--ci',
-        'journal-cms--ci',
         'iiif--ci',
+        'journal-cms--ci',
         'lax--ci',
         'observer--ci',
         'pattern-library--ci',
         'personalised-covers--ci',
+        'recommendations--ci',
         'redirects--ci',
         'search--ci'
     ]
