@@ -1,3 +1,2 @@
-NuclearRedeye
 de-code
 lsh-0
