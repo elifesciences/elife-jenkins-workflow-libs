@@ -101,6 +101,7 @@ def call(index='live') {
     withCredentials([string(credentialsId: "pypi-credentials--${index}", variable: 'TWINE_PASSWORD')]) {
         retval = command "./pypi-release.sh ${index}"
         assert retval == 0 : "failed to publish package"
-        return sh(script:"./release-venv/bin/activate && python3 setup.py --version", returnStdout:true)
+        // the "| tr ..." is to trim the new line from the version so the param doesn't carry it around downstream.
+        return sh(script:"./release-venv/bin/activate && python3 setup.py --version | tr --delete '\n'", returnStdout:true)
     }
 }
