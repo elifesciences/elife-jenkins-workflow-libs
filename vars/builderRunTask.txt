@@ -1,0 +1,5 @@
+Executes `task` with zero or many `args`. Depends on BUILDER_PATH environment variable.
+
+If the task is successful, the contents of stdout are returned.
+
+If the task fails the job will fail with an error message.
