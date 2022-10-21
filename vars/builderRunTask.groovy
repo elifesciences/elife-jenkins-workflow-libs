@@ -29,6 +29,8 @@ def call(String task, String ... args) {
     // run as bash
     shell_cmd = "/bin/bash -c \"set -o pipefail; " + _escapeCmd(shell_cmd) + "\""
 
+    echo shell_cmd
+
     rc = sh(script:shell_cmd, returnStatus:true) as Integer
     if (rc == 0) {
         return readFile(output_file).trim()
