@@ -19,8 +19,8 @@ def call(String task, String ... args) {
         shell_cmd += ":" + _escapeCmd(args.join(","))
     }
     // print stdout as it appears but also capture to file
-    // "/path/to/bldr sometask:somearg1 | tee .stdout.dwG76zKTGZeOI.txt"
-    shell_cmd += " | tee " + output_file
+    // "set -o pipefail; /path/to/bldr sometask:somearg1 | tee .stdout.dwG76zKTGZeOI.txt"
+    shell_cmd = "set -o pipefail; " + shell_cmd + " | tee " + output_file
 
     // disable input. this should be set by the shell, but just in case
     non_interactive = "BUILDER_NON_INTERACTIVE=1 "
