@@ -1,0 +1,5 @@
+Executes a closure with per-project, per-environment and per-node granularity. 
+A project name ('journal') and a comma separated list of environments ('ci, continuumtest, end2end') must be provided.
+The number of nodes is detected and doesn't need to be provided.
+A lock is acquired on the project+environment instance and the node is started before the closure is called.
+The project name, environment name and node number are passed into the closure.

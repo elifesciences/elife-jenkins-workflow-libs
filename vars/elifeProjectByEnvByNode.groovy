@@ -4,15 +4,16 @@ def call(project, env_csv, closure) {
         def stackname = "${project}--${env}";
         def Integer node_count = builderRunTask("report.ec2_node_count", stackname) as Integer;
         if (node_count > 0) {
+            // "project--prod"
             lock(stackname) {
                 for (Integer node in 1 .. node_count) {
                     // "project--prod--1"
                     stage("${stackname}--${node}", {
-                            builderRunTask("aws.ec2.start", stackname, node)
-                            closure(project, env, node)
+                        builderRunTask("aws.ec2.start", stackname, node)
+                        closure(project, env, node)
                     });
                 };
             }
         }
     };
-});
+};
