@@ -13,16 +13,20 @@ def call(String task, String ... args) {
     def output_file = ".stdout.${random_string}.txt"
 
     // "/path/to/bldr sometask"
-    def shellCmd = "${env.BUILDER_PATH}bldr ${task}"
+    def shell_cmd = "${env.BUILDER_PATH}bldr ${task}"
     if (args) {
         // "/path/to/bldr sometask:somearg1,somearg2"
-        shellCmd += ":" + _escapeCmd(args.join(","))
+        shell_cmd += ":" + _escapeCmd(args.join(","))
     }
     // print stdout as it appears but also capture to file
     // "/path/to/bldr sometask:somearg1 | tee .stdout.dwG76zKTGZeOI.txt"
-    shellCmd += " | tee " + output_file
+    shell_cmd += " | tee " + output_file
 
-    rc = sh(script:shellCmd, returnStatus:true) as Integer
+    // disable input. this should be set by the shell, but just in case
+    non_interactive = "BUILDER_NON_INTERACTIVE=1 "
+    shell_cmd = non_interactive + shell_cmd
+
+    rc = sh(script:shell_cmd, returnStatus:true) as Integer
     if (rc == 0) {
         return readFile(output_file).trim()
     }
