@@ -16,18 +16,18 @@ def call(String task, String ... args) {
     def shell_cmd = "${env.BUILDER_PATH}bldr ${task}"
     if (args) {
         // "/path/to/bldr sometask:somearg1,somearg2"
-        shell_cmd += ":" + _escapeCmd(args.join(","))
+        shell_cmd += ":" + args.join(",")
     }
     // print stdout as it appears but also capture to file
     // "/path/to/bldr sometask:somearg1 | tee .stdout.dwG76zKTGZeOI.txt"
-    shell_cmd = shell_cmd + " | tee " + output_file
+    shell_cmd += " | tee " + output_file
 
     // disable input. this should be set by the shell, but just in case
     //non_interactive = "BUILDER_NON_INTERACTIVE=1 "
     //shell_cmd = non_interactive + shell_cmd
 
-    // run as bash
-    shell_cmd = "/bin/bash -c \"set -o pipefail; " + _escapeCmd(shell_cmd) + "\""
+    // run as bash, not sh
+    shell_cmd = "/bin/bash -c 'set -o pipefail; " + shell_cmd + "'"
 
     echo shell_cmd
 
