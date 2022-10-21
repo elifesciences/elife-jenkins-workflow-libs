@@ -6,7 +6,7 @@ def call(project, env_csv, closure) {
         if (node_count > 0) {
             // "project--prod"
             lock(stackname) {
-                for (Integer node in 1 .. node_count) {
+                for (int node = 1; node <= node_count; node++) {
                     // "project--prod--1"
                     stage("${stackname}--${node}", {
                         builderRunTask("aws.ec2.start", stackname, node)
