@@ -1,4 +1,4 @@
-def call(String stackname, String node, String cmd, folder=null, captureOutput=false) {
+def call(String stackname, Integer node, String cmd, folder=null, captureOutput=false) {
     if (folder) {
         cmd = "cd ${folder} && " + cmd;
     }
