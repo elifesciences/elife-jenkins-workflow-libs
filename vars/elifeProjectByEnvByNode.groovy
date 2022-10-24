@@ -6,6 +6,7 @@ def call(String project, String env_csv, Closure closure) {
         if (node_count > 0) {
             // "project--prod"
             lock(stackname) {
+                builderRunTask("start", stackname)
                 for (int node = 1; node <= node_count; node++) {
                     // "project--prod--1"
                     def stage_label = "${stackname}--${node}"
@@ -14,7 +15,7 @@ def call(String project, String env_csv, Closure closure) {
                         stage_label = stackname
                     }
                     stage(stage_label, {
-                        builderRunTask("aws.ec2.start_node", stackname, node as String)
+                        //builderRunTask("aws.ec2.start_node", stackname, node as String)
                         closure(project, env, node as String)
                     });
                 };
