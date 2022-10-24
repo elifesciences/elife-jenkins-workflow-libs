@@ -8,9 +8,14 @@ def call(project, env_csv, closure) {
             lock(stackname) {
                 for (int node = 1; node <= node_count; node++) {
                     // "project--prod--1"
-                    stage("${stackname}--${node}", {
+                    stage_label = "${stackname}--${node}"
+                    if (node_count == 1) {
+                        // "project--prod" (cuts down on some noise)
+                        stage_label = stackname
+                    }
+                    stage(stage_label, {
                         builderRunTask("aws.ec2.start_node", stackname, node as String)
-                        closure(project, env, node)
+                        closure(project, env, node as String)
                     });
                 };
             }
