@@ -16,7 +16,7 @@ def call(String project, String env_csv, Closure closure) {
                     }
                     stage(stage_label, {
                         //builderRunTask("aws.ec2.start_node", stackname, node as String)
-                        closure(project, env, node as String)
+                        closure(project, env, node)
                     });
                 };
             }
