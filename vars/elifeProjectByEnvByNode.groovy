@@ -1,7 +1,7 @@
 def call(project, env_csv, closure) {
     for (env in env_csv.split(",")) {
         env = env.trim()
-        def stackname = "${project}--${env}"
+        def stackname = "${project}--${env}" as String
         def Integer node_count = builderRunTask("report.ec2_node_count", stackname) as Integer
         if (node_count > 0) {
             // "project--prod"
