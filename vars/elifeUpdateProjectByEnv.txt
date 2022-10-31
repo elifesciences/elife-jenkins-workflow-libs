@@ -1,0 +1,4 @@
+Executes the `daily-security-update` script followed by a restart and then the `daily-system-update` for each instance 
+of the given `project` in the given `envlist` comma-separated string.
+
+See also: `elifeProjectByEnvByNode` which sequentially executes commands on per-project, per-env, per-node basis.
