@@ -28,10 +28,12 @@ def parseMaintainerAliases() {
 def findMaintainers(fileName) {
     def maintainers = []
 
-    // TODO: what is there is no .git repository? Do we use in-line Jenkinsfile?
+    // TODO: what if there is no .git repository? Do we use in-line Jenkinsfile?
     // we probably need to do this all the time, but careful not to mess with files being written by the build?
-    // Those files should probably be in .gitignore anyway
+    // those files should probably be in .gitignore anyway
     echo "Checking out .git repository to make sure we find maintainers"
+
+    // lsh@2022-10-24: this is preventing `elifePipeline` from being run outside of a Jenkinsfile.
     checkout scm
 
     if (fileExists(fileName)) {
@@ -52,6 +54,25 @@ def findMaintainers(fileName) {
     }
 
     return maintainers
+}
+
+def notifyMaintainers(maintainers, exc) {
+    for (int i = 0; i < maintainers.size(); i++) {
+        def notification = Notification.fromMaintainersFileValue(maintainers.get(i))
+        if (notification.type() == Notification.EMAIL) {
+            mail subject: "${env.BUILD_TAG} failed", to: notification.value(), from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${exc.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
+            echo "Failure email sent to ${notification.value()}"
+
+        } else if (notification.type() == Notification.SLACK) {
+            def slackMessage = ":red: *${env.BUILD_TAG}* failed: ${exc.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
+            elifeSlack slackMessage, notification.value()
+            echo "Slack notification sent to ${notification.value()}"
+
+        } else if (notification.type() == Notification.NONE) {
+            echo "Unknown alias or notification type '${notification.value()}'"
+            echo "See ${aliasMapPath()} for known aliases."
+        }
+    }
 }
 
 def call(Closure body, timeoutInMinutes=120) {
@@ -87,23 +108,7 @@ def call(Closure body, timeoutInMinutes=120) {
                         // not always available, e.g. in branches?
                         // commit: env.GIT_COMMIT 
                     )
-                    maintainers = findMaintainers 'maintainers.txt'
-                    for (int i = 0; i < maintainers.size(); i++) {
-                        def notification = Notification.fromMaintainersFileValue(maintainers.get(i))
-                        if (notification.type() == Notification.EMAIL) {
-                            mail subject: "${env.BUILD_TAG} failed", to: notification.value(), from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Message: ${e.message}\nFailed build: ${env.RUN_DISPLAY_URL}"
-                            echo "Failure email sent to ${notification.value()}"
-
-                        } else if (notification.type() == Notification.SLACK) {
-                            def slackMessage = ":red: *${env.BUILD_TAG}* failed: ${e.message} (<${env.RUN_DISPLAY_URL}|Build>, <${env.RUN_CHANGES_DISPLAY_URL}|Changes>)"
-                            elifeSlack slackMessage, notification.value()
-                            echo "Slack notification sent to ${notification.value()}"
-
-                        } else if (notification.type() == Notification.NONE) {
-                            echo "Unknown alias or notification type '${notification.value()}'"
-                            echo "See ${aliasMapPath()} for known aliases."
-                        }
-                    }
+                    notifyMaintainers(findMaintainers('maintainers.txt'), e)
                     throw e
                 }
             }
