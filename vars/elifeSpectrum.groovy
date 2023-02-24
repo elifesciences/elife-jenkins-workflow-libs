@@ -109,7 +109,7 @@ def call(Map parameters) {
                     if (fileExists("${env.SPECTRUM_PREFIX}build/test.log")) {
                         def testLogArtifact = "${env.BUILD_TAG}.${environmentName}.log"
                         sh "cp ${env.SPECTRUM_PREFIX}build/test.log ${testLogArtifact}"
-                        archive testLogArtifact
+                        archiveArtifacts artifacts: testLogArtifact
                     }
                     
                     sh "cp ${env.SPECTRUM_PREFIX}build/screenshots/*.png . || true"
