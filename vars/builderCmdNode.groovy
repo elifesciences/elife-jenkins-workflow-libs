@@ -7,7 +7,7 @@ def call(String stackname, Integer node, String cmd, folder=null, captureOutput=
     // stacktraces for failed commands when run in parallel are longer as the parallel executor
     // prints a stacktrace for any jobs that fail, before failing itself.
     // since this command specifically targets individual nodes there is no need for parallelism.
-    def additionalBuilderOptions = ",concurrency=serial,node=${node},"
+    def additionalBuilderOptions = ",node=${node},"
     if (captureOutput) {
         additionalBuilderOptions = additionalBuilderOptions + ",clean_output=1"
     }
