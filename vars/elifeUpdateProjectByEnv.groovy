@@ -8,7 +8,7 @@ def call(String project_name, String envlist) {
                 println("call to 'daily-security-update' script failed: " + err.toString())
                 println("ignoring and restarting instance.")
             }
-            builderRunTask("aws.ec2.stop_node", stackname, node as String)
+            builderRunTask("aws.ec2.reboot_node", stackname, node as String)
             builderStart(stackname)
             builderCmdNode(stackname, node, "sudo /usr/local/bin/daily-system-update");
         }
