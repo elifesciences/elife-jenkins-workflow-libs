@@ -12,12 +12,14 @@ def call(String project_name, String envlist) {
             builderStart(stackname)
             builderCmdNode(stackname, node, "sudo /usr/local/bin/daily-system-update");
         }
-
+        /*
         if (stackname == "elife-alfred--prod") {
             // special handling for updating the machine this job is running on.
             elifeOnNode({fn()}, "elife-libraries--ci")
         } else {
             fn()
         }
+        */
+        fn()
     })
 };
