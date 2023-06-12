@@ -18,6 +18,8 @@ def script () {
     //releaseScriptString = libraryResource 'pypi-release.sh' 
     //writeFile file: 'pypi-release.sh', text: releaseScriptString
     // if anyone can figure out a way of reading this from the 'resources/' directory where it belongs, let me know
+    // lsh@2023-06-09: docs are here https://www.jenkins.io/doc/book/pipeline/shared-libraries/#loading-resources
+    // my future self is curious about what wasn't working...
 
     return '''#!/bin/bash
 # usage: `./release.sh [<test|live>]`
