@@ -45,22 +45,21 @@ rm -rf ./release-venv/ dist/ build/ ./*.egg-info
 python3 -m venv release-venv
 # shellcheck disable=SC1091
 source release-venv/bin/activate
-# needed later to execute 'activate' as 'source' not available
+# needed (much) later to execute 'activate' when 'source' no longer available.
 chmod +x release-venv/bin/activate
-python3 -m pip install --upgrade pip wheel
-# twine has a transitive dependency on cryptography that requires pip upgraded *first* else it attempts to build it
-# using the rust programming language.
-python3 -m pip install --upgrade setuptools twine
-python3 setup.py sdist bdist_wheel
+# twine has a transitive dependency on `cryptography` that requires `pip` upgraded first, otherwise it 
+# attempts to build it using the Rust programming language.
+python3 -m pip install --upgrade pip build wheel
+python3 -m pip install --upgrade twine
+python3 -m build --sdist --wheel
 
 echo "--- testing build"
-python3 -m twine check \
-    --strict \
-    dist/*
+python3 -m twine check --strict dist/*
 
 # lsh@2021-01-26: pypi disabled the 'search' service on its live server with no intent to turn it back on.
 # I can't test for the already-released version so we just have to push the package and see if it gets rejected.
 
+# TODO: what replaces this??
 local_version=$(python3 setup.py --version)
 
 echo "--- uploading"
@@ -104,6 +103,7 @@ def call(index='live') {
         retval = command "./pypi-release.sh ${index}"
         assert retval == 0 : "failed to publish package"
         // the "| tr ..." is to trim the new line from the version so the param doesn't carry it around downstream.
+        // TODO: what replaces `python3 setup.py --version` ??
         return sh(script:"./release-venv/bin/activate && python3 setup.py --version | tr --delete '\n'", returnStdout:true)
     }
 }
