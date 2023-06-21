@@ -8,10 +8,6 @@ either 'test' or 'live' as the first parameter, depending on the target host.
 
 */
 
-def command(cmd) {
-    sh(script: cmd, returnStatus: true)
-}
-
 /** returns a bash script that is written to the workspace and executed **/
 def script () {
     // doesn't work :(
@@ -59,8 +55,8 @@ python3 -m twine check --strict dist/*
 # lsh@2021-01-26: pypi disabled the 'search' service on its live server with no intent to turn it back on.
 # I can't test for the already-released version so we just have to push the package and see if it gets rejected.
 
-# TODO: what replaces this??
-local_version=$(python3 setup.py --version)
+# lsh@2023-06-21: setup.py are removing their CLI so the below won't be possible in the future:
+#local_version=$(python3 setup.py --version)
 
 echo "--- uploading"
 set +e
@@ -78,7 +74,7 @@ if [ "$rc" == "0" ]; then
     # successful release!
     exit 0
 elif grep "File already exists." release-output.txt --silent; then
-    echo "Local version '$local_version' is the same as the remote version. Not releasing."
+    echo "Local version is the same as the remote version. Not releasing."
     exit 0 # not a failure case
 else
     exit 1
@@ -90,7 +86,7 @@ def writeScript(pathToResource) {
     // write string to local file
     releaseScript = new File(pwd() + "/" + pathToResource)
     releaseScript.setText(script())
-    command "chmod +x ${releaseScript.name}" // make local file executable
+    sh(script: "chmod +x ${releaseScript.name}") // make local file executable
 
     // "/var/lib/jenkins/workspace/release/dummy-python-release-project/pypi-release.sh"
     return releaseScript.absolutePath 
@@ -100,10 +96,13 @@ def call(index='live') {
     assert (index == 'test' || index == 'live'): "pypi index must be either 'test' or 'live'"
     writeScript "pypi-release.sh"
     withCredentials([string(credentialsId: "pypi-credentials--${index}", variable: 'TWINE_PASSWORD')]) {
-        retval = command "./pypi-release.sh ${index}"
+        retval = sh(script: "./pypi-release.sh ${index}", returnStatus: true)
         assert retval == 0 : "failed to publish package"
-        // the "| tr ..." is to trim the new line from the version so the param doesn't carry it around downstream.
-        // TODO: what replaces `python3 setup.py --version` ??
-        return sh(script:"./release-venv/bin/activate && python3 setup.py --version | tr --delete '\n'", returnStdout:true)
+        // "ls -1" - one file per line (numeral '1' not the letter 'l')
+        // "grep -o -E '...'" - extract the semver major.minor.patch value from the filename
+        // "grep ... -m 1" - return after the first match. there should only ever be one .whl file.
+        // "| tr ..." - trim the trailing new line from the output.
+        // the final value is returned and used downstream, like tagging the revision and pushing to github.
+        return sh(script:"/bin/ls -1 ./dist/*.whl | grep -o -E '([0-9]+\\.[0-9]+\\.[0-9]+) -m 1 | tr --delete '\n'", returnStdout:true)
     }
 }
