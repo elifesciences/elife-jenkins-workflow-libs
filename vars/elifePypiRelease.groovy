@@ -108,6 +108,6 @@ def call(index='live') {
         // "grep ... -m 1" - return after the first match. there should only ever be one .whl file.
         // "| tr ..." - trim the trailing new line from the output.
         // the final value is returned and used downstream, like tagging the revision and pushing to github.
-        return sh(script:"/bin/ls -1 ./dist/*.whl | grep -o -E '([0-9]+\\.[0-9]+\\.[0-9]+) -m 1 | tr --delete '\n'", returnStdout:true)
+        return sh(script:"/bin/ls -1 ./dist/*.whl | grep -o -E '([0-9]+\\.[0-9]+\\.[0-9]+)' -m 1 | tr --delete '\n'", returnStdout:true)
     }
 }
