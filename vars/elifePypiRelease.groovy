@@ -19,7 +19,7 @@ def script () {
 
     return '''#!/bin/bash
 # usage: `./release.sh [<test|live>]`
-# calls `setup.py` to build Python distributables and uploads the result to `test.pypi.org` or `pypi.org`
+# calls `python -m build` to build Python distributables and uploads the result to Pypi using `twine`.
 set -exuo pipefail
 
 index=${1:-"test"}
@@ -41,10 +41,9 @@ rm -rf ./release-venv/ dist/ build/ ./*.egg-info
 python3 -m venv release-venv
 # shellcheck disable=SC1091
 source release-venv/bin/activate
-# needed (much) later to execute 'activate' when 'source' no longer available.
-chmod +x release-venv/bin/activate
-# twine has a transitive dependency on `cryptography` that requires `pip` upgraded first, otherwise it 
-# attempts to build it using the Rust programming language.
+
+# twine has a transitive dependency on `cryptography` (`keyring` -> `SecretStorage` -> `cryptography`) that 
+# requires `pip` upgraded first, otherwise it attempts to build it using the Rust programming language.
 python3 -m pip install --upgrade pip build wheel
 python3 -m pip install --upgrade twine
 python3 -m build --sdist --wheel
@@ -55,7 +54,8 @@ python3 -m twine check --strict dist/*
 # lsh@2021-01-26: pypi disabled the 'search' service on its live server with no intent to turn it back on.
 # I can't test for the already-released version so we just have to push the package and see if it gets rejected.
 
-# lsh@2023-06-21: setup.py are removing their CLI so the below won't be possible in the future:
+# lsh@2023-06-21: setup.py are removing their CLI so the below won't be possible in the future
+# - https://github.com/elifesciences/issues/issues/8340
 #local_version=$(python3 setup.py --version)
 
 echo "--- uploading"
@@ -98,6 +98,11 @@ def call(index='live') {
     withCredentials([string(credentialsId: "pypi-credentials--${index}", variable: 'TWINE_PASSWORD')]) {
         retval = sh(script: "./pypi-release.sh ${index}", returnStatus: true)
         assert retval == 0 : "failed to publish package"
+
+        // lsh@2023-06-21: setup.py are removing their CLI so the below won't be possible in the future
+        // - https://github.com/elifesciences/issues/issues/8340
+        // return sh(script:"./release-venv/bin/activate && python3 setup.py --version | tr --delete '\n'", returnStdout:true)
+
         // "ls -1" - one file per line (numeral '1' not the letter 'l')
         // "grep -o -E '...'" - extract the semver major.minor.patch value from the filename
         // "grep ... -m 1" - return after the first match. there should only ever be one .whl file.
