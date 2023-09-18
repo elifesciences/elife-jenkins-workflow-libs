@@ -1,3 +1,0 @@
-Returns the APM apdex of `applicationId` on New Relic, as a float.
-
-You can find out the `applicationId` from the URL, e.g. `29775807` in https://rpm.newrelic.com/accounts/1451451/applications/29775807
