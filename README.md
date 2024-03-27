@@ -11,18 +11,9 @@ of XML™) or inside projects in a top-level `Jenkinsfile`. In both cases they m
 duplicated code from other projects.
 
 Jenkins however provides the possibility to define custom steps shared by all pipelines, in the form of a Git 
-repository. Jenkins implements [a ssh server](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+SSH) that instead of 
-giving you a shell access to its machine lets you pull and push from its own few repositories.
+repository (this one).
 
-## Usage
+The `master` branch of this repository is checked out before any job is run and is available within `Jenkinsfile` files
+'implicity' - without any need to explicitly include it.
 
-1. Configure your Jenkins SSH access choosing a port at `http://$JENKINS/configure`.
-2. Provide a public key at `http://$JENKINS/me/configure`.
-3. Git push this repository (or your fork of it) at the remote `ssh://$USERNAME@$JENKINS:$PORT/workflowLibs.git`.
-
-`$PORT` should be the port you have chosen (e.g. 16022) and `$USERNAME` should be your Jenkins username.
-
-## Known issues
-
-[JENKINS-41497](https://issues.jenkins-ci.org/browse/JENKINS-41497) prevents from using an external Git repository, 
-that should be fetched by Jenkins on new builds.
+This behaviour is configured in Jenkins under "Global Pipeline Libraries" here: https://alfred.elifesciences.org/manage/configure
