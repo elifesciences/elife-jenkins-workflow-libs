@@ -18,6 +18,6 @@ def call() {
         'profiles--prod',
         'recommendations--prod',
         'redirects--prod',
-        'search--prod'
+        // 'search--prod'
     ]
 }
