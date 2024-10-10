@@ -15,6 +15,6 @@ def call() {
         'personalised-covers--end2end',
         'profiles--end2end',
         'recommendations--end2end',
-        'search--end2end'
+        // 'search--end2end'
     ]
 }

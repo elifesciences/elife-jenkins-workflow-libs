@@ -16,6 +16,6 @@ def call() {
         'personalised-covers--continuumtest',
         'profiles--continuumtest',
         'recommendations--continuumtest',
-        'search--continuumtest'
+        // 'search--continuumtest'
     ]
 }

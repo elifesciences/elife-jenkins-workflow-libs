@@ -12,6 +12,6 @@ def call() {
         'personalised-covers--ci',
         'recommendations--ci',
         'redirects--ci',
-        'search--ci'
+        // 'search--ci'
     ]
 }
