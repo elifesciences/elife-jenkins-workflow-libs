@@ -9,7 +9,6 @@ def call() {
         'lax--ci',
         'observer--ci',
         'pattern-library--ci',
-        'personalised-covers--ci',
         'recommendations--ci',
         'redirects--ci',
         // 'search--ci'

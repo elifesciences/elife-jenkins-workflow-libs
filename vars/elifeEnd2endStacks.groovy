@@ -12,7 +12,6 @@ def call() {
         'journal-cms--end2end',
         'lax--end2end',
         'observer--end2end',
-        'personalised-covers--end2end',
         'profiles--end2end',
         'recommendations--end2end',
         // 'search--end2end'
