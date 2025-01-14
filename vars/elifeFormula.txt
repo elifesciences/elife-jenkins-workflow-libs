@@ -13,11 +13,6 @@ Provides three or more checks:
 - `continuous-integration/jenkins/pr-update` tests applies the new formula to the result of `pr-base`.
 - (optional) `continuous-integration/jenkins/pr-fresh-$variant` tests variants of the stack built by using `salt/example-*.top` files in the formula, if there are any.
 - (optional) `continuous-integration/jenkins/pr-fresh-$alternative` tests alternatives of the stack built by using an `aws-alt` configuration from builder.
-- (optional) `continuous-integration/jenkins/helm/lint` runs static analysis on the Helm charts, if present.
-
-Provides tag builds:
-
-- publishing of Helm charts, if present.
 
 Checks are built in parallel and independently from each other. `continuous-integration/jenkins/pr-head` represents the whole build, so it will be red if at least one of the checks is red.
 

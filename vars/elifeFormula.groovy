@@ -21,7 +21,7 @@ def call(String project, String smokeTestsFolder = '', String formula = null, Li
             }
             def partialStackname = "${project}--${instance}"
             lock (partialStackname) {
-                actions = [:] 
+                actions = [:]
                 actions['fresh'] = {
                     try {
                         elifeGithubCommitStatus commit, 'pending', 'continuous-integration/jenkins/pr-fresh', 'Fresh stack creation started', env.RUN_DISPLAY_URL
@@ -113,27 +113,8 @@ def call(String project, String smokeTestsFolder = '', String formula = null, Li
                     }
                 }
 
-                if (fileExists('helm')) {
-                    actions["helm/lint"] = {
-                        withCommitStatus({
-                            sh "cd helm/ && helm lint *"
-                        }, "helm/lint", commit)
-                    }
-                }
-
                 stage "Provisionings", {
                     parallel actions
-                }
-            }
-        }
-
-        elifeTagOnly { tag ->
-            if (fileExists('helm')) {
-                stage 'Publish helm chart', {
-                    sh 'cd helm && rm -f *.tgz'
-                    sh 'cd helm/*/ && helm dependency update .'
-                    sh 'cd helm && helm package $(ls -d */)'
-                    sh 'cd helm && for p in $(ls *.tgz); do helm s3 push $p alfred; done'
                 }
             }
         }
