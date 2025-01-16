@@ -15,7 +15,7 @@ def call() {
         'observer--prod',
         'pattern-library--prod',
         'profiles--prod',
-        'recommendations--prod',
+        // 'recommendations--prod',
         'redirects--prod',
         // 'search--prod'
     ]

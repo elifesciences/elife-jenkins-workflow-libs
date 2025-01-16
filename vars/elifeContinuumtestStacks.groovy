@@ -14,7 +14,7 @@ def call() {
         'lax--continuumtest',
         //'observer--continuumtest',
         'profiles--continuumtest',
-        'recommendations--continuumtest',
+        // 'recommendations--continuumtest',
         // 'search--continuumtest'
     ]
 }

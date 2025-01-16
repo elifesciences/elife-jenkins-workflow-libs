@@ -13,7 +13,7 @@ def call() {
         'lax--end2end',
         'observer--end2end',
         'profiles--end2end',
-        'recommendations--end2end',
+        // 'recommendations--end2end',
         // 'search--end2end'
     ]
 }
