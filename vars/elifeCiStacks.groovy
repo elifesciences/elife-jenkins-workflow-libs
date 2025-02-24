@@ -8,9 +8,6 @@ def call() {
         'journal-cms--ci',
         'lax--ci',
         'observer--ci',
-        'pattern-library--ci',
-        // 'recommendations--ci',
         'redirects--ci',
-        // 'search--ci'
     ]
 }
