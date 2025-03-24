@@ -1,3 +1,3 @@
-def call(string body) {
+def call(String body) {
     sh 'mise exec -- ' + body
 }
