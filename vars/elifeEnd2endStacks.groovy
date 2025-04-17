@@ -3,7 +3,7 @@ def call() {
         'annotations--end2end',
         'api-gateway--end2end',
         'bioprotocol--end2end',
-        'digests--end2end',
+        // 'digests--end2end',
         'elife-bot--end2end',
         'elife-dashboard--end2end',
         'elife-metrics--end2end',

@@ -3,7 +3,7 @@ def call() {
         'annotations--prod',
         'api-gateway--prod',
         'elife-api--legacy',
-        'digests--prod',
+        // 'digests--prod',
         'elife-bot--prod',
         'elife-dashboard--prod',
         'elife-metrics--prod',
