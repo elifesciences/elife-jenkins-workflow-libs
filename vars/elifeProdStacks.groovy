@@ -14,6 +14,5 @@ def call() {
         'lax--prod',
         'observer--prod',
         'profiles--prod',
-        'redirects--prod',
     ]
 }

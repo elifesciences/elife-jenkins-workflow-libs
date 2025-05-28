@@ -8,6 +8,5 @@ def call() {
         'journal-cms--ci',
         'lax--ci',
         'observer--ci',
-        'redirects--ci',
     ]
 }
