@@ -1,7 +1,7 @@
 def call() {
     return [
         'annotations--end2end',
-        'api-gateway--end2end',
+        // 'api-gateway--end2end',
         'bioprotocol--end2end',
         // 'digests--end2end',
         'elife-bot--end2end',

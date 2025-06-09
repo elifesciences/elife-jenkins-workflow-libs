@@ -1,7 +1,7 @@
 def call() {
     return [
         'annotations--continuumtest',
-        'api-gateway--continuumtest',
+        // 'api-gateway--continuumtest',
         // 'digests--continuumtest',
         'elife-bot--continuumtest',
         'elife-dashboard--continuumtest',

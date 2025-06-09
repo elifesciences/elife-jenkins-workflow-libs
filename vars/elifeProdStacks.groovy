@@ -1,7 +1,7 @@
 def call() {
     return [
         'annotations--prod',
-        'api-gateway--prod',
+        // 'api-gateway--prod',
         'elife-api--legacy',
         // 'digests--prod',
         'elife-bot--prod',
