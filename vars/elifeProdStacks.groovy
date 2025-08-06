@@ -6,7 +6,6 @@ def call() {
         // 'digests--prod',
         'elife-bot--prod',
         'elife-dashboard--prod',
-        'elife-metrics--prod',
         'iiif--prod',
         'journal--preview',
         'journal--prod',

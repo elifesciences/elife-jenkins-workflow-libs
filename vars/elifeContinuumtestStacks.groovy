@@ -5,7 +5,6 @@ def call() {
         // 'digests--continuumtest',
         'elife-bot--continuumtest',
         'elife-dashboard--continuumtest',
-        'elife-metrics--continuumtest',
         'iiif--continuumtest',
         'journal--annotationstest',
         'journal--continuumtestpreview',
