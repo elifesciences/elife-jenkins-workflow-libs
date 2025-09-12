@@ -1,12 +1,9 @@
 def call() {
     return [
         'annotations--prod',
-        // 'api-gateway--prod',
         'elife-api--legacy',
-        // 'digests--prod',
         'elife-bot--prod',
         'elife-dashboard--prod',
-        'iiif--prod',
         'journal--preview',
         'journal--prod',
         'journal-cms--prod',
